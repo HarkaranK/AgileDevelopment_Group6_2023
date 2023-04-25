@@ -1,0 +1,19 @@
+<!-- In quiz.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ quiz.title }}</title>
+</head>
+<body>
+    <h1>{{ quiz.title }}</h1>
+    {% for question in quiz.questions %}
+        <h2>{{ question.question_text }}</h2>
+        <ul>
+            {% for answer in question.answers %}
+                <li>{{ answer.answer_text }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+</html>
