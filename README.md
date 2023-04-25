@@ -6,6 +6,11 @@ Harkaran Kang
 Gyumin kim
 Ziyin Zhuang
 Arshdeep Kaur
+<<<<<<< HEAD
+=======
+Gaeun Doo
+Aaron Wong
+>>>>>>> ada824b24d12b14f869811fd1c6bac1dd3188f47
 
 Create your own virtual environment and install packages using the provided requirements.txt file:
 python -m venv my_local_venv
