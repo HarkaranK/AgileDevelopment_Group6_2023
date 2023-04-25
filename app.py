@@ -102,3 +102,7 @@ def add_question_page(quiz_id):
 
         return redirect(url_for('add_question_page', quiz_id=quiz_id))
     return render_template('add_question.html', quiz=quiz)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
