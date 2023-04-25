@@ -6,6 +6,7 @@ Harkaran Kang
 Gyumin kim
 Ziyin Zhuang
 Arshdeep Kaur
+Gaeun Doo
 
 Create your own virtual environment and install packages using the provided requirements.txt file:
 python -m venv my_local_venv
