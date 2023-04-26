@@ -3,7 +3,7 @@
 Created By:
 
 Harkaran Kang
-Gyumin kim
+Gyumin Kim
 Ziyin Zhuang
 Arshdeep Kaur
 <<<<<<< HEAD

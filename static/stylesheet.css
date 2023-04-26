@@ -68,3 +68,32 @@ a:hover {
     cursor: pointer;
     font-size: 1em;
 }
+
+article {
+    margin-top: 60px;
+}
+
+/* Navigation 
+----------------------------------------------*/
+
+#indexHeader {
+    align-items: center;
+    background: #fff;
+    display: flex;
+    height: 54px;
+    justify-content: space-between;
+    left: 0;
+    padding: 0 24px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.navUl {
+    display: flex;
+    flex-direction: row;
+}
+
+.navElmt {
+    cursor: pointer;
+}

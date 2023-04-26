@@ -6,20 +6,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Quizzes</h1>
-        <a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
-        <ul>
-			<!-- In index.html -->
-		{% for quiz in quizzes %}
-			<li>
-				<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
-				<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
-					<input type="submit" value="Delete">
-				</form>
-			</li>
-		{% endfor %}
-        </ul>
-    </div>
+    <header id="indexHeader">
+		<p>Smart Quiz</p>
+		<nav>
+			<ul class="navUl">
+				<li class="navElmt">Login</li>
+				<li class="navElmt">Sign Up</li>
+			</ul>
+		</nav>
+	</header>
+	<article>
+		<div class="container">
+			<h1>Welcome to Quizzes</h1>
+			<a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
+			<ul>
+				<!-- In index.html -->
+			{% for quiz in quizzes %}
+				<li>
+					<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
+					<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
+						<input type="submit" value="Delete">
+					</form>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</article>
 </body>
 </html>
