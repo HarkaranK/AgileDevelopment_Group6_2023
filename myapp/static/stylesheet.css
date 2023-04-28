@@ -68,9 +68,6 @@ a:hover {
     cursor: pointer;
     font-size: 1em;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 /*
 css for login page
 */
@@ -86,13 +83,6 @@ body {
     height: 100vh;
   }
   
-  /* .login-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  } */
   .login-container {
     background-color: #ffffff;
     padding: 20px;
@@ -147,12 +137,6 @@ body {
     text-align: center;
     padding: 10px;
   }
-  
-=======
-=======
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 
 article {
     margin-top: 60px;
@@ -181,13 +165,4 @@ article {
 
 .navElmt {
     cursor: pointer;
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
-}
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
-}
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
