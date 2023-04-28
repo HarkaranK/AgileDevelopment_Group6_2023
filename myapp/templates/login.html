@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Login</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
   </head>
   <body>
@@ -28,5 +29,15 @@
       <p>new quiz app that challenges your knowledge and rewards your efforts.
       </p>
     </footer>
+=======
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form method="POST" action="{{ url_for('login') }}">
+      <p>Username: <input type="text" name="username" required /></p>
+      <p>Password: <input type="password" name="password" required /></p>
+      <input type="submit" value="Login" />
+    </form>
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
   </body>
 </html>

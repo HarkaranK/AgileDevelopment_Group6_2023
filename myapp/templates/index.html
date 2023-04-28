@@ -1,3 +1,44 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:templates/index.html
+<!-- In index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Quizzes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <header id="indexHeader">
+		<p>Smart Quiz</p>
+		<nav>
+			<ul class="navUl">
+				<li class="navElmt">Login</li>
+				<li class="navElmt">Sign Up</li>
+			</ul>
+		</nav>
+	</header>
+	<article>
+		<div class="container">
+			<h1>Welcome to Quizzes</h1>
+			<a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
+			<ul>
+				<!-- In index.html -->
+			{% for quiz in quizzes %}
+				<li>
+					<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
+					<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
+						<input type="submit" value="Delete">
+					</form>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</article>
+</body>
+=======
+<!-- In index.html -->
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,4 +62,8 @@
         </ul>
     </div>
 </body>
+<<<<<<< HEAD
+=======
+>>>>>>> 7e41567ac82c2629161c61aa5ca15e6b00e91ae2:myapp/templates/index.html
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 </html>

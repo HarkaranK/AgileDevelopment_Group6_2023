@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from myapp.database.db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -5,6 +6,13 @@ class User(db.Model):
     id = db.Column(db.String(100), primary_key=True)
     password_hash = db.Column(db.String(128), nullable=False)
     user_type = db.Column(db.String(20), nullable=False)
+=======
+class User:
+    users = {'user1': {'password': 'password1', 'type': 'professor'}, 'user2': {'password': 'password2', 'type': 'student'}}
+
+    def __init__(self, id):
+        self.id = id
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 
     def is_authenticated(self):
         return True
@@ -18,6 +26,7 @@ class User(db.Model):
     def get_id(self):
         return self.id
 
+<<<<<<< HEAD
     @staticmethod
     def hash_password(password):
         return generate_password_hash(password)
@@ -35,3 +44,16 @@ class User(db.Model):
         if user is None or not user.check_password(password):
             return None
         return user
+=======
+    @classmethod
+    def get(cls, user_id):
+        if user_id not in cls.users:
+            return None
+        return cls(user_id)
+
+    @classmethod
+    def authenticate(cls, user_id, password):
+        if user_id not in cls.users or cls.users[user_id]['password'] != password:
+            return None
+        return cls(user_id)
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
