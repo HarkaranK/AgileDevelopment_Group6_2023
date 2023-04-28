@@ -1,6 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from flask import render_template, redirect, url_for, request, flash
+=======
+from flask import render_template, redirect, url_for, request
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
 from flask import render_template, redirect, url_for, request
 >>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
@@ -15,7 +19,10 @@ from myapp.database.db import db
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
 >>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
@@ -31,6 +38,7 @@ def init_auth_routes(app):
                 login_user(user)
                 return redirect(url_for('index'))
         return render_template('login.html')
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     
@@ -51,6 +59,8 @@ def init_auth_routes(app):
 
             flash('A user with that username already exists. Please choose a different username.')
         return render_template('register.html')
+=======
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
 >>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
@@ -128,6 +138,7 @@ def init_auth_routes(app):
         return redirect(url_for('index'))
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     @app.route('/category/<category>')
     @login_required
@@ -135,6 +146,8 @@ def init_auth_routes(app):
         # Replace this with your own logic to filter quizzes based on the category
         quizzes = Quiz.query.filter_by(category=category).all()
         return render_template('category.html', quizzes=quizzes, category=category)
+=======
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
 >>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 =======
