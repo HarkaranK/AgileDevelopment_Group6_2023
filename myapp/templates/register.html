@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+  </head>
+  <body>
+    <div class="login-container">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo" />
+      <h1>Register</h1>
+      <form method="POST" action="{{ url_for('register') }}">
+        <p>Name <input type="text" name="name" required /></p>
+        <p>School <input type="text" name="school" required /></p>
+        <p>Username <input type="text" name="username" required /></p>
+        <p>Password <input type="password" name="password" required /></p>
+        <input class="register-btn" type="submit" value="Submit" />
+      </form>
+      <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+    </div>
+  </body>
+</html>
