@@ -69,6 +69,7 @@ a:hover {
     font-size: 1em;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 css for login page
 */
@@ -147,6 +148,8 @@ body {
   }
   
 =======
+=======
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 
 article {
     margin-top: 60px;
@@ -175,5 +178,9 @@ article {
 
 .navElmt {
     cursor: pointer;
+<<<<<<< HEAD
+}
+>>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
+=======
 }
 >>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
