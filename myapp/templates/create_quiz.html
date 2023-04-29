@@ -1,19 +1,38 @@
-<!-- In create_quiz.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Create Quiz</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
 </head>
-<body>
-    <div class="container">
+<body id="create_body">
+    <header id="indexHeader">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="App Logo" id="appLogo">
+        <p>Smart Quiz</p>
+        <nav>
+            <ul class="navUl">
+                <li class="navElmt"><a href="{{ url_for('login') }}">Login</a></li>
+                <li class="navElmt"><a href="{{ url_for('register') }}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container create-quiz-container">
         <h1>Create Quiz</h1>
-        <form action="{{ url_for('create_quiz_page') }}" method="post">
-            <input type="text" name="title" placeholder="Quiz Title" required>
-            <input type="submit" value="Create Quiz">
+        <p>Follow the steps below to create a new quiz. Select a course, set the number of questions, and start building your quiz!</p>
+        <form action="{{ url_for('create_quiz_page') }}" method="post" class="create-quiz-form">
+            <label for="course">Course:</label>
+            <select name="course" id="course" required>
+                <option value="" disabled selected>Select a course</option>
+                <option value="course1">Math</option>
+                <option value="course2">Science</option>
+                <option value="course3">Business</option>
+            </select>
+            
+            <label for="total_questions">Total number of questions:</label>
+            <input type="number" name="total_questions" id="total_questions" min="1" required>
+
+            <input type="submit" value="Create Quiz" class="create-quiz-btn">
         </form>
-        <a href="{{ url_for('index') }}">Back to Quizzes</a>
-        <br>
+        <a href="{{ url_for('index') }}" class="back-to-quizzes">Back to Quizzes</a>
     </div>
 </body>
 </html>

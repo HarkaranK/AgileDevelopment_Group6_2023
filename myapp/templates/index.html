@@ -4,8 +4,8 @@
     <title>Welcome to Quizzes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="main-wrapper">
@@ -21,7 +21,7 @@
         </header>
         <article>
             <div class="container">
-                <h1>Welcome to Quizzes</h1>
+                <h1 id="indexheading">Welcome to Quizzes</h1>
                 <p>Explore a wide range of quizzes created by our community, or create your own quiz to challenge your friends and test their knowledge.</p>
                 <a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
                 

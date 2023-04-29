@@ -62,13 +62,13 @@ article {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-h1{
+#indexheading{
   padding-top: 200px;
 }
 h1, h2 {
   color: #333;
   margin-bottom: 20px;
-  font-family: 'Sigmar', cursive;
+  font-family: 'Lobster', cursive;
   font-size: 40px;
 }
 
@@ -76,7 +76,7 @@ p {
   font-size: 18px;
   color: #333;
   line-height: 1.6;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 
 .featured-quizzes {
@@ -260,4 +260,44 @@ article {
 article {
   flex-grow: 1;
   margin-top: 80px; /* Update the margin-top value */
+}
+/*creating styles for create_quiz*/
+.create-quiz-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-quiz-form label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.create-quiz-form select,
+.create-quiz-form input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.create-quiz-btn {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.create-quiz-btn:hover {
+  background-color: #2980b9;
+}
+#create_body {
+  background-image: url('children.jpg');
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover; /* Scales the image to cover the entire element */
+  background-position: center; /* Centers the image within the element */
+  background-attachment: fixed; /* Keeps the image fixed in the viewport while scrolling */
 }
