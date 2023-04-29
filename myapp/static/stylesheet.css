@@ -1,73 +1,125 @@
-/* In styles.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  /* background-image: url('{{ url_for('static', filename='background.jpg') }}'); */
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+}
+/* Header styles */
+#indexHeader {
+  align-items: center;
+  background-color: #ffffff;
+  display: flex;
+  height: 80px; /* Increased header height */
+  justify-content: space-between;
+  left: 0;
+  padding: 0 24px;
+  position: fixed; /* Changed from absolute to fixed */
+  right: 0;
+  top: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+p {
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.navUl {
+  display: flex;
+  flex-direction: row;
+}
+
+.navElmt {
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.navElmt:hover {
+  color: #3498db;
+}
+
+#appLogo {
+  width: 60px;
+  height: auto;
+  float: left;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+/* Article styles */
+article {
+  margin-top: 100px;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #333;
+  color: #333;
 }
 
 ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 li:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 a {
-    text-decoration: none;
-    color: #3498db;
+  text-decoration: none;
+  color: #3498db;
 }
 
 a:hover {
-    color: #2980b9;
+  color: #2980b9;
 }
 
 .create-btn {
-    display: inline-block;
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-bottom: 20px;
+  display: inline-block;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-bottom: 20px;
 }
 
 .create-btn:hover {
-    background-color: #2980b9;
+  background-color: #2980b9;
 }
-/* In styles.css */
+
 .delete-form {
-    display: inline;
+  display: inline;
 }
 
 .delete-form input[type="submit"] {
-    background: none;
-    border: none;
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1em;
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
 }
+
+/* The rest of your CSS for login page and footer */
+
 /*
 css for login page
 */
