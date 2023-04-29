@@ -112,8 +112,6 @@ def init_auth_routes(app):
         quizzes = Quiz.query.filter_by(category=category).all()
         return render_template('category.html', quizzes=quizzes, category=category)
     
-    # In app.py
-    # In app.py
     @app.route('/add-question/<int:quiz_id>', methods=['GET', 'POST'])
     @login_required
     def add_question_page(quiz_id):
