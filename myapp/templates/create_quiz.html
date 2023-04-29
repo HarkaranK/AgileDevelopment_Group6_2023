@@ -26,10 +26,11 @@
                 <option value="course2">Science</option>
                 <option value="course3">Business</option>
             </select>
-            
-            <label for="total_questions">Total number of questions:</label>
-            <input type="number" name="total_questions" id="total_questions" min="1" required>
+            <label for="quiz-topic">Quiz Topic</label>
+            <input type="string" name="quiz-topic" id="quiz type" min="1" required>
 
+            <label for="total_questions">Total number of questions:</label>    
+            <input type="number" name="total_questions" id="total_questions" min="1" required>
             <input type="submit" value="Create Quiz" class="create-quiz-btn">
         </form>
         <a href="{{ url_for('index') }}" class="back-to-quizzes">Back to Quizzes</a>
