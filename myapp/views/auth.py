@@ -28,6 +28,7 @@ def init_auth_routes(app):
             if existing_user is None:
                 new_user = User(id=username)
                 new_user.set_password(password)
+                new_user.set_attr(name, school)
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect(url_for('login'))
