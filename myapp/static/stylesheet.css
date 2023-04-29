@@ -62,7 +62,9 @@ article {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+h1{
+  padding-top: 200px;
+}
 h1, h2 {
   color: #333;
   margin-bottom: 20px;
@@ -74,6 +76,7 @@ p {
   font-size: 18px;
   color: #333;
   line-height: 1.6;
+  padding-top: 30px;
 }
 
 .featured-quizzes {
@@ -247,4 +250,14 @@ article {
 .navUl {
     display: flex;
     flex-direction: row;
+}
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+article {
+  flex-grow: 1;
+  margin-top: 80px; /* Update the margin-top value */
 }
