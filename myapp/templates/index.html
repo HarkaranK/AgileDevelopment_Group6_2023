@@ -3,16 +3,19 @@
 <head>
     <title>Welcome to Quizzes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sigmar&display=swap" rel="stylesheet">
 </head>
 <body>
     <header id="indexHeader">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="App Logo" id="appLogo">
         <p>Smart Quiz</p>
         <nav>
-            <ul class="navUl">
-                <li class="navElmt">Login</li>
-                <li class="navElmt">Sign Up</li>
-            </ul>
+			<ul class="navUl">
+				<li class="navElmt"><a href="{{ url_for('login') }}">Login</a></li>
+				<li class="navElmt"><a href="{{ url_for('register') }}">Sign Up</a></li>
+			</ul>			
         </nav>
     </header>
     <article>
@@ -23,28 +26,26 @@
             
             <h2>Featured Quizzes</h2>
             <div class="featured-quizzes">
-                <!-- Add featured quizzes with images here -->
                 <div class="featured-quiz">
-                    <img src="{{ url_for('static', filename='quiz1.png') }}" height="400px" width="400px">
+                    <img src="{{ url_for('static', filename='quiz1.png') }}" alt="Example Quiz 1">
                     <a href="#">Example Quiz 1</a>
                 </div>
                 <div class="featured-quiz">
-                    <img src="{{ url_for('static', filename='study_time.jpg') }}" height="400px" width="400px" alt="Example Quiz 2">
+                    <img src="{{ url_for('static', filename='study_time.jpg') }}" alt="Example Quiz 2">
                     <a href="#">Example Quiz 2</a>
                 </div>
             </div>
 
             <h2>All Quizzes</h2>
             <ul>
-                <!-- In index.html -->
-            {% for quiz in quizzes %}
+                {% for quiz in quizzes %}
                 <li>
                     <a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
                     <form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
                         <input type="submit" value="Delete">
                     </form>
                 </li>
-            {% endfor %}
+                {% endfor %}
             </ul>
         </div>
     </article>
