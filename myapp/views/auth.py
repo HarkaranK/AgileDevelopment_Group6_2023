@@ -26,15 +26,10 @@ def init_auth_routes(app):
 
             existing_user = User.query.filter_by(user_id=username).first()
             if existing_user is None:
-<<<<<<< HEAD
                 new_user = User(user_id=username)
                 new_user.set_password(password)
                 new_user.set_attr(name, school)
                 db.session.add(new_user)
-=======
-                user = User(id=username, password_hash=User.hash_password(password), user_type='student')
-                db.session.add(user)
->>>>>>> 2f766932f1e388a76a17ee9660ba9f08da426661
                 db.session.commit()
                 return redirect(url_for('login'))
 
