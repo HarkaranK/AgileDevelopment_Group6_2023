@@ -1,159 +1,53 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD:templates/index.html
-<!-- In index.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Welcome to Quizzes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header id="indexHeader">
-		<p>Smart Quiz</p>
-		<nav>
-			<ul class="navUl">
-				<li class="navElmt">Login</li>
-				<li class="navElmt">Sign Up</li>
-			</ul>
-		</nav>
-	</header>
-	<article>
-		<div class="container">
-			<h1>Welcome to Quizzes</h1>
-			<a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
-			<ul>
-				<!-- In index.html -->
-			{% for quiz in quizzes %}
-				<li>
-					<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
-					<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
-						<input type="submit" value="Delete">
-					</form>
-				</li>
-			{% endfor %}
-			</ul>
-		</div>
-	</article>
-</body>
-=======
-<!-- In index.html -->
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
-<<<<<<< HEAD:templates/index.html
-<!-- In index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Quizzes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-</head>
-<body>
-    <header id="indexHeader">
-		<p>Smart Quiz</p>
-		<nav>
-			<ul class="navUl">
-				<li class="navElmt">Login</li>
-				<li class="navElmt">Sign Up</li>
-			</ul>
-		</nav>
-	</header>
-	<article>
-		<div class="container">
-			<h1>Welcome to Quizzes</h1>
-			<a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
-			<ul>
-				<!-- In index.html -->
-			{% for quiz in quizzes %}
-				<li>
-					<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
-					<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
-						<input type="submit" value="Delete">
-					</form>
-				</li>
-			{% endfor %}
-			</ul>
-		</div>
-	</article>
-</body>
-=======
-<!-- In index.html -->
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
-<<<<<<< HEAD:templates/index.html
-<!-- In index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Quizzes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-</head>
-<body>
-    <header id="indexHeader">
-		<p>Smart Quiz</p>
-		<nav>
-			<ul class="navUl">
-				<li class="navElmt">Login</li>
-				<li class="navElmt">Sign Up</li>
-			</ul>
-		</nav>
-	</header>
-	<article>
-		<div class="container">
-			<h1>Welcome to Quizzes</h1>
-			<a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
-			<ul>
-				<!-- In index.html -->
-			{% for quiz in quizzes %}
-				<li>
-					<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
-					<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
-						<input type="submit" value="Delete">
-					</form>
-				</li>
-			{% endfor %}
-			</ul>
-		</div>
-	</article>
-</body>
-=======
-<!-- In index.html -->
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Quizzes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to Quizzes</h1>
-        <a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
-        <ul>
-			<!-- In index.html -->
-		{% for quiz in quizzes %}
-			<li>
-				<a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
-				<form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
-					<input type="submit" value="Delete">
-				</form>
-			</li>
-		{% endfor %}
-        </ul>
+    <div class="main-wrapper">
+        <header id="indexHeader">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="App Logo" id="appLogo">
+            <p>Smart Quiz</p>
+            <nav>
+                <ul class="navUl">
+                    <li class="navElmt"><a href="{{ url_for('login') }}">Login</a></li>
+                    <li class="navElmt"><a href="{{ url_for('register') }}">Sign Up</a></li>
+                </ul>
+            </nav>
+        </header>
+        <article>
+            <div class="container">
+                <h1 id="indexheading">Welcome to Quizzes</h1>
+                <p>Explore a wide range of quizzes created by our community, or create your own quiz to challenge your friends and test their knowledge.</p>
+                <a href="{{ url_for('create_quiz_page') }}" class="create-btn">Create Quiz</a>
+                
+                <h2>Featured Quizzes</h2>
+                <div class="featured-quizzes">
+                    <div class="featured-quiz">
+                        <img src="{{ url_for('static', filename='quiz1.png') }}" alt="Example Quiz 1">
+                    </div>
+                    <div class="featured-quiz">
+                        <img src="{{ url_for('static', filename='study_time.jpg') }}" alt="Example Quiz 2">
+                    </div>
+                </div>
+
+                <h2>All Quizzes</h2>
+                <ul>
+                    {% for quiz in quizzes %}
+                    <li>
+                        <a href="{{ url_for('quiz_page', quiz_id=quiz.id) }}">{{ quiz.title }}</a>
+                        <form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </article>
     </div>
 </body>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7e41567ac82c2629161c61aa5ca15e6b00e91ae2:myapp/templates/index.html
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
->>>>>>> 7e41567ac82c2629161c61aa5ca15e6b00e91ae2:myapp/templates/index.html
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
-=======
->>>>>>> 7e41567ac82c2629161c61aa5ca15e6b00e91ae2:myapp/templates/index.html
->>>>>>> 97281a16867be91c438e72be78e8cbbdac1a0671
 </html>

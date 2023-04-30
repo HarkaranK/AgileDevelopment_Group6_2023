@@ -1,73 +1,163 @@
-/* In styles.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+#indexHeader {
+  align-items: center;
+  background-color: #3498db;
+  display: flex;
+  height: 80px;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 24px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+#indexHeader p {
+  font-size: 24px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+.navUl {
+  display: flex;
+  flex-direction: row;
+}
+
+.navElmt {
+  cursor: pointer;
+  color: #ffffff;
+  margin-right: 15px;
+}
+
+.navElmt:hover {
+  color: #2980b9;
+}
+
+#appLogo {
+  width: 60px;
+  height: auto;
+  float: left;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+article {
+  margin-top: 100px;
+  padding: 20px;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#indexheading{
+  padding-top: 200px;
+}
+h1, h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Lobster', cursive;
+  font-size: 40px;
 }
 
-h1 {
-    color: #333;
+p {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  /* padding-top: 30px; */
+}
+
+.featured-quizzes {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.featured-quiz {
+  width: 400px;
+  text-align: center;
+}
+
+.featured-quiz img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.featured-quiz a {
+  display: block;
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 li:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 a {
-    text-decoration: none;
-    color: #3498db;
+  text-decoration: none;
+  color: #3498db;
 }
 
 a:hover {
-    color: #2980b9;
+  color: #2980b9;
 }
 
 .create-btn {
-    display: inline-block;
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-bottom: 20px;
+  display: inline-block;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-bottom: 20px;
 }
 
 .create-btn:hover {
-    background-color: #2980b9;
+  background-color: #2980b9;
 }
-/* In styles.css */
+
 .delete-form {
-    display: inline;
+  display: inline;
 }
 
 .delete-form input[type="submit"] {
-    background: none;
-    border: none;
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1em;
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
 }
+
+/* The rest of your CSS for login page and footer */
+
+
+/* The rest of your CSS for login page and footer */
+
 /*
 css for login page
 */
@@ -144,12 +234,11 @@ article {
 
 /* Navigation 
 ----------------------------------------------*/
-
 #indexHeader {
     align-items: center;
     background: #fff;
     display: flex;
-    height: 54px;
+    height: 70px;
     justify-content: space-between;
     left: 0;
     padding: 0 24px;
@@ -162,7 +251,53 @@ article {
     display: flex;
     flex-direction: row;
 }
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-.navElmt {
-    cursor: pointer;
+article {
+  flex-grow: 1;
+  margin-top: 80px; /* Update the margin-top value */
+}
+/*creating styles for create_quiz*/
+.create-quiz-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-quiz-form label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.create-quiz-form select,
+.create-quiz-form input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.create-quiz-btn {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.create-quiz-btn:hover {
+  background-color: #2980b9;
+}
+#create_body {
+  background-image: url('children.jpg');
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover; /* Scales the image to cover the entire element */
+  background-position: center; /* Centers the image within the element */
+  background-attachment: fixed; /* Keeps the image fixed in the viewport while scrolling */
 }
