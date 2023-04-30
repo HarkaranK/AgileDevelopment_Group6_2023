@@ -47,5 +47,5 @@ def send_openai_embeddings_to_pinecone_langchain(question_id):
 
 
 # Replace this with the actual question_id you want to send to Pinecone
-question_id_to_send = 4
-send_openai_embeddings_to_pinecone_langchain(question_id_to_send)
+# question_id_to_send = 4
+# send_openai_embeddings_to_pinecone_langchain(question_id_to_send)
