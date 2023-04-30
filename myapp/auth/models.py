@@ -1,11 +1,15 @@
 from myapp.database.db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 class User(db.Model):
-    id = db.Column(db.String(80), primary_key=True)
-    password_hash = db.Column(db.String(120), nullable=False)
-    name = db.Column(db.String(80), nullable=False)
-    school = db.Column(db.String(80), nullable=False)
+    user_id = db.Column(db.String(36), primary_key=True)
+    password_hash = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    school = db.Column(db.String(100), nullable=False)
+    questions = db.relationship('Question', backref='author', lazy=True)
+    quizzes = db.relationship('Quiz', backref='author', lazy=True)
+    participations = db.relationship('QuizParticipant', backref='participant', lazy=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -27,15 +31,15 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return self.id
+        return self.user_id
 
     @classmethod
     def get(cls, user_id):
-        return cls.query.filter_by(id=user_id).first()
+        return cls.query.filter_by(user_id=user_id).first()
 
     @classmethod
     def authenticate(cls, user_id, password):
-        user = cls.query.filter_by(id=user_id).first()
+        user = cls.query.filter_by(user_id=user_id).first()
         if user and user.check_password(password):
             return user
         return None

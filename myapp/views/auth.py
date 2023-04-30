@@ -24,9 +24,9 @@ def init_auth_routes(app):
             username = request.form['username']
             password = request.form['password']
 
-            existing_user = User.query.filter_by(id=username).first()
+            existing_user = User.query.filter_by(user_id=username).first()
             if existing_user is None:
-                new_user = User(id=username)
+                new_user = User(user_id=username)
                 new_user.set_password(password)
                 new_user.set_attr(name, school)
                 db.session.add(new_user)
@@ -45,7 +45,7 @@ def init_auth_routes(app):
     @app.route('/protected')
     @login_required
     def protected():
-        return f'Logged in as: {current_user.id}'
+        return f'Logged in as: {current_user.user_id}'
 
 
     @app.route('/')
