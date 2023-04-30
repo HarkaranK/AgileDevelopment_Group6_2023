@@ -68,3 +68,68 @@ with app.app_context():
             db.session.add(answer)
 
     db.session.commit()
+
+
+    # Create example Network questions for user with user_id 'rzhuang'
+    network_questions = [
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which layer of the OSI model is responsible for reliable communication?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What protocol is used by the World Wide Web?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What is the standard port number for HTTP?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which protocol is used to send email?',
+            'course': 'Network'
+        }
+    ]
+
+    for question_data in network_questions:
+        question = Question(**question_data)
+        db.session.add(question)
+
+    network_question_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in network_questions]
+
+    network_answers = [
+        [
+            {'question_id': network_question_ids[0], 'answer': 'Physical Layer', 'is_correct': False},
+            {'question_id': network_question_ids[0], 'answer': 'Data Link Layer', 'is_correct': False},
+            {'question_id': network_question_ids[0], 'answer': 'Transport Layer', 'is_correct': True},
+            {'question_id': network_question_ids[0], 'answer': 'Application Layer', 'is_correct': False}
+        ],
+        [
+            {'question_id': network_question_ids[1], 'answer': 'TCP', 'is_correct': False},
+            {'question_id': network_question_ids[1], 'answer': 'UDP', 'is_correct': False},
+            {'question_id': network_question_ids[1], 'answer': 'FTP', 'is_correct': False},
+            {'question_id': network_question_ids[1], 'answer': 'HTTP', 'is_correct': True}
+        ],
+        [
+            {'question_id': network_question_ids[2], 'answer': '25', 'is_correct': False},
+            {'question_id': network_question_ids[2], 'answer': '80', 'is_correct': True},
+            {'question_id': network_question_ids[2], 'answer': '110', 'is_correct': False},
+            {'question_id': network_question_ids[2], 'answer': '443', 'is_correct': False}
+        ],
+        [
+            {'question_id': network_question_ids[3], 'answer': 'SMTP', 'is_correct': True},
+            {'question_id': network_question_ids[3], 'answer': 'POP3', 'is_correct': False},
+            {'question_id': network_question_ids[3], 'answer': 'IMAP', 'is_correct': False},
+            {'question_id': network_question_ids[3], 'answer': 'HTTP', 'is_correct': False}
+        ]
+    ]
+
+    for question_answers in network_answers:
+        for answer_data in question_answers:
+            answer = Answer(**answer_data)
+            db.session.add(answer)
+
+    db.session.commit()
