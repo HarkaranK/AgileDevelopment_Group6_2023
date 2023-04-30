@@ -86,6 +86,12 @@ def init_auth_routes(app):
         except Exception as e:
             print(f"Error: {e}")
             return render_template('create_quiz.html', error=str(e))
+        
+    @app.route('/test_statistic')
+    @login_required
+    def test_statistic():
+        return render_template('test_statistic.html')
+
 
 
     @app.route('/edit/<int:quiz_id>', methods=['GET', 'POST'])

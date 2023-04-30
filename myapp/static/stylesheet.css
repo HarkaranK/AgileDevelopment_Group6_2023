@@ -301,3 +301,8 @@ article {
   background-position: center; /* Centers the image within the element */
   background-attachment: fixed; /* Keeps the image fixed in the viewport while scrolling */
 }
+.view-progress-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  text-decoration: none;
+}
