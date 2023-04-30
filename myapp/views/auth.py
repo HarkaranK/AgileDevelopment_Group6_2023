@@ -13,8 +13,9 @@ def init_auth_routes(app):
             user = User.authenticate(user_id, password)
             if user:
                 login_user(user)
-                return redirect(url_for('index'))
+                return redirect(url_for('create_quiz_page'))
         return render_template('login.html')
+
     
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -49,7 +50,6 @@ def init_auth_routes(app):
 
 
     @app.route('/')
-    @login_required
     def index():
         quizzes = Quiz.query.all()
         return render_template('index.html', quizzes=quizzes)
