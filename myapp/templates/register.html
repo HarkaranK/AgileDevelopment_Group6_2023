@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-  </head>
-  <body>
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
     <div class="login-container">
       <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo" />
       <h1>Register</h1>
@@ -17,5 +15,4 @@
       </form>
       <a href="{{ url_for('login') }}" class="login-btn">Login</a>
     </div>
-  </body>
-</html>
+{% endblock %}

@@ -7,19 +7,18 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="main-wrapper">
-        <header id="indexHeader">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="App Logo" id="appLogo">
-            <p>Smart Quiz</p>
-            <nav>
-                <ul class="navUl">
-                    <li class="navElmt"><a href="{{ url_for('login') }}">Login</a></li>
-                    <li class="navElmt"><a href="{{ url_for('register') }}">Sign Up</a></li>
-                </ul>
-            </nav>
-        </header>
-        <article>
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Quizzes{% endblock %}
+
+{% block extra_head %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <article>
             <div class="container">
                 <h1 id="indexheading">Welcome to Quizzes</h1>
                 <p>Explore a wide range of quizzes created by our community, or create your own quiz to challenge your friends and test their knowledge.</p>
@@ -48,6 +47,4 @@
                 </ul>
             </div>
         </article>
-    </div>
-</body>
-</html>
+{% endblock %}
