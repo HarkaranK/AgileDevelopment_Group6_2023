@@ -26,4 +26,4 @@ Make sure to create the database by running the following commands
  python .\create_tables.py
  python .\create_data.py
 ```
-Now you can start the app by running ``` python .\run.py```
+Now you can start the app by running ```python .\run.py```
