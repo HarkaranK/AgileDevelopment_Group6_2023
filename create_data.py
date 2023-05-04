@@ -133,3 +133,96 @@ with app.app_context():
             db.session.add(answer)
 
     db.session.commit()
+
+
+    biology_questions = [
+        {
+            'user_id': 'harkaran',
+            'question': 'Chest is used for pushing while the back is used for pulling?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'How many heads does the bicep have?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'How many heads does the tricep have?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'What is the upper back usually known as?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'What is the middle back usually known as?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'Can working out your grip increase forearm size?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'How many muscles groups are in the legs?',
+            'course': 'Biology'
+        },
+        {
+            'user_id': 'harkaran',
+            'question': 'How many different muscle groups are in the thigh?',
+            'course': 'Biology'
+        },
+    ]
+
+    for question_data in biology_questions:
+        question = Question(**question_data)
+        db.session.add(question)
+
+    biology_questions_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in biology_questions]
+
+    biology_answers [
+        [
+            {'question_id': biology_questions_ids[0], 'answer': 'True', 'is_correct': True},
+            {'question_id': biology_questions_ids[0], 'answer': 'False', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[1], 'answer': '1', 'is_correct': False},
+            {'question_id': biology_questions_ids[1], 'answer': '2', 'is_correct': True},
+            {'question_id': biology_questions_ids[1], 'answer': '3', 'is_correct': False},
+            {'question_id': biology_questions_ids[1], 'answer': '4', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[2], 'answer': '1', 'is_correct': False},
+            {'question_id': biology_questions_ids[2], 'answer': '2', 'is_correct': False},
+            {'question_id': biology_questions_ids[2], 'answer': '3', 'is_correct': True},
+            {'question_id': biology_questions_ids[2], 'answer': '4', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[3], 'answer': 'Traps', 'is_correct': True},
+            {'question_id': biology_questions_ids[3], 'answer': 'Lats', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[4], 'answer': 'Traps', 'is_correct': False},
+            {'question_id': biology_questions_ids[4], 'answer': 'Lats', 'is_correct': True},
+        ],
+        [
+            {'question_id': biology_questions_ids[5], 'answer': 'True', 'is_correct': True},
+            {'question_id': biology_questions_ids[5], 'answer': 'False', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[6], 'answer': '5', 'is_correct': False},
+            {'question_id': biology_questions_ids[6], 'answer': '6', 'is_correct': False},
+            {'question_id': biology_questions_ids[6], 'answer': '7', 'is_correct': True},
+            {'question_id': biology_questions_ids[6], 'answer': '8', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[7], 'answer': '1', 'is_correct': False},
+            {'question_id': biology_questions_ids[7], 'answer': '2', 'is_correct': False},
+            {'question_id': biology_questions_ids[7], 'answer': '3', 'is_correct': True},
+            {'question_id': biology_questions_ids[7], 'answer': '4', 'is_correct': False},
+        ],
+    ]
