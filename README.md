@@ -20,3 +20,10 @@ source my_local_venv/bin/activate
 
 Install packages from requirements.txt:
 pip install -r requirements.txt
+
+Make sure to create the database by running the following commands
+```
+ python .\create_tables.py
+ python .\create_data.py
+```
+Now you can start the app by running ```python .\run.py```
