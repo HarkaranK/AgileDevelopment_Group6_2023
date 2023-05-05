@@ -26,6 +26,66 @@ with app.app_context():
             'user_id': 'rzhuang',
             'question': 'How can you create a server in Node.js?',
             'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'How can you export a module in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which function is used to create a new buffer in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which method is used to emit an event in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What is the default package manager for Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What does "global" object in Node.js represent?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which module provides cryptographic functionality in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What is the purpose of the "process" object in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which method is used to remove a directory in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which method is used to create a new directory in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which method is used to create a Readable stream in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What is the purpose of "util.promisify()" in Node.js?',
+            'course': 'Node.js'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'How do you enable HTTP/2 in a Node.js server?',
+            'course': 'Node.js'
         }
     ]
 
