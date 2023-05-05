@@ -1,28 +1,44 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Create Quiz{% endblock %} {% block
+content %}
+<div class="container create-quiz-container">
+  <h1>Create Quiz</h1>
+  <p>
+    Follow the steps below to create a new quiz. Select a course, set the number
+    of questions, and start building your quiz!
+  </p>
+  <form
+    action="{{ url_for('create_quiz_page') }}"
+    method="post"
+    class="create-quiz-form"
+  >
+    <label for="quiz-title">Quiz Title:</label>
+    <input type="text" name="title" id="quiz-title" required />
+    <label for="course">Course:</label>
+    <select name="course" id="course" required>
+      <option value="" disabled selected>Select a course</option>
+      <option value="Node.js">Node.js</option>
+      <option value="Python">Python</option>
+      <option value="Network">Network</option>
+    </select>
+    <label for="quiz-topic">Quiz Topic</label>
+    <input type="string" name="quiz-topic" id="quiz type" min="1" required />
 
-{% block title %}Create Quiz{% endblock %}
-
-{% block content %}
-    <div class="container create-quiz-container">
-        <h1>Create Quiz</h1>
-        <p>Follow the steps below to create a new quiz. Select a course, set the number of questions, and start building your quiz!</p>
-        <form action="{{ url_for('create_quiz_page') }}" method="post" class="create-quiz-form">
-            <label for="course">Course:</label>
-            <select name="course" id="course" required>
-                <option value="" disabled selected>Select a course</option>
-                <option value="course1">node.js</option>
-                <option value="course2">Python</option>
-                <option value="course3">Networking</option>
-            </select>
-            <label for="quiz-topic">Quiz Topic</label>
-            <input type="string" name="quiz-topic" id="quiz type" min="1" required>
-
-            <label for="total_questions">Total number of questions:</label>    
-            <input type="number" name="total_questions" id="total_questions" min="1" required>
-            <input type="submit" value="Create Quiz" class="create-quiz-btn">
-        </form>
-        <a href="{{ url_for('index') }}" class="back-to-quizzes">Back to Quizzes</a>
-        <!-- Add this line for the "View Your Progress" button -->
-        <a href="{{ url_for('test_statistic') }}" class="btn btn-primary view-progress-btn">View Your Progress</a>
-    </div>
+    <label for="total_questions">Total number of questions:</label>
+    <input
+      type="number"
+      name="total_questions"
+      id="total_questions"
+      min="1"
+      required
+    />
+    <input type="submit" value="Create Quiz" class="create-quiz-btn" />
+  </form>
+  <a href="{{ url_for('index') }}" class="back-to-quizzes">Back to Quizzes</a>
+  <!-- Add this line for the "View Your Progress" button -->
+  <a
+    href="{{ url_for('test_statistic') }}"
+    class="btn btn-primary view-progress-btn"
+    >View Your Progress</a
+  >
+</div>
 {% endblock %}

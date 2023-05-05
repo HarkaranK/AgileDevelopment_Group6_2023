@@ -9,18 +9,15 @@ from myapp.database.db import db
 
 
 class Handler:
-    def __init__(self, pinecone_key, pinecone_env, index_name):
-        self.pinecone_key = pinecone_key
+    def __init__(self, pinecone_env, index_name):
         self.pinecone_env = pinecone_env
-        pinecone.init(api_key=self.pinecone_key, environment=self.pinecone_env)
+        pinecone.init(api_key=os.environ['PINECONE_API_KEY'], environment=self.pinecone_env)
         self.index_name = index_name
 
 
 class Search(Handler):
-    def __init__(self, pinecone_key, pinecone_env, index_name, openai_key):
-        super().__init__(pinecone_key, pinecone_env, index_name)
-        self.openai_key = openai_key
-        os.environ['OPENAI_API_KEY'] = self.openai_key
+    def __init__(self, pinecone_env, index_name):
+        super().__init__(pinecone_env, index_name)
         self.embeddings = OpenAIEmbeddings()
         self.app = create_app()
 
@@ -49,10 +46,8 @@ class Search(Handler):
 
 
 class Ingest(Handler):
-    def __init__(self, pinecone_key, pinecone_env, index_name, openai_key):
-        super().__init__(pinecone_key, pinecone_env, index_name)
-        self.openai_key = openai_key
-        os.environ['OPENAI_API_KEY'] = self.openai_key
+    def __init__(self, pinecone_env, index_name):
+        super().__init__(pinecone_env, index_name)
         self.embeddings = OpenAIEmbeddings()
         self.app = create_app()
 
@@ -87,8 +82,8 @@ class Ingest(Handler):
 
 
 class Index(Handler):
-    def __init__(self, pinecone_key, pinecone_env, index_name):
-        super().__init__(pinecone_key, pinecone_env, index_name)
+    def __init__(self, pinecone_env, index_name):
+        super().__init__(pinecone_env, index_name)
 
     def view_stats(self):
         index = pinecone.Index(self.index_name)

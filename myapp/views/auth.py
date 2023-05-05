@@ -1,8 +1,9 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from myapp.auth.models import User
-from myapp.database.models import Quiz, Question, Answer
+from myapp.database.models import Quiz, Question, Answer, QuizQuestion
 from myapp.database.db import db
+from myapp.utils.handler import Search
 
 def init_auth_routes(app):
     @app.route('/login', methods=['GET', 'POST'])
@@ -77,9 +78,25 @@ def init_auth_routes(app):
     def create_quiz_page():
         try:
             if request.method == 'POST':
-                title = request.form['title']
-                new_quiz = Quiz(title=title)
-                db.session.add(new_quiz)
+                quiz_name = request.form['title']
+                duration = 30
+                course = request.form['course']
+                topic = request.form['quiz-topic']
+                num = int(request.form['total_questions'])
+                
+                # Create the Quiz instance
+                quiz = Quiz(user_id=current_user.user_id, quiz_name=quiz_name, duration=duration)
+                db.session.add(quiz)
+                db.session.flush()  # Flush the session to get the quiz_id before adding QuizQuestion instances
+                
+                # Add QuizQuestions for each question_id in question_ids
+                search = Search("us-central1-gcp", "quizzes")
+                question_ids = search.get_question_ids(course, topic, num, 0.8)
+
+                for question_id in question_ids:
+                    quiz_question = QuizQuestion(quiz_id=quiz.quiz_id, question_id=question_id)
+                    db.session.add(quiz_question)
+
                 db.session.commit()
                 return redirect(url_for('index'))
             return render_template('create_quiz.html')
