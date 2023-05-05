@@ -29,62 +29,22 @@ with app.app_context():
         },
         {
             'user_id': 'rzhuang',
-            'question': 'How can you export a module in Node.js?',
+            'question': 'What is the purpose of the "require" function in Node.js?',
             'course': 'Node.js'
         },
         {
             'user_id': 'rzhuang',
-            'question': 'Which function is used to create a new buffer in Node.js?',
+            'question': 'What is the Event Loop in Node.js?',
             'course': 'Node.js'
         },
         {
             'user_id': 'rzhuang',
-            'question': 'Which method is used to emit an event in Node.js?',
+            'question': 'Which module is used to work with file paths in Node.js?',
             'course': 'Node.js'
         },
         {
             'user_id': 'rzhuang',
-            'question': 'What is the default package manager for Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'What does "global" object in Node.js represent?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'Which module provides cryptographic functionality in Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'What is the purpose of the "process" object in Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'Which method is used to remove a directory in Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'Which method is used to create a new directory in Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'Which method is used to create a Readable stream in Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'What is the purpose of "util.promisify()" in Node.js?',
-            'course': 'Node.js'
-        },
-        {
-            'user_id': 'rzhuang',
-            'question': 'How do you enable HTTP/2 in a Node.js server?',
+            'question': 'How can you create a child process in Node.js?',
             'course': 'Node.js'
         }
     ]
@@ -119,6 +79,30 @@ with app.app_context():
             {'question_id': nodejs_question_ids[3], 'answer': 'Using the fs module', 'is_correct': False},
             {'question_id': nodejs_question_ids[3], 'answer': 'Using the http module', 'is_correct': True},
             {'question_id': nodejs_question_ids[3], 'answer': 'Using the os module', 'is_correct': False}
+        ],
+        [
+            {'question_id': nodejs_question_ids[4], 'answer': 'To include a module', 'is_correct': True},
+            {'question_id': nodejs_question_ids[4], 'answer': 'To create a new object', 'is_correct': False},
+            {'question_id': nodejs_question_ids[4], 'answer': 'To define a function', 'is_correct': False},
+            {'question_id': nodejs_question_ids[4], 'answer': 'To create a new variable', 'is_correct': False}
+        ],
+        [
+            {'question_id': nodejs_question_ids[5], 'answer': 'A feature that handles multiple connections', 'is_correct': True},
+            {'question_id': nodejs_question_ids[5], 'answer': 'A programming pattern', 'is_correct': False},
+            {'question_id': nodejs_question_ids[5], 'answer': 'A module in Node.js', 'is_correct': False},
+            {'question_id': nodejs_question_ids[5], 'answer': 'A built-in function', 'is_correct': False}
+        ],
+        [
+            {'question_id': nodejs_question_ids[6], 'answer': 'fs', 'is_correct': False},
+            {'question_id': nodejs_question_ids[6], 'answer': 'http', 'is_correct': False},
+            {'question_id': nodejs_question_ids[6], 'answer': 'path', 'is_correct': True},
+            {'question_id': nodejs_question_ids[6], 'answer': 'net', 'is_correct': False}
+        ],
+        [
+            {'question_id': nodejs_question_ids[7], 'answer': 'Using the "spawn" function', 'is_correct': True},
+            {'question_id': nodejs_question_ids[7], 'answer': 'Using the "fork" function', 'is_correct': True},
+            {'question_id': nodejs_question_ids[7], 'answer': 'Using the "exec" function', 'is_correct': True},
+            {'question_id': nodejs_question_ids[7], 'answer': 'Using the "setTimeout" function', 'is_correct': False}
         ]
     ]
 
@@ -150,6 +134,26 @@ with app.app_context():
         {
             'user_id': 'rzhuang',
             'question': 'Which protocol is used to send email?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What does the term "OSI Model" stand for?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which protocol is responsible for error checking and data recovery in the transport layer?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'What is the primary purpose of the DNS?',
+            'course': 'Network'
+        },
+        {
+            'user_id': 'rzhuang',
+            'question': 'Which port number does the HTTP protocol use?',
             'course': 'Network'
         }
     ]
@@ -184,6 +188,30 @@ with app.app_context():
             {'question_id': network_question_ids[3], 'answer': 'POP3', 'is_correct': False},
             {'question_id': network_question_ids[3], 'answer': 'IMAP', 'is_correct': False},
             {'question_id': network_question_ids[3], 'answer': 'HTTP', 'is_correct': False}
+        ],
+        [
+            {'question_id': network_question_ids[4], 'answer': 'Open Systems Interconnection', 'is_correct': True},
+            {'question_id': network_question_ids[4], 'answer': 'Operating System Interface', 'is_correct': False},
+            {'question_id': network_question_ids[4], 'answer': 'Optimal System Integration', 'is_correct': False},
+            {'question_id': network_question_ids[4], 'answer': 'Optical Signal Interface', 'is_correct': False}
+        ],
+        [
+            {'question_id': network_question_ids[5], 'answer': 'UDP', 'is_correct': False},
+            {'question_id': network_question_ids[5], 'answer': 'TCP', 'is_correct': True},
+            {'question_id': network_question_ids[5], 'answer': 'IP', 'is_correct': False},
+            {'question_id': network_question_ids[5], 'answer': 'ARP', 'is_correct': False}
+        ],
+        [
+            {'question_id': network_question_ids[6], 'answer': 'Route selection', 'is_correct': False},
+            {'question_id': network_question_ids[6], 'answer': 'Error checking', 'is_correct': False},
+            {'question_id': network_question_ids[6], 'answer': 'Domain name resolution', 'is_correct': True},
+            {'question_id': network_question_ids[6], 'answer': 'File transfer', 'is_correct': False}
+        ],
+        [
+            {'question_id': network_question_ids[7], 'answer': '21', 'is_correct': False},
+            {'question_id': network_question_ids[7], 'answer': '25', 'is_correct': False},
+            {'question_id': network_question_ids[7], 'answer': '80', 'is_correct': True},
+            {'question_id': network_question_ids[7], 'answer': '110', 'is_correct': False}
         ]
     ]
 
@@ -195,6 +223,7 @@ with app.app_context():
     db.session.commit()
 
 
+    # Create example Network questions for user with user_id 'harkaran'
     biology_questions = [
         {
             'user_id': 'harkaran',
@@ -286,4 +315,10 @@ with app.app_context():
             {'question_id': biology_questions_ids[7], 'answer': '4', 'is_correct': False},
         ],
     ]
+
+    for question_answers in biology_answers:
+        for answer_data in question_answers:
+            answer = Answer(**answer_data)
+            db.session.add(answer)
+    
     db.session.commit()
