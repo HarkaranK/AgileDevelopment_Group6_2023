@@ -374,52 +374,52 @@ with app.app_context():
 
     physics_answers = [
         [
-            {'question_id': biology_questions_ids[0], 'answer': 'Force is proportional to mass, and inversely proportional to acceleration', 'is_correct': False},
-            {'question_id': biology_questions_ids[0], 'answer': 'Force is proportional to acceleration, and inversely proportional to mass', 'is_correct': True},
-            {'question_id': biology_questions_ids[0], 'answer': 'Mass is proportional to force, and inversely proportional to acceleration', 'is_correct': False},
-            {'question_id': biology_questions_ids[0], 'answer': 'Acceleration is proportional to mass, and inversely proportional to force', 'is_correct': False},
+            {'question_id': physics_questions_ids[0], 'answer': 'Force is proportional to mass, and inversely proportional to acceleration', 'is_correct': False},
+            {'question_id': physics_questions_ids[0], 'answer': 'Force is proportional to acceleration, and inversely proportional to mass', 'is_correct': True},
+            {'question_id': physics_questions_ids[0], 'answer': 'Mass is proportional to force, and inversely proportional to acceleration', 'is_correct': False},
+            {'question_id': physics_questions_ids[0], 'answer': 'Acceleration is proportional to mass, and inversely proportional to force', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[1], 'answer': 'Joule', 'is_correct': True},
-            {'question_id': biology_questions_ids[1], 'answer': 'Watt', 'is_correct': False},
-            {'question_id': biology_questions_ids[1], 'answer': 'Newton', 'is_correct': False},
-            {'question_id': biology_questions_ids[1], 'answer': 'Meter', 'is_correct': False},
+            {'question_id': physics_questions_ids[1], 'answer': 'Joule', 'is_correct': True},
+            {'question_id': physics_questions_ids[1], 'answer': 'Watt', 'is_correct': False},
+            {'question_id': physics_questions_ids[1], 'answer': 'Newton', 'is_correct': False},
+            {'question_id': physics_questions_ids[1], 'answer': 'Meter', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them increases', 'is_correct': False},
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them decreases', 'is_correct': True},
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them remains constant', 'is_correct': False},
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them becomes repulsive instead of attractive', 'is_correct': False},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them increases', 'is_correct': False},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them decreases', 'is_correct': True},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them remains constant', 'is_correct': False},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them becomes repulsive instead of attractive', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[3], 'answer': 'A screwdriver', 'is_correct': True},
-            {'question_id': biology_questions_ids[3], 'answer': 'A computer', 'is_correct': False},
-            {'question_id': biology_questions_ids[3], 'answer': 'A bicycle', 'is_correct': False},
-            {'question_id': biology_questions_ids[3], 'answer': 'A television', 'is_correct': False},
+            {'question_id': physics_questions_ids[3], 'answer': 'A screwdriver', 'is_correct': True},
+            {'question_id': physics_questions_ids[3], 'answer': 'A computer', 'is_correct': False},
+            {'question_id': physics_questions_ids[3], 'answer': 'A bicycle', 'is_correct': False},
+            {'question_id': physics_questions_ids[3], 'answer': 'A television', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy cannot be created or destroyed, only transformed from one form to another', 'is_correct': True},
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy always flows from hot to cold objects', 'is_correct': False},
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy is always conserved in a closed system', 'is_correct': False},
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy is proportional to mass and velocity', 'is_correct': False},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy cannot be created or destroyed, only transformed from one form to another', 'is_correct': True},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy always flows from hot to cold objects', 'is_correct': False},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy is always conserved in a closed system', 'is_correct': False},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy is proportional to mass and velocity', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[5], 'answer': 'Melting ice', 'is_correct': False},
-            {'question_id': biology_questions_ids[5], 'answer': 'Boiling water', 'is_correct': False},
-            {'question_id': biology_questions_ids[5], 'answer': 'Burning wood', 'is_correct': True},
-            {'question_id': biology_questions_ids[5], 'answer': 'Rusting iron', 'is_correct': False},
+            {'question_id': physics_questions_ids[5], 'answer': 'Melting ice', 'is_correct': False},
+            {'question_id': physics_questions_ids[5], 'answer': 'Boiling water', 'is_correct': False},
+            {'question_id': physics_questions_ids[5], 'answer': 'Burning wood', 'is_correct': True},
+            {'question_id': physics_questions_ids[5], 'answer': 'Rusting iron', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[6], 'answer': 'c = λf', 'is_correct': True},
-            {'question_id': biology_questions_ids[6], 'answer': 'E = mc²', 'is_correct': False},
-            {'question_id': biology_questions_ids[6], 'answer': 'F = ma', 'is_correct': False},
-            {'question_id': biology_questions_ids[6], 'answer': 'v = d/t', 'is_correct': False},
+            {'question_id': physics_questions_ids[6], 'answer': 'c = λf', 'is_correct': True},
+            {'question_id': physics_questions_ids[6], 'answer': 'E = mc²', 'is_correct': False},
+            {'question_id': physics_questions_ids[6], 'answer': 'F = ma', 'is_correct': False},
+            {'question_id': physics_questions_ids[6], 'answer': 'v = d/t', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[7], 'answer': 'Gamma rays', 'is_correct': False},
-            {'question_id': biology_questions_ids[7], 'answer': 'X-rays', 'is_correct': False},
-            {'question_id': biology_questions_ids[7], 'answer': 'Ultraviolet light', 'is_correct': False},
-            {'question_id': biology_questions_ids[7], 'answer': 'Radio waves', 'is_correct': True},
+            {'question_id': physics_questions_ids[7], 'answer': 'Gamma rays', 'is_correct': False},
+            {'question_id': physics_questions_ids[7], 'answer': 'X-rays', 'is_correct': False},
+            {'question_id': physics_questions_ids[7], 'answer': 'Ultraviolet light', 'is_correct': False},
+            {'question_id': physics_questions_ids[7], 'answer': 'Radio waves', 'is_correct': True},
         ],
     ]
 
@@ -534,3 +534,5 @@ with app.app_context():
         for answer_data in question_answers:
             answer = Answer(**answer_data)
             db.session.add(answer)
+
+    db.session.commit()

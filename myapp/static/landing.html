@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Quest</title>
+    <link rel="stylesheet" href="landing.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <section class="header">
+      <nav>
+        <a href="landing.html"><img src="img/logo.png" alt="logo" /></a>
+        <div class="nav-links" id="navLinks">
+          <i class="fa fa-times" onclick="hideMenu()"></i>
+          <ul>
+            <li><a href="">HOME</a></li>
+            <li><a href="">CREATE Q&A</a></li>
+            <li><a href="">CREATE QUIZ</a></li>
+            <li><a href="">TAKE QUIZ</a></li>
+            <li><a href="">ABOUT</a></li>
+          </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+      </nav>
+      <div class="text-box">
+        <h1>Explore, Learn, Triumph</h1>
+        <p>
+          Dive into the world of interactive quizzes and engage your mind with
+          our diverse array of topics. <br />Enhance your knowledge, learn
+          something new every day, and track your progress on your
+          <br />intellectual journey. With Smart Quest, conquer challenges,
+          celebrate victories, <br />and unlock your full potential.
+        </p>
+        <a href="" class="hero-btn">Create Your First Quiz</a>
+      </div>
+    </section>
+    <section class="features">
+      <h1>Discover the Smart Quest Advantage</h1>
+      <p>
+        Empowering your learning journey with innovative features and an
+        engaging quiz experience.
+      </p>
+      <div class="row">
+        <div class="features-col">
+          <img src="img/ai.jpeg" alt="ai" />
+          <h3>AI-Assisted Quiz Creation</h3>
+          <p>
+            Generate custom quizzes effortlessly with AI assistance. Choose
+            course, topic, and question count for instant, engaging quizzes.
+            Save time with Smart Quest.
+          </p>
+        </div>
+        <div class="features-col">
+          <img src="img/questions.jpeg" alt="ai" />
+          <h3>Extensive Quiz Library</h3>
+          <p>
+            Discover our vast quiz library, covering diverse subjects and
+            difficulties. Catering to beginners and experts alike, continuously
+            updated for fresh content.
+          </p>
+        </div>
+        <div class="features-col">
+          <img src="img/analytics.jpeg" alt="ai" />
+          <h3>Comprehensive Performance Analytics</h3>
+          <p>
+            Track progress with in-depth analytics. Identify strengths,
+            weaknesses, and receive personalized recommendations. Boost
+            performance through data-driven feedback on Smart Quest.
+          </p>
+        </div>
+      </div>
+    </section>
+    <script>
+      const navLinks = document.getElementById("navLinks");
+      const showMenu = () => {
+        navLinks.style.right = "0";
+      };
+      const hideMenu = () => {
+        navLinks.style.right = "-200px";
+      };
+    </script>
+  </body>
+</html>
