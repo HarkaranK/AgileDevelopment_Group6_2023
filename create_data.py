@@ -322,3 +322,110 @@ with app.app_context():
             db.session.add(answer)
     
     db.session.commit()
+
+    physics_questions = [
+        {
+            'user_id': 'aaronw',
+            'question': "Which of the following best describes the relationship between force, mass, and acceleration according to Newton's second law?",
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'What is the SI unit of measurement for work?',
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'Which of the following describes the effect of increasing the distance between two electric charges?',
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'Which of the following is an example of a simple machine?',
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'What is the law of conservation of energy?',
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'Which of the following is an example of an exothermic process?',
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'How many muscles groups are in the legs?',
+            'course': 'Physics'
+        },
+        {
+            'user_id': 'aaronw',
+            'question': 'Which of the following is a type of electromagnetic radiation with the longest wavelength?',
+            'course': 'Physics'
+        },
+    ]
+
+    for question_data in physics_questions:
+        question = Question(**question_data)
+        db.session.add(question)
+
+    physics_questions_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in physics_questions]
+
+    physics_answers = [
+        [
+            {'question_id': biology_questions_ids[0], 'answer': 'Force is proportional to mass, and inversely proportional to acceleration', 'is_correct': False},
+            {'question_id': biology_questions_ids[0], 'answer': 'Force is proportional to acceleration, and inversely proportional to mass', 'is_correct': True},
+            {'question_id': biology_questions_ids[0], 'answer': 'Mass is proportional to force, and inversely proportional to acceleration', 'is_correct': False},
+            {'question_id': biology_questions_ids[0], 'answer': 'Acceleration is proportional to mass, and inversely proportional to force', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[1], 'answer': 'Joule', 'is_correct': True},
+            {'question_id': biology_questions_ids[1], 'answer': 'Watt', 'is_correct': False},
+            {'question_id': biology_questions_ids[1], 'answer': 'Newton', 'is_correct': False},
+            {'question_id': biology_questions_ids[1], 'answer': 'Meter', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[2], 'answer': 'The force between them increases', 'is_correct': False},
+            {'question_id': biology_questions_ids[2], 'answer': 'The force between them decreases', 'is_correct': True},
+            {'question_id': biology_questions_ids[2], 'answer': 'The force between them remains constant', 'is_correct': False},
+            {'question_id': biology_questions_ids[2], 'answer': 'The force between them becomes repulsive instead of attractive', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[3], 'answer': 'A screwdriver', 'is_correct': True},
+            {'question_id': biology_questions_ids[3], 'answer': 'A computer', 'is_correct': False},
+            {'question_id': biology_questions_ids[3], 'answer': 'A bicycle', 'is_correct': False},
+            {'question_id': biology_questions_ids[3], 'answer': 'A television', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[4], 'answer': 'Energy cannot be created or destroyed, only transformed from one form to another', 'is_correct': True},
+            {'question_id': biology_questions_ids[4], 'answer': 'Energy always flows from hot to cold objects', 'is_correct': False},
+            {'question_id': biology_questions_ids[4], 'answer': 'Energy is always conserved in a closed system', 'is_correct': False},
+            {'question_id': biology_questions_ids[4], 'answer': 'Energy is proportional to mass and velocity', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[5], 'answer': 'Melting ice', 'is_correct': False},
+            {'question_id': biology_questions_ids[5], 'answer': 'Boiling water', 'is_correct': False},
+            {'question_id': biology_questions_ids[5], 'answer': 'Burning wood', 'is_correct': True},
+            {'question_id': biology_questions_ids[5], 'answer': 'Rusting iron', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[6], 'answer': 'c = λf', 'is_correct': True},
+            {'question_id': biology_questions_ids[6], 'answer': 'E = mc²', 'is_correct': False},
+            {'question_id': biology_questions_ids[6], 'answer': 'F = ma', 'is_correct': False},
+            {'question_id': biology_questions_ids[6], 'answer': 'v = d/t', 'is_correct': False},
+        ],
+        [
+            {'question_id': biology_questions_ids[7], 'answer': 'Gamma rays', 'is_correct': False},
+            {'question_id': biology_questions_ids[7], 'answer': 'X-rays', 'is_correct': False},
+            {'question_id': biology_questions_ids[7], 'answer': 'Ultraviolet light', 'is_correct': False},
+            {'question_id': biology_questions_ids[7], 'answer': 'Radio waves', 'is_correct': True},
+        ],
+    ]
+
+    for question_answers in physics_answers:
+        for answer_data in question_answers:
+            answer = Answer(**answer_data)
+            db.session.add(answer)
+    
+    db.session.commit()
