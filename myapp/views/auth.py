@@ -61,16 +61,28 @@ def init_auth_routes(app):
     def create_quiz():
         title = request.form['title']
         new_quiz = Quiz(title=title)
+        # new_quiz = Quiz(title=title, user_id=current_user.user_id)
         db.session.add(new_quiz)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
+        # return redirect(url_for('index'))
 
 
     @app.route('/quiz/<int:quiz_id>')
     @login_required
     def quiz_page(quiz_id):
         quiz = Quiz.query.get(quiz_id)
-        return render_template('quiz.html', quiz=quiz)
+        quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+        questions = []
+        for quiz_question in quiz_questions:
+            question = Question.query.get(quiz_question.question_id)
+            answers = Answer.query.filter_by(question_id=question.id).all()
+            questions.append({
+                'question': question,
+                'answers': answers
+            })
+        return render_template('quiz.html', quiz=quiz, questions=questions)
+
 
 
     @app.route('/create-quiz', methods=['GET', 'POST'])
@@ -86,6 +98,7 @@ def init_auth_routes(app):
                 
                 # Create the Quiz instance
                 quiz = Quiz(user_id=current_user.user_id, quiz_name=quiz_name, duration=duration)
+                # quiz = Quiz(user_id=current_user.user_id, title=quiz_name, duration=duration)
                 db.session.add(quiz)
                 db.session.flush()  # Flush the session to get the quiz_id before adding QuizQuestion instances
                 
@@ -98,7 +111,8 @@ def init_auth_routes(app):
                     db.session.add(quiz_question)
 
                 db.session.commit()
-                return redirect(url_for('index'))
+                # return redirect(url_for('index'))
+                return redirect(url_for('quiz_page', quiz_id=quiz.quiz_id))
             return render_template('create_quiz.html')
         except Exception as e:
             print(f"Error: {e}")
