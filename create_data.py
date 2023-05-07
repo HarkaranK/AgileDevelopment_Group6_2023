@@ -374,52 +374,52 @@ with app.app_context():
 
     physics_answers = [
         [
-            {'question_id': biology_questions_ids[0], 'answer': 'Force is proportional to mass, and inversely proportional to acceleration', 'is_correct': False},
-            {'question_id': biology_questions_ids[0], 'answer': 'Force is proportional to acceleration, and inversely proportional to mass', 'is_correct': True},
-            {'question_id': biology_questions_ids[0], 'answer': 'Mass is proportional to force, and inversely proportional to acceleration', 'is_correct': False},
-            {'question_id': biology_questions_ids[0], 'answer': 'Acceleration is proportional to mass, and inversely proportional to force', 'is_correct': False},
+            {'question_id': physics_questions_ids[0], 'answer': 'Force is proportional to mass, and inversely proportional to acceleration', 'is_correct': False},
+            {'question_id': physics_questions_ids[0], 'answer': 'Force is proportional to acceleration, and inversely proportional to mass', 'is_correct': True},
+            {'question_id': physics_questions_ids[0], 'answer': 'Mass is proportional to force, and inversely proportional to acceleration', 'is_correct': False},
+            {'question_id': physics_questions_ids[0], 'answer': 'Acceleration is proportional to mass, and inversely proportional to force', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[1], 'answer': 'Joule', 'is_correct': True},
-            {'question_id': biology_questions_ids[1], 'answer': 'Watt', 'is_correct': False},
-            {'question_id': biology_questions_ids[1], 'answer': 'Newton', 'is_correct': False},
-            {'question_id': biology_questions_ids[1], 'answer': 'Meter', 'is_correct': False},
+            {'question_id': physics_questions_ids[1], 'answer': 'Joule', 'is_correct': True},
+            {'question_id': physics_questions_ids[1], 'answer': 'Watt', 'is_correct': False},
+            {'question_id': physics_questions_ids[1], 'answer': 'Newton', 'is_correct': False},
+            {'question_id': physics_questions_ids[1], 'answer': 'Meter', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them increases', 'is_correct': False},
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them decreases', 'is_correct': True},
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them remains constant', 'is_correct': False},
-            {'question_id': biology_questions_ids[2], 'answer': 'The force between them becomes repulsive instead of attractive', 'is_correct': False},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them increases', 'is_correct': False},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them decreases', 'is_correct': True},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them remains constant', 'is_correct': False},
+            {'question_id': physics_questions_ids[2], 'answer': 'The force between them becomes repulsive instead of attractive', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[3], 'answer': 'A screwdriver', 'is_correct': True},
-            {'question_id': biology_questions_ids[3], 'answer': 'A computer', 'is_correct': False},
-            {'question_id': biology_questions_ids[3], 'answer': 'A bicycle', 'is_correct': False},
-            {'question_id': biology_questions_ids[3], 'answer': 'A television', 'is_correct': False},
+            {'question_id': physics_questions_ids[3], 'answer': 'A screwdriver', 'is_correct': True},
+            {'question_id': physics_questions_ids[3], 'answer': 'A computer', 'is_correct': False},
+            {'question_id': physics_questions_ids[3], 'answer': 'A bicycle', 'is_correct': False},
+            {'question_id': physics_questions_ids[3], 'answer': 'A television', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy cannot be created or destroyed, only transformed from one form to another', 'is_correct': True},
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy always flows from hot to cold objects', 'is_correct': False},
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy is always conserved in a closed system', 'is_correct': False},
-            {'question_id': biology_questions_ids[4], 'answer': 'Energy is proportional to mass and velocity', 'is_correct': False},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy cannot be created or destroyed, only transformed from one form to another', 'is_correct': True},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy always flows from hot to cold objects', 'is_correct': False},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy is always conserved in a closed system', 'is_correct': False},
+            {'question_id': physics_questions_ids[4], 'answer': 'Energy is proportional to mass and velocity', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[5], 'answer': 'Melting ice', 'is_correct': False},
-            {'question_id': biology_questions_ids[5], 'answer': 'Boiling water', 'is_correct': False},
-            {'question_id': biology_questions_ids[5], 'answer': 'Burning wood', 'is_correct': True},
-            {'question_id': biology_questions_ids[5], 'answer': 'Rusting iron', 'is_correct': False},
+            {'question_id': physics_questions_ids[5], 'answer': 'Melting ice', 'is_correct': False},
+            {'question_id': physics_questions_ids[5], 'answer': 'Boiling water', 'is_correct': False},
+            {'question_id': physics_questions_ids[5], 'answer': 'Burning wood', 'is_correct': True},
+            {'question_id': physics_questions_ids[5], 'answer': 'Rusting iron', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[6], 'answer': 'c = λf', 'is_correct': True},
-            {'question_id': biology_questions_ids[6], 'answer': 'E = mc²', 'is_correct': False},
-            {'question_id': biology_questions_ids[6], 'answer': 'F = ma', 'is_correct': False},
-            {'question_id': biology_questions_ids[6], 'answer': 'v = d/t', 'is_correct': False},
+            {'question_id': physics_questions_ids[6], 'answer': 'c = λf', 'is_correct': True},
+            {'question_id': physics_questions_ids[6], 'answer': 'E = mc²', 'is_correct': False},
+            {'question_id': physics_questions_ids[6], 'answer': 'F = ma', 'is_correct': False},
+            {'question_id': physics_questions_ids[6], 'answer': 'v = d/t', 'is_correct': False},
         ],
         [
-            {'question_id': biology_questions_ids[7], 'answer': 'Gamma rays', 'is_correct': False},
-            {'question_id': biology_questions_ids[7], 'answer': 'X-rays', 'is_correct': False},
-            {'question_id': biology_questions_ids[7], 'answer': 'Ultraviolet light', 'is_correct': False},
-            {'question_id': biology_questions_ids[7], 'answer': 'Radio waves', 'is_correct': True},
+            {'question_id': physics_questions_ids[7], 'answer': 'Gamma rays', 'is_correct': False},
+            {'question_id': physics_questions_ids[7], 'answer': 'X-rays', 'is_correct': False},
+            {'question_id': physics_questions_ids[7], 'answer': 'Ultraviolet light', 'is_correct': False},
+            {'question_id': physics_questions_ids[7], 'answer': 'Radio waves', 'is_correct': True},
         ],
     ]
 
@@ -428,4 +428,111 @@ with app.app_context():
             answer = Answer(**answer_data)
             db.session.add(answer)
     
+    db.session.commit()
+    
+    communication_questions = [
+        {
+            'user_id': 'chrisk',
+            'question': 'Which following her is not used as a possessive pronoun?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following represents the disadvantage of working in teams?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following writing corresponds with the most formal?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following is the most improper description of avoiding an apology?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following can not be used as a cc?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following order is correct for the closing line in a letter?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following is not represent for a good delivery in oral presentation?',
+            'course': 'Communication'
+        },
+        {
+            'user_id': 'chrisk',
+            'question': 'Which of the following is not a type of oral presentation?',
+            'course': 'Communication'
+        }
+    ]
+
+    for question_data in communication_questions:
+        question = Question(**question_data)
+        db.session.add(question)
+
+    communication_question_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in communication_questions]
+
+    communication_answers = [
+        [
+            {'question_id': communication_question_ids[0], 'answer': 'Annie drove a car for improving her driving skill.', 'is_correct': False},
+            {'question_id': communication_question_ids[0], 'answer': 'Anthony is the main character from her point of view.', 'is_correct': False},
+            {'question_id': communication_question_ids[0], 'answer': 'I love her enough to sacrifice my life.', 'is_correct': True},
+            {'question_id': communication_question_ids[0], 'answer': 'Huckley was her first love. ', 'is_correct': False}
+        ],
+        [
+            {'question_id': communication_question_ids[1], 'answer': 'Increased Information', 'is_correct': False},
+            {'question_id': communication_question_ids[1], 'answer': 'Groupthink', 'is_correct': True},
+            {'question_id': communication_question_ids[1], 'answer': 'Diversity of Views', 'is_correct': False},
+            {'question_id': communication_question_ids[1], 'answer': 'Support for solutions', 'is_correct': False}
+        ],
+        [
+            {'question_id': communication_question_ids[2], 'answer': 'Texts', 'is_correct': False},
+            {'question_id': communication_question_ids[2], 'answer': 'Memos', 'is_correct': False},
+            {'question_id': communication_question_ids[2], 'answer': 'Letters', 'is_correct': True},
+            {'question_id': communication_question_ids[2], 'answer': 'Emails', 'is_correct': False}
+        ],
+        [
+            {'question_id': communication_question_ids[3], 'answer': 'Apologizing keeps attention on the error or problem, not a solution.', 'is_correct': False},
+            {'question_id': communication_question_ids[3], 'answer': 'Apologies may seem pretentious.', 'is_correct': True},
+            {'question_id': communication_question_ids[3], 'answer': 'Apologizing can be taken as a responsibility for the problem.', 'is_correct': False},
+            {'question_id': communication_question_ids[3], 'answer': 'Apologies make the writing with a negative atmosphere.', 'is_correct': False}
+        ],
+        [
+            {'question_id': communication_question_ids[4], 'answer': 'Manager of the receiver', 'is_correct': False},
+            {'question_id': communication_question_ids[4], 'answer': 'CEO', 'is_correct': False},
+            {'question_id': communication_question_ids[4], 'answer': 'Councillor of the company', 'is_correct': False},
+            {'question_id': communication_question_ids[4], 'answer': 'Receiver', 'is_correct': True}
+        ],
+        [
+            {'question_id': communication_question_ids[5], 'answer': 'Complimentary close, signature, sender information, copy line, enclosure line', 'is_correct': True},
+            {'question_id': communication_question_ids[5], 'answer': 'Complimentary close, sender information, signature, copy line, enclosure line', 'is_correct': False},
+            {'question_id': communication_question_ids[5], 'answer': 'Complimentary close, sender information, signature, enclosure line, copy line', 'is_correct': False},
+            {'question_id': communication_question_ids[5], 'answer': 'Complimentary close, signature, sender information, enclosure line, copy line', 'is_correct': False}
+        ],
+        [
+            {'question_id': communication_question_ids[6], 'answer': 'shows poise and confidence in facial expression', 'is_correct': False},
+            {'question_id': communication_question_ids[6], 'answer': 'maintains a business-like tone', 'is_correct': False},
+            {'question_id': communication_question_ids[6], 'answer': 'maintains eye contact, responds to audience', 'is_correct': False},
+            {'question_id': communication_question_ids[6], 'answer': 'visually present main ideas and sub-points', 'is_correct': True}
+        ],
+        [
+            {'question_id': communication_question_ids[7], 'answer': 'Impromptu presentation', 'is_correct': False},
+            {'question_id': communication_question_ids[7], 'answer': 'Abstract presentation', 'is_correct': True},
+            {'question_id': communication_question_ids[7], 'answer': 'Manuscript presentation', 'is_correct': False},
+            {'question_id': communication_question_ids[7], 'answer': 'Memorized presentation', 'is_correct': False}
+        ]
+    ]
+
+    for question_answers in communication_answers:
+        for answer_data in question_answers:
+            answer = Answer(**answer_data)
+            db.session.add(answer)
+
     db.session.commit()

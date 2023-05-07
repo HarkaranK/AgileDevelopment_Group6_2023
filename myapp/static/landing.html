@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Quest</title>
+    <link rel="stylesheet" href="landing.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <section class="header">
+      <nav>
+        <a href="landing.html"><img src="img/logo.png" alt="logo" /></a>
+        <div class="nav-links" id="navLinks">
+          <i class="fa fa-times" onclick="hideMenu()"></i>
+          <ul>
+            <li><a href="">HOME</a></li>
+            <li><a href="">CREATE Q&A</a></li>
+            <li><a href="">CREATE QUIZ</a></li>
+            <li><a href="">TAKE QUIZ</a></li>
+          </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+      </nav>
+      <div class="text-box">
+        <h1>Explore, Learn, Triumph</h1>
+        <p>
+          Dive into the world of interactive quizzes and engage your mind with
+          our diverse array of topics. <br />Enhance your knowledge, learn
+          something new every day, and track your progress on your
+          <br />intellectual journey. With Smart Quest, conquer challenges,
+          celebrate victories, <br />and unlock your full potential.
+        </p>
+        <a href="" class="hero-btn">Create Your First Quiz</a>
+      </div>
+    </section>
+    <section class="features">
+      <h1>Discover the Smart Quest Advantage</h1>
+      <p>
+        Empowering your learning journey with innovative features and an
+        engaging quiz experience.
+      </p>
+      <div class="row">
+        <div class="features-col">
+          <img src="img/ai.jpeg" alt="ai" />
+          <h3>AI-Assisted Quiz Creation</h3>
+          <p>
+            Generate custom quizzes effortlessly with AI assistance. Choose
+            course, topic, and question count for instant, engaging quizzes.
+            Save time with Smart Quest.
+          </p>
+        </div>
+        <div class="features-col">
+          <img src="img/questions.jpeg" alt="ai" />
+          <h3>Extensive Quiz Library</h3>
+          <p>
+            Discover our vast quiz library, covering diverse subjects and
+            difficulties. Catering to beginners and experts alike, continuously
+            updated for fresh content.
+          </p>
+        </div>
+        <div class="features-col">
+          <img src="img/analytics.jpeg" alt="ai" />
+          <h3>Comprehensive Performance Analytics</h3>
+          <p>
+            Track progress with in-depth analytics. Identify strengths,
+            weaknesses, and receive personalized recommendations. Boost
+            performance through data-driven feedback on Smart Quest.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="testimonials">
+      <h1>What Our User Says</h1>
+      <p>
+        Discover the impact of Smart Quest from the perspectives of our valued
+        users.
+      </p>
+      <div class="row">
+        <div class="testimonial-col">
+          <img src="img/user1.jpg" />
+          <div>
+            <p>
+              "Smart Quest has transformed my learning experience! The
+              AI-generated quizzes and diverse topics keep me engaged and
+              constantly challenged. I highly recommend it!"
+            </p>
+            <h3>Arshdeep K., Student</h3>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o"></i>
+          </div>
+        </div>
+        <div class="testimonial-col">
+          <img src="img/user2.jpg" />
+          <div>
+            <p>
+              "As an educator, I've found Smart Quest invaluable for creating
+              customized quizzes and tracking my students' progress. The
+              comprehensive analytics are truly insightful!"
+            </p>
+            <h3>Chris K., Teacher</h3>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-half-o"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="cta">
+      <h1>
+        Unleash your potential - join Smart Quest today <br />and elevate your
+        learning experience!
+      </h1>
+      <a href="" class="hero-btn">Create Your First Quiz</a>
+    </section>
+    <section class="footer">
+      <h4>About US</h4>
+      <p>
+        At Smart Quest, we are a dedicated team of five Computer Information
+        Technology (CIT) students from the <br />British Columbia Institute of
+        Technology (BCIT). Our passion for learning and technological innovation
+        has <br />driven us to develop this webapp as part of our ACIT 2911
+        course project. We believe in the power of <br />interactive and
+        engaging learning experiences, and our goal is to empower users by
+        providing them <br />with a platform that fosters curiosity and growth.
+        Through our combined expertise and commitment, <br />we strive to create
+        a cutting-edge quiz platform that makes learning enjoyable and
+        accessible for everyone.
+      </p>
+      <div class="icons">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-twitter"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-linkedin"></i>
+      </div>
+      <p>Made with <i class="fa fa-heart-o"></i> by Team 6</p>
+    </section>
+    <script>
+      const navLinks = document.getElementById("navLinks");
+      const showMenu = () => {
+        navLinks.style.right = "0";
+      };
+      const hideMenu = () => {
+        navLinks.style.right = "-200px";
+      };
+    </script>
+  </body>
+</html>
