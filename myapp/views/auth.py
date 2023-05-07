@@ -4,6 +4,8 @@ from myapp.auth.models import User
 from myapp.database.models import Quiz, Question, Answer, QuizQuestion
 from myapp.database.db import db
 from myapp.utils.handler import Search
+import os
+
 
 def init_auth_routes(app):
     @app.route('/login', methods=['GET', 'POST'])
@@ -17,6 +19,14 @@ def init_auth_routes(app):
                 return redirect(url_for('create_quiz_page'))
         return render_template('login.html')
 
+    @app.route('/')
+    def landing_page():
+        return render_template('landing.html')
+
+    # @app.route('/')
+    # def index():
+    #     quizzes = Quiz.query.all()
+    #     return render_template('index.html', quizzes=quizzes)
     
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -50,10 +60,10 @@ def init_auth_routes(app):
         return f'Logged in as: {current_user.user_id}'
 
 
-    @app.route('/')
-    def index():
-        quizzes = Quiz.query.all()
-        return render_template('index.html', quizzes=quizzes)
+    # @app.route('/')
+    # def index():
+    #     quizzes = Quiz.query.all()
+    #     return render_template('index.html', quizzes=quizzes)
 
 
     @app.route('/create', methods=['POST'])
@@ -134,7 +144,7 @@ def init_auth_routes(app):
         if request.method == 'POST':
             quiz.title = request.form['title']
             db.session.commit()
-            return redirect(url_for('index'))
+            return redirect(url_for('index.html'))
         return render_template('edit.html', quiz=quiz)
 
 
@@ -144,7 +154,7 @@ def init_auth_routes(app):
         quiz = Quiz.query.get(quiz_id)
         db.session.delete(quiz)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('index.html'))
     
     @app.route('/category/<category>')
     @login_required

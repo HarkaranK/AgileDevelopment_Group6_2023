@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Quest</title>
-    <link rel="stylesheet" href="landing.css" />
+    <!-- <link rel="stylesheet" href="landing.css" /> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       rel="stylesheet"
@@ -19,7 +20,7 @@
   <body>
     <section class="header">
       <nav>
-        <a href="landing.html"><img src="img/logo.png" alt="logo" /></a>
+        <a href="landing.html"><img src="static/img/logo.png" alt="logo" /></a>
         <div class="nav-links" id="navLinks">
           <i class="fa fa-times" onclick="hideMenu()"></i>
           <ul>
@@ -51,7 +52,7 @@
       </p>
       <div class="row">
         <div class="features-col">
-          <img src="img/ai.jpeg" alt="ai" />
+          <img src="static/img/ai.jpeg" alt="ai" />
           <h3>AI-Assisted Quiz Creation</h3>
           <p>
             Generate custom quizzes effortlessly with AI assistance. Choose
@@ -60,7 +61,7 @@
           </p>
         </div>
         <div class="features-col">
-          <img src="img/questions.jpeg" alt="ai" />
+          <img src="static/img/questions.jpeg" alt="ai" />
           <h3>Extensive Quiz Library</h3>
           <p>
             Discover our vast quiz library, covering diverse subjects and
@@ -69,7 +70,7 @@
           </p>
         </div>
         <div class="features-col">
-          <img src="img/analytics.jpeg" alt="ai" />
+          <img src="static/img/analytics.jpeg" alt="ai" />
           <h3>Comprehensive Performance Analytics</h3>
           <p>
             Track progress with in-depth analytics. Identify strengths,
@@ -87,7 +88,7 @@
       </p>
       <div class="row">
         <div class="testimonial-col">
-          <img src="img/user1.jpg" />
+          <img src="static/img/user1.jpg" />
           <div>
             <p>
               "Smart Quest has transformed my learning experience! The
@@ -103,7 +104,7 @@
           </div>
         </div>
         <div class="testimonial-col">
-          <img src="img/user2.jpg" />
+          <img src="static/img/user2.jpg" />
           <div>
             <p>
               "As an educator, I've found Smart Quest invaluable for creating
