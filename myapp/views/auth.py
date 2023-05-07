@@ -21,7 +21,9 @@ def init_auth_routes(app):
 
     @app.route('/')
     def landing_page():
-        return render_template('landing.html')
+        quizzes = Quiz.query.all()
+        return render_template('landing.html', quizzes=quizzes)
+        # return render_template('landing.html')
 
     # @app.route('/')
     # def index():
@@ -59,12 +61,9 @@ def init_auth_routes(app):
     def protected():
         return f'Logged in as: {current_user.user_id}'
 
-
-    # @app.route('/')
-    # def index():
-    #     quizzes = Quiz.query.all()
-    #     return render_template('index.html', quizzes=quizzes)
-
+    @app.route('/index')
+    def index():
+        return render_template('index.html')
 
     @app.route('/create', methods=['POST'])
     @login_required
@@ -111,6 +110,24 @@ def init_auth_routes(app):
             print(f"Error: {e}")
             return render_template('create_quiz.html', error=str(e))
         
+    # @app.route('/quiz/<int:quiz_id>')
+    # @login_required
+    # def quiz_page(quiz_id):
+    #     quiz = Quiz.query.get(quiz_id)
+    #     quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+    #     print(f"Quiz questions: {quiz_questions}")
+    #     questions = []
+    #     for quiz_question in quiz_questions:
+    #         question = Question.query.get(quiz_question.question_id)
+    #         print(f"Question: {question}")
+    #         answers = Answer.query.filter_by(question_id=question.question_id).all()
+    #         print(f"Answers: {answers}")
+    #         questions.append({
+    #             'question': question,
+    #             'answers': answers
+    #         })
+    #     return render_template('quiz.html', quiz=quiz, questions=questions)
+
     @app.route('/quiz/<int:quiz_id>')
     @login_required
     def quiz_page(quiz_id):
@@ -129,7 +146,13 @@ def init_auth_routes(app):
             })
         return render_template('quiz.html', quiz=quiz, questions=questions)
 
-        
+    @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
+    @login_required
+    def submit_quiz(quiz_id):
+        # Process the submitted answers and store the results
+        # Redirect the user to a results page or another appropriate page
+        return redirect(url_for('results.html'))
+
     @app.route('/test_statistic')
     @login_required
     def test_statistic():
@@ -144,7 +167,7 @@ def init_auth_routes(app):
         if request.method == 'POST':
             quiz.title = request.form['title']
             db.session.commit()
-            return redirect(url_for('index.html'))
+            return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
 
 
@@ -154,7 +177,7 @@ def init_auth_routes(app):
         quiz = Quiz.query.get(quiz_id)
         db.session.delete(quiz)
         db.session.commit()
-        return redirect(url_for('index.html'))
+        return redirect(url_for('landing.html'))
     
     @app.route('/category/<category>')
     @login_required
