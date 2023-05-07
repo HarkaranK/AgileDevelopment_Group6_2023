@@ -67,24 +67,6 @@ def init_auth_routes(app):
         return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
         # return redirect(url_for('index'))
 
-
-    @app.route('/quiz/<int:quiz_id>')
-    @login_required
-    def quiz_page(quiz_id):
-        quiz = Quiz.query.get(quiz_id)
-        quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
-        questions = []
-        for quiz_question in quiz_questions:
-            question = Question.query.get(quiz_question.question_id)
-            answers = Answer.query.filter_by(question_id=question.id).all()
-            questions.append({
-                'question': question,
-                'answers': answers
-            })
-        return render_template('quiz.html', quiz=quiz, questions=questions)
-
-
-
     @app.route('/create-quiz', methods=['GET', 'POST'])
     @login_required
     def create_quiz_page():
@@ -98,17 +80,18 @@ def init_auth_routes(app):
                 
                 # Create the Quiz instance
                 quiz = Quiz(user_id=current_user.user_id, quiz_name=quiz_name, duration=duration)
-                # quiz = Quiz(user_id=current_user.user_id, title=quiz_name, duration=duration)
                 db.session.add(quiz)
                 db.session.flush()  # Flush the session to get the quiz_id before adding QuizQuestion instances
                 
                 # Add QuizQuestions for each question_id in question_ids
                 search = Search("us-central1-gcp", "quizzes")
-                question_ids = search.get_question_ids(course, topic, num, 0.8)
+                question_ids = search.get_question_ids(course, topic, num, 0.3)
+                print(f"Question IDs: {question_ids}")
 
                 for question_id in question_ids:
                     quiz_question = QuizQuestion(quiz_id=quiz.quiz_id, question_id=question_id)
                     db.session.add(quiz_question)
+                    print(f"Adding QuizQuestion: {quiz_question}")
 
                 db.session.commit()
                 # return redirect(url_for('index'))
@@ -117,6 +100,25 @@ def init_auth_routes(app):
         except Exception as e:
             print(f"Error: {e}")
             return render_template('create_quiz.html', error=str(e))
+        
+    @app.route('/quiz/<int:quiz_id>')
+    @login_required
+    def quiz_page(quiz_id):
+        quiz = Quiz.query.get(quiz_id)
+        quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+        print(f"Quiz questions: {quiz_questions}")
+        questions = []
+        for quiz_question in quiz_questions:
+            question = Question.query.get(quiz_question.question_id)
+            print(f"Question: {question}")
+            answers = Answer.query.filter_by(question_id=question.question_id).all()
+            print(f"Answers: {answers}")
+            questions.append({
+                'question': question,
+                'answers': answers
+            })
+        return render_template('quiz.html', quiz=quiz, questions=questions)
+
         
     @app.route('/test_statistic')
     @login_required

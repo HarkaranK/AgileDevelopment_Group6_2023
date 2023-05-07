@@ -53,7 +53,7 @@ with app.app_context():
         question = Question(**question_data)
         db.session.add(question)
 
-    nodejs_question_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in nodejs_questions]
+    nodejs_question_ids = [Question.query.filter_by(**question_data).first().question_id for question_data in nodejs_questions]
 
     nodejs_answers = [
         [
@@ -162,7 +162,7 @@ with app.app_context():
         question = Question(**question_data)
         db.session.add(question)
 
-    network_question_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in network_questions]
+    network_question_ids = [Question.query.filter_by(**question_data).first().question_id for question_data in network_questions]
 
     network_answers = [
         [
@@ -271,7 +271,7 @@ with app.app_context():
         question = Question(**question_data)
         db.session.add(question)
 
-    biology_questions_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in biology_questions]
+    biology_questions_ids = [Question.query.filter_by(**question_data).first().question_id for question_data in biology_questions]
 
     biology_answers = [
         [
@@ -370,7 +370,7 @@ with app.app_context():
         question = Question(**question_data)
         db.session.add(question)
 
-    physics_questions_ids = [Question.query.filter_by(**question_data).one().question_id for question_data in physics_questions]
+    physics_questions_ids = [Question.query.filter_by(**question_data).first().question_id for question_data in physics_questions]
 
     physics_answers = [
         [

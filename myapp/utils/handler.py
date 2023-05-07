@@ -21,9 +21,10 @@ class Search(Handler):
         self.embeddings = OpenAIEmbeddings()
         self.app = create_app()
 
-    def get_question_ids(self, course, topic, num, score=0.8):
+    def get_question_ids(self, course, topic, num, score=0.3):
         cone = Pinecone.from_existing_index(self.index_name, self.embeddings) 
         docs = cone.similarity_search_with_score(topic, num, {"course": course})
+        print("Docs returned:", docs)
         num = min(num, len(docs))
         ids = [docs[i][0].metadata["question_id"] for i in range(num) if docs[i][1] > score]
         return ids
@@ -76,6 +77,7 @@ class Ingest(Handler):
                 )
 
                 documents.append(document)
+                print("Documents to be sent:", documents)
 
         Pinecone.from_documents(documents, self.embeddings, index_name=self.index_name)
         print(f"Successfully sent {len(documents)} questions and answers to Pinecone.")
