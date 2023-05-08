@@ -109,24 +109,6 @@ def init_auth_routes(app):
         except Exception as e:
             print(f"Error: {e}")
             return render_template('create_quiz.html', error=str(e))
-        
-    # @app.route('/quiz/<int:quiz_id>')
-    # @login_required
-    # def quiz_page(quiz_id):
-    #     quiz = Quiz.query.get(quiz_id)
-    #     quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
-    #     print(f"Quiz questions: {quiz_questions}")
-    #     questions = []
-    #     for quiz_question in quiz_questions:
-    #         question = Question.query.get(quiz_question.question_id)
-    #         print(f"Question: {question}")
-    #         answers = Answer.query.filter_by(question_id=question.question_id).all()
-    #         print(f"Answers: {answers}")
-    #         questions.append({
-    #             'question': question,
-    #             'answers': answers
-    #         })
-    #     return render_template('quiz.html', quiz=quiz, questions=questions)
 
     @app.route('/quiz/<int:quiz_id>')
     @login_required
