@@ -4,7 +4,7 @@ from langchain.vectorstores import Pinecone
 from langchain.docstore.document import Document
 import pinecone
 from myapp import create_app
-from myapp.database.models import Question, Answer
+from myapp.database.models import Question, Answer, Quiz, QuizQuestion, QuizParticipant, UserResponse
 from myapp.database.db import db
 
 
@@ -29,21 +29,63 @@ class Search(Handler):
         ids = [docs[i][0].metadata["question_id"] for i in range(num) if docs[i][1] > score]
         return ids
 
-    def get_questions_and_answers(self, question_ids):
-        question_answer_list = []
+    # def get_questions_and_answers(self, question_ids):
+    #     question_answer_list = []
 
+    #     with self.app.app_context():
+    #         for question_id in question_ids:
+    #             question = db.session.get(Question, question_id)
+    #             if question:
+    #                 answers = Answer.query.filter_by(question_id=question_id).all()
+    #                 answer_texts = [answer.answer for answer in answers]
+    #                 question_answer_list.append({
+    #                     "question": question.question,
+    #                     "answers": answer_texts
+    #                 })
+
+    #     return question_answer_list
+
+    def get_quizzes(self, user_id):
         with self.app.app_context():
-            for question_id in question_ids:
-                question = db.session.get(Question, question_id)
-                if question:
-                    answers = Answer.query.filter_by(question_id=question_id).all()
-                    answer_texts = [answer.answer for answer in answers]
-                    question_answer_list.append({
-                        "question": question.question,
-                        "answers": answer_texts
-                    })
+            quizzes = Quiz.query.filter_by(user_id=user_id).all()
+            return quizzes
 
-        return question_answer_list
+    def get_questions_answers(self, quiz_id):
+        with self.app.app_context():
+            quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+            questions_answers = []
+
+            for quiz_question in quiz_questions:
+                question = quiz_question.question
+                answers = Answer.query.filter_by(question_id=question.question_id).all()
+                questions_answers.append({
+                    'question': question,
+                    'answers': answers
+                })
+
+            return questions_answers
+
+    def get_participation(self, quiz_id):
+        with self.app.app_context():
+            participation = QuizParticipant.query.filter_by(quiz_id=quiz_id).all()
+            return participation
+
+    def get_responses(self, participation_id):
+        with self.app.app_context():
+            user_responses = UserResponse.query.filter_by(participation_id=participation_id).all()
+            response_data = []
+
+            for user_response in user_responses:
+                question = Question.query.filter_by(question_id=user_response.question_id).first()
+                answers = Answer.query.filter_by(question_id=question.question_id).all()
+                selected_answer = Answer.query.filter_by(answer_id=user_response.answer_id).first()
+                response_data.append({
+                    'question': question,
+                    'response': selected_answer,
+                    'answers': answers
+                })
+
+            return response_data
 
 
 class Ingest(Handler):
