@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from myapp.auth.models import User
 from myapp.database.models import Quiz, Question, Answer, QuizQuestion
 from myapp.database.db import db
-from myapp.utils.handler import Search
+from myapp.utils.handler import Search, QuizManager
 import os
 
 
@@ -105,18 +105,20 @@ def init_auth_routes(app):
     @login_required
     def quiz_page(quiz_id):
         quiz = Quiz.query.get(quiz_id)
-        quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
-        print(f"Quiz questions: {quiz_questions}")
-        questions = []
-        for quiz_question in quiz_questions:
-            question = Question.query.get(quiz_question.question_id)
-            print(f"Question: {question}")
-            answers = Answer.query.filter_by(question_id=question.question_id).all()
-            print(f"Answers: {answers}")
-            questions.append({
-                'question': question,
-                'answers': answers
-            })
+        # quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+        # print(f"Quiz questions: {quiz_questions}")
+        # questions = []
+        # for quiz_question in quiz_questions:
+        #     question = Question.query.get(quiz_question.question_id)
+        #     print(f"Question: {question}")
+        #     answers = Answer.query.filter_by(question_id=question.question_id).all()
+        #     print(f"Answers: {answers}")
+        #     questions.append({
+        #         'question': question,
+        #         'answers': answers
+        #     })
+        manger = QuizManager()
+        questions = manger.get_questions_answers(quiz_id)
         return render_template('quiz.html', quiz=quiz, questions=questions)
 
     @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])

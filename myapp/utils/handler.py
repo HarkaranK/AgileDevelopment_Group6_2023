@@ -45,6 +45,11 @@ class Search(Handler):
 
     #     return question_answer_list
 
+
+class QuizManager:
+    def __init__(self):
+        self.app = create_app()
+
     def get_quizzes(self, user_id):
         with self.app.app_context():
             quizzes = Quiz.query.filter_by(user_id=user_id).all()
