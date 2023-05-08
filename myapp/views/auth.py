@@ -131,9 +131,24 @@ def init_auth_routes(app):
     @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def submit_quiz(quiz_id):
-        # Process the submitted answers and store the results
-        # Redirect the user to a results page or another appropriate page
-        return redirect(url_for('results.html'))
+        # Retrieve submitted answers
+        answers = {}
+        for key, value in request.form.items():
+            if key.startswith('question-'):
+                question_id = int(key.split('-')[-1])
+                answers[question_id] = int(value)
+
+        # Check answers and calculate the score
+        score = 0
+        total_questions = len(answers)
+        for question_id, answer_id in answers.items():
+            answer = Answer.query.get(answer_id)
+            if answer.is_correct:
+                score += 1
+
+        # Render the results.html template with the score
+        # Render the results.html template with the score and quiz_id
+        return render_template('results.html', score=score, total_questions=total_questions, quiz_id=quiz_id)
 
     @app.route('/test_statistic')
     @login_required
