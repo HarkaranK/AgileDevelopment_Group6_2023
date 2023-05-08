@@ -23,12 +23,6 @@ def init_auth_routes(app):
     def landing_page():
         quizzes = Quiz.query.all()
         return render_template('landing.html', quizzes=quizzes)
-        # return render_template('landing.html')
-
-    # @app.route('/')
-    # def index():
-    #     quizzes = Quiz.query.all()
-    #     return render_template('index.html', quizzes=quizzes)
     
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -70,11 +64,9 @@ def init_auth_routes(app):
     def create_quiz():
         title = request.form['title']
         new_quiz = Quiz(title=title)
-        # new_quiz = Quiz(title=title, user_id=current_user.user_id)
         db.session.add(new_quiz)
         db.session.commit()
         return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
-        # return redirect(url_for('index'))
 
     @app.route('/create-quiz', methods=['GET', 'POST'])
     @login_required
@@ -103,7 +95,6 @@ def init_auth_routes(app):
                     print(f"Adding QuizQuestion: {quiz_question}")
 
                 db.session.commit()
-                # return redirect(url_for('index'))
                 return redirect(url_for('quiz_page', quiz_id=quiz.quiz_id))
             return render_template('create_quiz.html')
         except Exception as e:
@@ -145,9 +136,6 @@ def init_auth_routes(app):
             answer = Answer.query.get(answer_id)
             if answer.is_correct:
                 score += 1
-
-        # Render the results.html template with the score
-        # Render the results.html template with the score and quiz_id
         return render_template('results.html', score=score, total_questions=total_questions, quiz_id=quiz_id)
 
     @app.route('/test_statistic')
@@ -183,29 +171,30 @@ def init_auth_routes(app):
         quizzes = Quiz.query.filter_by(category=category).all()
         return render_template('category.html', quizzes=quizzes, category=category)
     
-    @app.route('/add-question/<int:quiz_id>', methods=['GET', 'POST'])
+    @app.route('/add_question', methods=['GET', 'POST'])
     @login_required
-    def add_question_page(quiz_id):
-        quiz = Quiz.query.get(quiz_id)
+    def add_question():
         if request.method == 'POST':
-            question_text = request.form['question']
-            new_question = Question(question_text=question_text, quiz_id=quiz_id)
-            db.session.add(new_question)
+            user_id = current_user.user_id
+            question_text = request.form.get('question')
+            course = request.form.get('course')
+
+            question = Question(user_id=user_id, question=question_text, course=course)
+            db.session.add(question)
             db.session.commit()
 
-            options = [
-                request.form['option1'],
-                request.form['option2'],
-                request.form['option3'],
-                request.form['option4']
-            ]
-            correct_option = int(request.form['correct_option'])
+            # Add the answers
+            for i in range(1, 5):
+                answer_text = request.form.get(f'answer{i}')
+                if answer_text:  # Add this conditional check
+                    is_correct = request.form.get(f'is_correct{i}') == 'true'
+                    answer = Answer(question_id=question.question_id, answer=answer_text, is_correct=is_correct)
+                    db.session.add(answer)
 
-            for index, option in enumerate(options, start=1):
-                is_correct = (index == correct_option)
-                new_answer = Answer(answer_text=option, is_correct=is_correct, question_id=new_question.id)
-                db.session.add(new_answer)
-                db.session.commit()
+            db.session.commit()
+            flash('Question added successfully.', 'success')
+            return redirect(url_for('index'))
 
-            return redirect(url_for('add_question_page', quiz_id=quiz_id))
-        return render_template('add_question.html', quiz=quiz)
+        return render_template('add_question.html')
+
+

@@ -24,6 +24,16 @@
                 <p>Explore a wide range of quizzes created by our community, or create your own quiz to challenge your friends and test their knowledge.</p>
                 <a href="{{ url_for('create_quiz_page') }}" class="create-btn">Take a Quiz</a>
                 
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                    <p class="message">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                
                 <h2>Featured Quizzes</h2>
                 <div class="featured-quizzes">
                     <div class="featured-quiz">

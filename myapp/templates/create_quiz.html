@@ -11,6 +11,8 @@ content %}
     method="post"
     class="create-quiz-form"
   >
+  <!-- Add this button inside your create_quiz.html file -->
+    <a href="{{ url_for('add_question') }}" class="btn btn-secondary mt-3">Add Question Instead</a>
     <label for="quiz-title">Quiz Title:</label>
     <input type="text" name="title" id="quiz-title" required />
     <label for="course">Course:</label>
