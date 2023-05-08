@@ -9,8 +9,8 @@ body {
   align-items: center;
   background-color: #3498db;
   display: flex;
-  height: 80px;
   justify-content: space-between;
+  height: 80px;
   left: 0;
   padding: 0 24px;
   position: fixed;
@@ -44,7 +44,6 @@ body {
 #appLogo {
   width: 60px;
   height: auto;
-  float: left;
   margin-right: 10px;
   margin-top: 10px;
 }
@@ -306,3 +305,6 @@ article {
   margin-top: 1rem;
   text-decoration: none;
 }
+
+/*
+for index.html*/

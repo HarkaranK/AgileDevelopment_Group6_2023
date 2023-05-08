@@ -1,60 +1,78 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Welcome to Quizzes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 {% extends 'base.html' %}
 
 {% block title %}Welcome to Quizzes{% endblock %}
 
 {% block extra_head %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-    <article>
-            <div class="container">
-                <h1 id="indexheading">Welcome to Quizzes</h1>
-                <p>Explore a wide range of quizzes created by our community, or create your own quiz to challenge your friends and test their knowledge.</p>
-                <a href="{{ url_for('create_quiz_page') }}" class="create-btn">Take a Quiz</a>
-                
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <div class="flash-messages">
-                    {% for message in messages %}
-                    <p class="message">{{ message }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% endwith %}
-                
-                <h2>Featured Quizzes</h2>
-                <div class="featured-quizzes">
-                    <div class="featured-quiz">
-                        <img src="{{ url_for('static', filename='quiz1.png') }}" alt="Example Quiz 1">
-                    </div>
-                    <div class="featured-quiz">
-                        <img src="{{ url_for('static', filename='study_time.jpg') }}" alt="Example Quiz 2">
-                    </div>
-                </div>
+<script>
+function showQuestions(quizIndex) {
+    const questionsContainers = document.querySelectorAll(".questions-container");
+    questionsContainers.forEach((container, index) => {
+        if (index === quizIndex) {
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+        }
+    });
+}
+</script>
+<div class="content">
+    <aside class="sidebar">
+        <h2>My Quizzes</h2>
+        <ul class="quizzes">
+            <!-- Add quizzes as list items -->
+            {% for quiz in user_quizzes %}
+            <li>
+                <a href="#" onclick="showQuestions('{{ loop.index0 }}')">{{ quiz.quiz_name }}</a>
+                <form action="{{ url_for('delete_quiz', quiz_id=quiz.quiz_id) }}" method="post" class="delete-form">
+                    <input type="submit" value="Delete">
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </aside>
 
-                <h2>All Quizzes</h2>
-                <ul>
-                    {% for quiz in quizzes %}
-                    <li>
-                        <a href="{{ url_for('quiz_page', quiz_id=quiz.quiz_id) }}">{{ quiz.title }}</a>
-                        <form action="{{ url_for('delete_quiz', quiz_id=quiz.quiz_id) }}" method="post" class="delete-form">
-                            <input type="submit" value="Delete">
-                        </form>
-                    </li>
-                    {% endfor %}
-                </ul>
+    <div class="main">
+        {% for quiz, questions in user_quizzes_questions %}
+            <div class="questions-container" {% if loop.first %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+                {% for question_data in questions %}
+                <div class="question">
+                    <h3>{{ question_data['question'].question_text }}</h3>
+                    <ul>
+                        {% for answer in question_data['answers'] %}
+                        <li>{{ answer.answer_text }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
             </div>
-        </article>
+        {% endfor %}
+
+        <div class="buttons">
+            <button>Save</button>
+            <button>History</button>
+            <a href="{{ url_for('create_quiz_page') }}" class="button-link">
+                <button>Create Quiz</button>
+            </a>
+            <button>Delete</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+</html>

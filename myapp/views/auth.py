@@ -55,9 +55,32 @@ def init_auth_routes(app):
     def protected():
         return f'Logged in as: {current_user.user_id}'
 
+    # @app.route('/index')
+    # @login_required
+    # def index():
+    #     user_quizzes = Quiz.query.filter_by(user_id=current_user.user_id).all()
+    #     return render_template('index.html', user_quizzes=user_quizzes)
     @app.route('/index')
+    @login_required
     def index():
-        return render_template('index.html')
+        user_quizzes = Quiz.query.filter_by(user_id=current_user.user_id).all()
+        user_quizzes_questions = []
+
+        for quiz in user_quizzes:
+            quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz.quiz_id).all()
+            questions = []
+            for quiz_question in quiz_questions:
+                question = Question.query.get(quiz_question.question_id)
+                answers = Answer.query.filter_by(question_id=question.question_id).all()
+                questions.append({
+                    'question': question,
+                    'answers': answers
+                })
+            user_quizzes_questions.append((quiz, questions))
+
+        return render_template('index.html', user_quizzes=user_quizzes, user_quizzes_questions=user_quizzes_questions)
+
+
 
     @app.route('/create', methods=['POST'])
     @login_required
@@ -69,7 +92,7 @@ def init_auth_routes(app):
         return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
 
     @app.route('/create-quiz', methods=['GET', 'POST'])
-    @login_required
+    # @login_required
     def create_quiz_page():
         try:
             if request.method == 'POST':
