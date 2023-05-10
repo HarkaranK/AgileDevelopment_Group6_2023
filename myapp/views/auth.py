@@ -54,32 +54,20 @@ def init_auth_routes(app):
     @login_required
     def protected():
         return f'Logged in as: {current_user.user_id}'
-
-    # @app.route('/index')
-    # @login_required
-    # def index():
-    #     user_quizzes = Quiz.query.filter_by(user_id=current_user.user_id).all()
-    #     return render_template('index.html', user_quizzes=user_quizzes)
+    
+    
     @app.route('/index')
     @login_required
     def index():
         user_quizzes = Quiz.query.filter_by(user_id=current_user.user_id).all()
+        quiz_manager = QuizManager()
         user_quizzes_questions = []
 
         for quiz in user_quizzes:
-            quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz.quiz_id).all()
-            questions = []
-            for quiz_question in quiz_questions:
-                question = Question.query.get(quiz_question.question_id)
-                answers = Answer.query.filter_by(question_id=question.question_id).all()
-                questions.append({
-                    'question': question,
-                    'answers': answers
-                })
+            questions = quiz_manager.get_questions_answers(quiz.quiz_id)
             user_quizzes_questions.append((quiz, questions))
 
         return render_template('index.html', user_quizzes=user_quizzes, user_quizzes_questions=user_quizzes_questions)
-
 
 
     @app.route('/create', methods=['POST'])
@@ -181,13 +169,21 @@ def init_auth_routes(app):
         return render_template('edit.html', quiz=quiz)
 
 
+    # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
+    # @login_required
+    # def delete_quiz(quiz_id):
+    #     quiz = Quiz.query.get(quiz_id)
+    #     db.session.delete(quiz)
+    #     db.session.commit()
+    #     return redirect(url_for('landing.html'))
     @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def delete_quiz(quiz_id):
         quiz = Quiz.query.get(quiz_id)
         db.session.delete(quiz)
         db.session.commit()
-        return redirect(url_for('landing.html'))
+        return redirect(url_for('index'))
+
     
     @app.route('/category/<category>')
     @login_required

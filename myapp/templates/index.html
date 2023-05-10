@@ -20,16 +20,21 @@
 
 {% block content %}
 <script>
-function showQuestions(quizIndex) {
-    const questionsContainers = document.querySelectorAll(".questions-container");
-    questionsContainers.forEach((container, index) => {
-        if (index === quizIndex) {
-            container.style.display = "block";
-        } else {
-            container.style.display = "none";
-        }
-    });
-}
+    function showQuestions(quizIndex, event) {
+        event.preventDefault();
+        const questionsContainers = document.querySelectorAll(".questions-container");
+        questionsContainers.forEach((container, index) => {
+            if (index === parseInt(quizIndex)) {
+                if (container.style.display !== "block") {
+                    container.style.display = "block";
+                } else {
+                    container.style.display = "none";
+                }
+            } else {
+                container.style.display = "none";
+            }
+        });
+    }
 </script>
 <div class="content">
     <aside class="sidebar">
@@ -38,9 +43,7 @@ function showQuestions(quizIndex) {
             <!-- Add quizzes as list items -->
             {% for quiz in user_quizzes %}
             <li>
-                <a href="#" onclick="showQuestions('{{ loop.index0 }}')">{{ quiz.quiz_name }}</a>
-                <form action="{{ url_for('delete_quiz', quiz_id=quiz.quiz_id) }}" method="post" class="delete-form">
-                    <input type="submit" value="Delete">
+                <a href="#" onclick="showQuestions('{{ loop.index0 }}', event)">{{ quiz.quiz_name }}</a>
                 </form>
             </li>
             {% endfor %}
@@ -49,18 +52,23 @@ function showQuestions(quizIndex) {
 
     <div class="main">
         {% for quiz, questions in user_quizzes_questions %}
-            <div class="questions-container" {% if loop.first %}style="display: block;"{% else %}style="display: none;"{% endif %}>
-                {% for question_data in questions %}
-                <div class="question">
-                    <h3>{{ question_data['question'].question_text }}</h3>
+        <div class="card">
+            <h5 class="card-header">
+                <a href="#" onclick="showQuestions('{{ loop.index0 }}', event)">{{ quiz.title }}</a>
+            </h5>
+            <div class="questions-container" style="display: none;" id="questions-container-{{ loop.index0 }}">
+                <div class="card-body">
+                    {% for question_obj in questions %}
+                    <p>{{ question_obj.question.question }}</p>
                     <ul>
-                        {% for answer in question_data['answers'] %}
-                        <li>{{ answer.answer_text }}</li>
+                        {% for answer in question_obj.answers %}
+                        <li>{{ answer.answer }}</li>
                         {% endfor %}
                     </ul>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
+        </div>
         {% endfor %}
 
         <div class="buttons">
