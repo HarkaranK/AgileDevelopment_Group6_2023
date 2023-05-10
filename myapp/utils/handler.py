@@ -2,6 +2,7 @@ import os
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 from langchain.docstore.document import Document
+from langchain.llms import OpenAI
 import pinecone
 from myapp import create_app
 from myapp.database.models import Question, Answer, Quiz, QuizQuestion, QuizParticipant, UserResponse
@@ -28,6 +29,24 @@ class Search(Handler):
         num = min(num, len(docs))
         ids = [docs[i][0].metadata["question_id"] for i in range(num) if docs[i][1] > score]
         return ids
+
+class Predict(Handler):
+    def __init__(self, pinecone_env, index_name):
+        super().__init__(pinecone_env, index_name)
+        self.embeddings = OpenAIEmbeddings()
+        self.app = create_app()
+
+    def get_feedback(self, participation_id):
+        manager = QuizManager()
+        response_data = manager.get_responses(participation_id)
+        course = response_data[0]['question'].course
+        text = f"i just took a quiz on {course} and below is the question, correct answer and my answer. would you please provide feedback on the quiz? please start with 'Here's some feedback on your quiz:'. describe the overall performance and then comment only on the questions with wrong answers. make your feedback concise and no more than 100 words.\n\n"
+        for res in response_data:
+            text += f"question: {res['question'].question}\ncorrect answer: {next(filter(lambda answer: answer.is_correct, res['answers']), None).answer}\nmy answer: {res['response'].answer}\n\n"
+        llm = OpenAI(model_name="gpt-4", temperature=0.5)
+        feedback = llm(text)
+        return feedback
+
 
     # def get_questions_and_answers(self, question_ids):
     #     question_answer_list = []
