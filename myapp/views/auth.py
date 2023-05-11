@@ -23,7 +23,7 @@ def init_auth_routes(app):
     def landing_page():
         quizzes = Quiz.query.all()
         return render_template('landing.html', quizzes=quizzes)
-    
+
     @app.route('/register', methods=['GET', 'POST'])
     def register():
         if request.method == 'POST':
@@ -41,7 +41,8 @@ def init_auth_routes(app):
                 db.session.commit()
                 return redirect(url_for('login'))
 
-            flash('A user with that username already exists. Please choose a different username.')
+            flash(
+                'A user with that username already exists. Please choose a different username.')
         return render_template('register.html')
 
     @app.route('/logout')
@@ -54,8 +55,7 @@ def init_auth_routes(app):
     @login_required
     def protected():
         return f'Logged in as: {current_user.user_id}'
-    
-    
+
     @app.route('/index')
     @login_required
     def index():
@@ -68,7 +68,6 @@ def init_auth_routes(app):
             user_quizzes_questions.append((quiz, questions))
 
         return render_template('index.html', user_quizzes=user_quizzes, user_quizzes_questions=user_quizzes_questions)
-
 
     @app.route('/create', methods=['POST'])
     @login_required
@@ -89,19 +88,22 @@ def init_auth_routes(app):
                 course = request.form['course']
                 topic = request.form['quiz-topic']
                 num = int(request.form['total_questions'])
-                
+
                 # Create the Quiz instance
-                quiz = Quiz(user_id=current_user.user_id, quiz_name=quiz_name, duration=duration)
+                quiz = Quiz(user_id=current_user.user_id,
+                            quiz_name=quiz_name, duration=duration)
                 db.session.add(quiz)
-                db.session.flush()  # Flush the session to get the quiz_id before adding QuizQuestion instances
-                
+                # Flush the session to get the quiz_id before adding QuizQuestion instances
+                db.session.flush()
+
                 # Add QuizQuestions for each question_id in question_ids
                 search = Search("us-central1-gcp", "quizzes")
                 question_ids = search.get_question_ids(course, topic, num, 0.3)
                 print(f"Question IDs: {question_ids}")
 
                 for question_id in question_ids:
-                    quiz_question = QuizQuestion(quiz_id=quiz.quiz_id, question_id=question_id)
+                    quiz_question = QuizQuestion(
+                        quiz_id=quiz.quiz_id, question_id=question_id)
                     db.session.add(quiz_question)
                     print(f"Adding QuizQuestion: {quiz_question}")
 
@@ -156,8 +158,6 @@ def init_auth_routes(app):
     def test_statistic():
         return render_template('test_statistic.html')
 
-
-
     @app.route('/edit/<int:quiz_id>', methods=['GET', 'POST'])
     @login_required
     def edit_quiz(quiz_id):
@@ -168,7 +168,6 @@ def init_auth_routes(app):
             return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
 
-
     # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     # @login_required
     # def delete_quiz(quiz_id):
@@ -176,6 +175,7 @@ def init_auth_routes(app):
     #     db.session.delete(quiz)
     #     db.session.commit()
     #     return redirect(url_for('landing.html'))
+
     @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def delete_quiz(quiz_id):
@@ -184,14 +184,13 @@ def init_auth_routes(app):
         db.session.commit()
         return redirect(url_for('index'))
 
-    
     @app.route('/category/<category>')
     @login_required
     def category_page(category):
         # Replace this with your own logic to filter quizzes based on the category
         quizzes = Quiz.query.filter_by(category=category).all()
         return render_template('category.html', quizzes=quizzes, category=category)
-    
+
     @app.route('/add_question', methods=['GET', 'POST'])
     @login_required
     def add_question():
@@ -200,7 +199,8 @@ def init_auth_routes(app):
             question_text = request.form.get('question')
             course = request.form.get('course')
 
-            question = Question(user_id=user_id, question=question_text, course=course)
+            question = Question(
+                user_id=user_id, question=question_text, course=course)
             db.session.add(question)
             db.session.commit()
 
@@ -209,7 +209,8 @@ def init_auth_routes(app):
                 answer_text = request.form.get(f'answer{i}')
                 if answer_text:  # Add this conditional check
                     is_correct = request.form.get(f'is_correct{i}') == 'true'
-                    answer = Answer(question_id=question.question_id, answer=answer_text, is_correct=is_correct)
+                    answer = Answer(question_id=question.question_id,
+                                    answer=answer_text, is_correct=is_correct)
                     db.session.add(answer)
 
             db.session.commit()
@@ -218,4 +219,6 @@ def init_auth_routes(app):
 
         return render_template('add_question.html')
 
-
+    @app.route("/streamer")
+    def streamer():
+        return render_template("streamer.html")
