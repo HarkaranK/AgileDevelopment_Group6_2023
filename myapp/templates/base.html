@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
     {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="main-body">
     <header id="indexHeader">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="App Logo" id="appLogo">
-        <p>Smart Quiz</p>
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="App Logo" id="appLogo", width="300" height="300">
         <nav>
             <ul class="navUl">
                 <li class="navElmt"><a href="{{ url_for('login') }}">Login</a></li>
@@ -22,6 +21,12 @@
             </ul>
         </nav>
     </header>
+    <div class="icons">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-twitter"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-linkedin"></i>
+    </div>
     {% block content %}{% endblock %}
 </body>
 </html>
