@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_socketio import SocketIO, send, emit, disconnect
-import eventlet
 
 
 def create_app():
@@ -26,7 +25,7 @@ def create_app():
     from myapp.utils import streamer
 
     auth.init_auth_routes(app)
-    socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+    socketio = SocketIO(app, cors_allowed_origins="*")
     streamer.init_stream_socket(socketio)
 
     return (app, socketio)

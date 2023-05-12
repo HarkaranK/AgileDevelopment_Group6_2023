@@ -5,11 +5,11 @@ import openai
 
 def init_stream_socket(socketio):
     @socketio.on('connect')
-    async def handle_connection():
+    def handle_connection():
         predict = Predict("us-central1-gcp", "quizzes")
         message = predict.get_message(1)
 
-        for chunk in await openai.ChatCompletion.acreate(
+        for chunk in openai.ChatCompletion.create(
             model="gpt-4",
             messages=[{
                 "role": "user",
@@ -19,4 +19,4 @@ def init_stream_socket(socketio):
         ):
             content = chunk["choices"][0].get("delta", {}).get("content")
             if content is not None:
-                await emit('message', {'data': content})
+                emit('message', {'data': content})
