@@ -8,7 +8,6 @@ import os
 from flask import jsonify
 
 
-
 def init_auth_routes(app):
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -158,8 +157,6 @@ def init_auth_routes(app):
             return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
 
-<<<<<<< HEAD
-=======
     # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     # @login_required
     # def delete_quiz(quiz_id):
@@ -168,7 +165,6 @@ def init_auth_routes(app):
     #     db.session.commit()
     #     return redirect(url_for('landing.html'))
 
->>>>>>> 6edeb9d0dec67df299a65721065e69c9d39b0907
     @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def delete_quiz(quiz_id):
@@ -215,6 +211,7 @@ def init_auth_routes(app):
             return redirect(url_for('index'))
 
         return render_template('add_question.html')
+
     @app.route('/get-quiz-details/<int:quiz_id>', methods=['GET'])
     @login_required
     def get_quiz_details(quiz_id):
@@ -229,7 +226,7 @@ def init_auth_routes(app):
             })
 
         return jsonify(questions)
-    
+
     @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def update_quiz(quiz_id):
@@ -237,18 +234,20 @@ def init_auth_routes(app):
         new_question_ids = data['question_ids']
 
         # Delete existing QuizQuestion instances
-        existing_quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+        existing_quiz_questions = QuizQuestion.query.filter_by(
+            quiz_id=quiz_id).all()
         for quiz_question in existing_quiz_questions:
             db.session.delete(quiz_question)
 
         # Add new QuizQuestions for each question_id in new_question_ids
         for question_id in new_question_ids:
-            quiz_question = QuizQuestion(quiz_id=quiz_id, question_id=question_id)
+            quiz_question = QuizQuestion(
+                quiz_id=quiz_id, question_id=question_id)
             db.session.add(quiz_question)
 
         db.session.commit()
         return jsonify({'status': 'success'})
-    
+
     @app.route('/delete-question/<int:question_id>', methods=['POST'])
     @login_required
     def delete_question(question_id):
@@ -259,9 +258,6 @@ def init_auth_routes(app):
             return jsonify({'status': 'success'})
         else:
             return jsonify({'status': 'failure'})
-
-
-
 
     @app.route("/streamer")
     def streamer():
