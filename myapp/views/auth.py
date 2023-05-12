@@ -5,6 +5,8 @@ from myapp.database.models import Quiz, Question, Answer, QuizQuestion
 from myapp.database.db import db
 from myapp.utils.handler import Search, QuizManager
 import os
+from flask import jsonify
+
 
 
 def init_auth_routes(app):
@@ -116,18 +118,6 @@ def init_auth_routes(app):
     @login_required
     def quiz_page(quiz_id):
         quiz = Quiz.query.get(quiz_id)
-        # quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
-        # print(f"Quiz questions: {quiz_questions}")
-        # questions = []
-        # for quiz_question in quiz_questions:
-        #     question = Question.query.get(quiz_question.question_id)
-        #     print(f"Question: {question}")
-        #     answers = Answer.query.filter_by(question_id=question.question_id).all()
-        #     print(f"Answers: {answers}")
-        #     questions.append({
-        #         'question': question,
-        #         'answers': answers
-        #     })
         manger = QuizManager()
         questions = manger.get_questions_answers(quiz_id)
         return render_template('quiz.html', quiz=quiz, questions=questions)
@@ -168,23 +158,18 @@ def init_auth_routes(app):
             return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
 
-
-    # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
-    # @login_required
-    # def delete_quiz(quiz_id):
-    #     quiz = Quiz.query.get(quiz_id)
-    #     db.session.delete(quiz)
-    #     db.session.commit()
-    #     return redirect(url_for('landing.html'))
     @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def delete_quiz(quiz_id):
         quiz = Quiz.query.get(quiz_id)
-        db.session.delete(quiz)
-        db.session.commit()
-        return redirect(url_for('index'))
+        if quiz.user_id == current_user.user_id:
+            db.session.delete(quiz)
+            db.session.commit()
+            print(f"Quiz with id {quiz_id} was deleted successfully")
+            return jsonify({'status': 'success'})
+        else:
+            return jsonify({'status': 'failure'})
 
-    
     @app.route('/category/<category>')
     @login_required
     def category_page(category):
@@ -217,5 +202,52 @@ def init_auth_routes(app):
             return redirect(url_for('index'))
 
         return render_template('add_question.html')
+    @app.route('/get-quiz-details/<int:quiz_id>', methods=['GET'])
+    @login_required
+    def get_quiz_details(quiz_id):
+        quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+        questions = []
+
+        for quiz_question in quiz_questions:
+            question = Question.query.get(quiz_question.question_id)
+            questions.append({
+                'question_id': question.question_id,
+                'question_text': question.question_text
+            })
+
+        return jsonify(questions)
+    
+    @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
+    @login_required
+    def update_quiz(quiz_id):
+        data = request.get_json()
+        new_question_ids = data['question_ids']
+
+        # Delete existing QuizQuestion instances
+        existing_quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
+        for quiz_question in existing_quiz_questions:
+            db.session.delete(quiz_question)
+
+        # Add new QuizQuestions for each question_id in new_question_ids
+        for question_id in new_question_ids:
+            quiz_question = QuizQuestion(quiz_id=quiz_id, question_id=question_id)
+            db.session.add(quiz_question)
+
+        db.session.commit()
+        return jsonify({'status': 'success'})
+    
+    @app.route('/delete-question/<int:question_id>', methods=['POST'])
+    @login_required
+    def delete_question(question_id):
+        question = Question.query.get(question_id)
+        if question.user_id == current_user.user_id:
+            db.session.delete(question)
+            db.session.commit()
+            return jsonify({'status': 'success'})
+        else:
+            return jsonify({'status': 'failure'})
+
+
+
 
 

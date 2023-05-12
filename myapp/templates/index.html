@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 {% extends 'base.html' %}
 
@@ -25,17 +26,142 @@
         const questionsContainers = document.querySelectorAll(".questions-container");
         questionsContainers.forEach((container, index) => {
             if (index === parseInt(quizIndex)) {
-                if (container.style.display !== "block") {
-                    container.style.display = "block";
-                } else {
-                    container.style.display = "none";
-                }
+                container.style.display = container.style.display !== "block" ? "block" : "none";
             } else {
                 container.style.display = "none";
             }
         });
     }
+    function deleteQuiz(quiz_id) {
+    const url = `/delete-quiz/${quiz_id}`;
+    console.log("quiz id:", quiz_id)
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            location.reload();
+        } else {
+            alert('Error deleting quiz.');
+        }
+    });
+}
+    function deleteQuestion(quizId, questionId) {
+        const url = '{{ url_for("delete_question", question_id=0) }}'.replace('0', questionId);
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log(`Question with id ${questionId} from quiz with id ${quizId} deleted successfully.`);
+                } else {
+                    alert('Error deleting question.');
+                }
+            });
+    }
+
+    function saveUpdatedQuiz(quizId, questionIds) {
+        const url = '{{ url_for("update_quiz", quiz_id=0) }}'.replace('0', quizId);
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ question_ids: questionIds }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log(`Quiz with id ${quizId} and question ids ${JSON.stringify(questionIds)} updated successfully.`);
+                } else {
+                    alert('Error updating quiz.');
+                }
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteQuizButtons = document.querySelectorAll('.delete-quiz-btn');
+        deleteQuizButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const quiz_id = button.dataset.quizId;
+                deleteQuiz(quiz_id);
+            });
+        });
+
+        const deleteQuestionButtons = document.querySelectorAll('.delete-question-btn');
+        deleteQuestionButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const quizId = button.dataset.quizId;
+                const questionId = button.dataset.questionId;
+                deleteQuestion(quizId, questionId);
+            });
+        });
+
+        const saveButtons = document.querySelectorAll('.save-btn');
+        saveButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const quizId = button.dataset.quizId;
+                const questionsContainer = document.querySelector(`#questions-container-${quizId}`);
+                const questionElements = questionsContainer.querySelectorAll('.question-item');
+                const questionIds = Array.from(questionElements).map(el => el.dataset.questionId);
+                saveUpdatedQuiz(quizId, questionIds);
+            });
+        });
+
+        const editButtons = document.querySelectorAll('.edit-quiz-btn');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const quizId = button.dataset.quizId;
+                const questionsContainer = document.querySelector(`#questions-container-${quizId}`);
+                const deleteButtons = questionsContainer.querySelectorAll('.delete-question-btn');
+                const saveButton = questionsContainer.querySelector('.save-btn');
+
+                // Toggle the display of the delete buttons for each question
+                deleteButtons.forEach(btn => {
+                    btn.style.display = btn.style.display === 'none' ? 'inline' : 'none';
+                });
+
+                // Toggle the display of the save button
+                saveButton.style.display = saveButton.style.display === 'none' ? 'inline' : 'none';
+            });
+        })
+    })
+    $(document).ready(function () {
+        $(".delete-quiz").on("click", function () {
+            const quizId = $(this).data("quiz-id");
+            $.post(`/delete-quiz/${quizId}`, function (response) {
+                if (response.status === "success") {
+                    location.reload();
+                } else {
+                    alert("Could not delete the quiz. Please try again.");
+                }
+            });
+        });
+
+        $(".edit-quiz").on("click", function () {
+            const quizId = $(this).data("quiz-id");
+            location.href = `/edit/${quizId}`;
+        });
+    });
 </script>
+
 <div class="content">
     <aside class="sidebar">
         <h2>My Quizzes</h2>
@@ -59,7 +185,9 @@
             <div class="questions-container" style="display: none;" id="questions-container-{{ loop.index0 }}">
                 <div class="card-body">
                     {% for question_obj in questions %}
-                    <p>{{ question_obj.question.question }}</p>
+                    <p>{{ question_obj.question.question }} <button class="delete-question-btn"
+                            data-question-id="{{ question_obj.question.question_id }}"
+                            style="display: none;">Delete</button></p>
                     <ul>
                         {% for answer in question_obj.answers %}
                         <li>{{ answer.answer }}</li>
@@ -67,6 +195,9 @@
                     </ul>
                     {% endfor %}
                 </div>
+                <button class="save-btn" style="display: none;">Save</button>
+                <button class="edit-quiz-btn" data-quiz-id="{{ quiz.id }}">Edit</button>
+                <button class="delete-quiz-btn" data-quiz-id="{{ quiz.id }}">Delete</button>
             </div>
         </div>
         {% endfor %}
@@ -77,7 +208,6 @@
             <a href="{{ url_for('create_quiz_page') }}" class="button-link">
                 <button>Create Quiz</button>
             </a>
-            <button>Delete</button>
         </div>
     </div>
 </div>
