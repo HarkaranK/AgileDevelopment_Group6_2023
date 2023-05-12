@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_login import LoginManager
+from flask_socketio import SocketIO, send, emit, disconnect
 
 
 def create_app():
@@ -21,7 +22,10 @@ def create_app():
         return User.get(user_id)
 
     from myapp.views import auth
+    from myapp.utils import streamer
 
     auth.init_auth_routes(app)
-    
-    return app
+    socketio = SocketIO(app, cors_allowed_origins="*")
+    streamer.init_stream_socket(socketio)
+
+    return (app, socketio)
