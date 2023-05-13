@@ -66,8 +66,7 @@ class Predict(Handler):
 
 
 class QuizManager:
-    def __init__(self):
-        from run import app
+    def __init__(self, app):
         self.app = app
 
     def get_quizzes(self, user_id):

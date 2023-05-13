@@ -9,6 +9,8 @@ from flask import jsonify
 
 
 def init_auth_routes(app):
+    quiz_manager = QuizManager(app)
+
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if request.method == 'POST':
@@ -61,7 +63,6 @@ def init_auth_routes(app):
     @login_required
     def index():
         user_quizzes = Quiz.query.filter_by(user_id=current_user.user_id).all()
-        quiz_manager = QuizManager()
         user_quizzes_questions = []
 
         for quiz in user_quizzes:
@@ -119,8 +120,7 @@ def init_auth_routes(app):
     @login_required
     def quiz_page(quiz_id):
         quiz = Quiz.query.get(quiz_id)
-        manger = QuizManager()
-        questions = manger.get_questions_answers(quiz_id)
+        questions = quiz_manager.get_questions_answers(quiz_id)
         return render_template('quiz.html', quiz=quiz, questions=questions)
 
     @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
@@ -227,26 +227,50 @@ def init_auth_routes(app):
 
         return jsonify(questions)
 
+    # @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
+    # @login_required
+    # def update_quiz(quiz_id):
+    #     data = request.get_json()
+    #     new_question_ids = data['question_ids']
+
+    #     # Delete existing QuizQuestion instances
+    #     existing_quiz_questions = QuizQuestion.query.filter_by(
+    #         quiz_id=quiz_id).all()
+    #     for quiz_question in existing_quiz_questions:
+    #         db.session.delete(quiz_question)
+
+    #     # Add new QuizQuestions for each question_id in new_question_ids
+    #     for question_id in new_question_ids:
+    #         quiz_question = QuizQuestion(
+    #             quiz_id=quiz_id, question_id=question_id)
+    #         db.session.add(quiz_question)
+
+    #     db.session.commit()
+    #     return jsonify({'status': 'success'})
+
     @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def update_quiz(quiz_id):
-        data = request.get_json()
-        new_question_ids = data['question_ids']
+        # Get data from request
+        updated_quiz_data = request.json
 
-        # Delete existing QuizQuestion instances
-        existing_quiz_questions = QuizQuestion.query.filter_by(
-            quiz_id=quiz_id).all()
-        for quiz_question in existing_quiz_questions:
-            db.session.delete(quiz_question)
+        # Get the quiz
+        quiz = Quiz.query.get(quiz_id)
 
-        # Add new QuizQuestions for each question_id in new_question_ids
-        for question_id in new_question_ids:
-            quiz_question = QuizQuestion(
-                quiz_id=quiz_id, question_id=question_id)
-            db.session.add(quiz_question)
+        # Check for valid quiz
+        if not quiz:
+            return jsonify({'success': False, 'error': 'Quiz not found'})
 
+        # Remove any questions not included in the updated quiz data
+        for quiz_question in quiz.quiz_questions:
+            if quiz_question.question_id not in updated_quiz_data['questions']:
+                db.session.delete(quiz_question)
+
+        # Commit changes to database
         db.session.commit()
-        return jsonify({'status': 'success'})
+
+        # Send back a response
+        return jsonify({'success': True})
 
     @app.route('/delete-question/<int:question_id>', methods=['POST'])
     @login_required
@@ -262,3 +286,20 @@ def init_auth_routes(app):
     @app.route("/streamer")
     def streamer():
         return render_template("streamer.html")
+
+    @app.route('/quizzes')
+    @login_required
+    def quizzes():
+        user_id = current_user.user_id
+        quizzes = quiz_manager.get_quizzes(user_id)
+        first_quiz_id = quizzes[0].quiz_id if quizzes else None
+        first_quiz_data = quiz_manager.get_questions_answers(
+            first_quiz_id) if first_quiz_id else None
+        return render_template('quizzes.html', quizzes=quizzes, first_quiz_data=first_quiz_data)
+
+    @app.route('/quiz-detail/<int:quiz_id>')
+    @login_required
+    def quiz_detail(quiz_id):
+        questions_answers = quiz_manager.get_questions_answers(quiz_id)
+        quiz = Quiz.query.get(quiz_id)
+        return render_template('quiz_detail.html', questions_answers=questions_answers, quiz=quiz)

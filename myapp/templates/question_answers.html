@@ -1,0 +1,17 @@
+{% for qa in questions_answers %}
+    <div class="card mb-3 question" data-question-id="{{ qa.question.question_id }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ qa.question.question }}</h5>
+            <form>
+                {% for answer in qa.answers %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="answer{{ qa.question.question_id }}" id="answer{{ answer.answer_id }}" value="{{ answer.answer_id }}" disabled>
+                        <label class="form-check-label" for="answer{{ answer.answer_id }}">
+                            {{ answer.answer }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+{% endfor %}
