@@ -27,11 +27,11 @@
         <div class="nav-links" id="navLinks">
           <i class="fa fa-times" onclick="hideMenu()"></i>
           <ul>
-            <li><a href="">HOME</a></li>
-            <li><a href="">SIGN UP</a></li>
-            <li><a href="">LOG IN</a></li>
+            <li><a href="{{ url_for('landing_page') }}">HOME</a></li>
+            <li><a href="{{ url_for('register') }}">SIGN UP</a></li>
+            <li><a href="{{ url_for('login') }}">LOG IN</a></li>
             <li><a href="">ABOUT</a></li>
-          </ul>
+        </ul>        
         </div>
         <i class="fa fa-bars" onclick="showMenu()"></i>
       </nav>
@@ -44,7 +44,8 @@
           <br />intellectual journey. With Smart Quest, conquer challenges,
           celebrate victories, <br />and unlock your full potential.
         </p>
-        <a href="" class="hero-btn">Create Your First Quiz</a>
+        <a href="{{ url_for('create_quiz_page') }}" class="hero-btn">Create Your First Quiz</a>
+        <!-- <a href="" class="hero-btn">Create Your First Quiz</a> -->
       </div>
     </section>
     <section class="features">

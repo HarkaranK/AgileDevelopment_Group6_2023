@@ -19,7 +19,7 @@ def init_auth_routes(app):
             user = User.authenticate(user_id, password)
             if user:
                 login_user(user)
-                return redirect(url_for('create_quiz_page'))
+                return redirect(url_for('quizzes'))
         return render_template('login.html')
 
     @app.route('/')
@@ -157,26 +157,6 @@ def init_auth_routes(app):
             return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
 
-    # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
-    # @login_required
-    # def delete_quiz(quiz_id):
-    #     quiz = Quiz.query.get(quiz_id)
-    #     db.session.delete(quiz)
-    #     db.session.commit()
-    #     return redirect(url_for('landing.html'))
-
-    # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
-    # @login_required
-    # def delete_quiz(quiz_id):
-    #     quiz = Quiz.query.get(quiz_id)
-    #     if quiz.user_id == current_user.user_id:
-    #         db.session.delete(quiz)
-    #         db.session.commit()
-    #         print(f"Quiz with id {quiz_id} was deleted successfully")
-    #         return jsonify({'status': 'success'})
-    #     else:
-    #         return jsonify({'status': 'failure'})
-
     @app.route('/category/<category>')
     @login_required
     def category_page(category):
@@ -226,27 +206,6 @@ def init_auth_routes(app):
             })
 
         return jsonify(questions)
-
-    # @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
-    # @login_required
-    # def update_quiz(quiz_id):
-    #     data = request.get_json()
-    #     new_question_ids = data['question_ids']
-
-    #     # Delete existing QuizQuestion instances
-    #     existing_quiz_questions = QuizQuestion.query.filter_by(
-    #         quiz_id=quiz_id).all()
-    #     for quiz_question in existing_quiz_questions:
-    #         db.session.delete(quiz_question)
-
-    #     # Add new QuizQuestions for each question_id in new_question_ids
-    #     for question_id in new_question_ids:
-    #         quiz_question = QuizQuestion(
-    #             quiz_id=quiz_id, question_id=question_id)
-    #         db.session.add(quiz_question)
-
-    #     db.session.commit()
-    #     return jsonify({'status': 'success'})
 
     @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
