@@ -5,10 +5,10 @@
     <nav class="navbar">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Create Quiz</a></li>
-            <li><a href="#">Create Question</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="{{ url_for('quizzes') }}">Home</a></li>
+            <li><a href="{{ url_for('create_quiz_page') }}">Create Quiz</a></li>
+            <li><a href="{{ url_for('add_question') }}">Create Question</a></li>
+            <li><a href="{{ url_for('landing_page') }}">Logout</a></li>
         </ul>
     </nav>
 {% else %}
@@ -16,9 +16,9 @@
     <nav class="navbar">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Signup</a></li>
+            <li><a href="{{ url_for('quizzes') }}">Home</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Signup</a></li>
         </ul>
     </nav>
 {% endif %}
