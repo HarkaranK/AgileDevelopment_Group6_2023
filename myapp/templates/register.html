@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="login-container">
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo" />
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo" />
       <h1>Register</h1>
       <form method="POST" action="{{ url_for('register') }}">
         <p>Name <input type="text" name="name" required /></p>

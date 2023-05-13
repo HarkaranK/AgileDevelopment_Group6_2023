@@ -10,7 +10,7 @@ def init_stream_socket(socketio):
         message = predict.get_message(1)
 
         for chunk in openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[{
                 "role": "user",
                 "content": message

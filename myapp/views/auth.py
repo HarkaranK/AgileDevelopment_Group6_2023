@@ -156,7 +156,7 @@ def init_auth_routes(app):
             db.session.commit()
             return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
-
+    
     # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     # @login_required
     # def delete_quiz(quiz_id):

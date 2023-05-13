@@ -3,11 +3,16 @@ body {
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
+  background-image: url('../static/img/back2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #indexHeader {
   align-items: center;
-  background-color: #3498db;
+  background-color: none;
   display: flex;
   justify-content: space-between;
   height: 80px;
@@ -42,7 +47,7 @@ body {
 }
 
 #appLogo {
-  width: 60px;
+  width: 200px;
   height: auto;
   margin-right: 10px;
   margin-top: 10px;
@@ -65,7 +70,7 @@ article {
   padding-top: 200px;
 }
 h1, h2 {
-  color: #333;
+  color: antiquewhite;
   margin-bottom: 20px;
   font-family: 'Lobster', cursive;
   font-size: 40px;
@@ -73,7 +78,7 @@ h1, h2 {
 
 p {
   font-size: 18px;
-  color: #333;
+  color: white;
   line-height: 1.6;
   /* padding-top: 30px; */
 }
@@ -118,7 +123,7 @@ li:last-child {
 
 a {
   text-decoration: none;
-  color: #3498db;
+  color: whitesmoke;
 }
 
 a:hover {
@@ -179,15 +184,20 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 600px; /* Add this line to set the width */
+    margin-top: 120px;
+    background-image: url('img/create.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
   }  
   
   .logo {
-    width: 120px;
+    width: 200px;
     margin-bottom: 20px;
   }
   
   h1 {
-    color: #333;
+    color: whitesmoke;
     margin-bottom: 20px;
   }
   
@@ -205,7 +215,7 @@ body {
   
   .register-btn {
     display: inline-block;
-    background-color: #3498db;
+    background-color: black;
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -214,7 +224,7 @@ body {
   }
   
   .register-btn:hover {
-    background-color: #2980b9;
+    background-color: rgb(136, 226, 226);
   }
   footer {
     position: fixed;
@@ -235,7 +245,7 @@ article {
 ----------------------------------------------*/
 #indexHeader {
     align-items: center;
-    background: #fff;
+    background-color: none;
     display: flex;
     height: 70px;
     justify-content: space-between;
@@ -305,6 +315,31 @@ article {
   margin-top: 1rem;
   text-decoration: none;
 }
-
-/*
-for index.html*/
+/*create quiz page css*/
+.create-quiz-container {
+  background-image: url('img/quiz.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 150px;
+}
+#create_quiz_heading{
+  margin-top: 50px;
+}
+.create{
+  color: white;
+}
+.login-heading{
+  color: black;
+}
+.loginp{
+  color: white;
+}
+.quiz_label{
+  color: white;
+}
+.login-btn{
+  margin-top: 10px;
+}
+.rslt-container{
+  background-color: none;
+}

@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="login-container">
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo" />
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo" />
       {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class="flashes">
@@ -14,11 +14,11 @@
         </ul>
         {% endif %}
       {% endwith %}
-      <h1>Login</h1>
+      <!-- <h1 class="login-heading">Login</h1> -->
       <form method="POST" action="{{ url_for('login') }}">
-        <p>Username <input type="text" name="username" required /></p>
-        <p>Password <input type="password" name="password" required /></p>
-        <input class="register-btn" type="submit" value="Login" />
+        <p class="loginp">Username <input type="text" name="username" required /></p>
+        <p class="loginp">Password <input type="password" name="password" required /></p>
+        <input class="register-btn login-btn" type="submit" value="Login" />
       </form>
     <a href="{{ url_for('register') }}" class="register-btn">Register</a>
     </div>
