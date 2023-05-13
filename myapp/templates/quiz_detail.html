@@ -3,7 +3,7 @@
 {% endwith %}
 <div class="btn-group" role="group" aria-label="Quiz Controls">
     <button id="edit-button" type="button" class="btn btn-primary" onclick="editQuiz({{ quiz.quiz_id }})">Edit</button>
-    <button type="button" class="btn btn-success" onclick="saveQuiz()">Save</button>
+    <button id="save-button" type="button" class="btn btn-success" onclick="saveQuiz()" disabled>Save</button>
     <button type="button" class="btn btn-info" onclick="viewPastAttempts()">View Past Attempts</button>
     <button type="button" class="btn btn-warning" onclick="takeQuiz()">Take Quiz</button>
     <button type="button" class="btn btn-danger" onclick="deleteQuiz()">Delete</button>
