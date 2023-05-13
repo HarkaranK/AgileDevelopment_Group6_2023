@@ -1,0 +1,24 @@
+<!-- navbar.html -->
+
+{% if current_user.is_authenticated %}
+    <!-- Navbar when user is logged in -->
+    <nav class="navbar">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Create Quiz</a></li>
+            <li><a href="#">Create Question</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+{% else %}
+    <!-- Navbar when user is not logged in -->
+    <nav class="navbar">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Signup</a></li>
+        </ul>
+    </nav>
+{% endif %}

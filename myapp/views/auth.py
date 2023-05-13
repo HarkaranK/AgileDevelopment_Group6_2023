@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from myapp.auth.models import User
-from myapp.database.models import Quiz, Question, Answer, QuizQuestion
+from myapp.database.models import Quiz, Question, Answer, QuizQuestion, QuizParticipant
 from myapp.database.db import db
 from myapp.utils.handler import Search, QuizManager
 import os
@@ -156,7 +156,7 @@ def init_auth_routes(app):
             db.session.commit()
             return redirect(url_for('landing.html'))
         return render_template('edit.html', quiz=quiz)
-    
+
     # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
     # @login_required
     # def delete_quiz(quiz_id):
@@ -165,17 +165,17 @@ def init_auth_routes(app):
     #     db.session.commit()
     #     return redirect(url_for('landing.html'))
 
-    @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
-    @login_required
-    def delete_quiz(quiz_id):
-        quiz = Quiz.query.get(quiz_id)
-        if quiz.user_id == current_user.user_id:
-            db.session.delete(quiz)
-            db.session.commit()
-            print(f"Quiz with id {quiz_id} was deleted successfully")
-            return jsonify({'status': 'success'})
-        else:
-            return jsonify({'status': 'failure'})
+    # @app.route('/delete-quiz/<int:quiz_id>', methods=['POST'])
+    # @login_required
+    # def delete_quiz(quiz_id):
+    #     quiz = Quiz.query.get(quiz_id)
+    #     if quiz.user_id == current_user.user_id:
+    #         db.session.delete(quiz)
+    #         db.session.commit()
+    #         print(f"Quiz with id {quiz_id} was deleted successfully")
+    #         return jsonify({'status': 'success'})
+    #     else:
+    #         return jsonify({'status': 'failure'})
 
     @app.route('/category/<category>')
     @login_required
@@ -303,3 +303,16 @@ def init_auth_routes(app):
         questions_answers = quiz_manager.get_questions_answers(quiz_id)
         quiz = Quiz.query.get(quiz_id)
         return render_template('quiz_detail.html', questions_answers=questions_answers, quiz=quiz)
+
+    @app.route('/delete-quiz/<int:quiz_id>', methods=['DELETE'])
+    @login_required
+    def delete_quiz(quiz_id):
+        try:
+            quiz = Quiz.query.get(quiz_id)
+            QuizQuestion.query.filter_by(quiz_id=quiz_id).delete()
+            QuizParticipant.query.filter_by(quiz_id=quiz_id).delete()
+            db.session.delete(quiz)
+            db.session.commit()
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})

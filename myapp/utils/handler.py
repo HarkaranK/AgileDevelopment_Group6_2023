@@ -71,7 +71,8 @@ class QuizManager:
 
     def get_quizzes(self, user_id):
         with self.app.app_context():
-            quizzes = Quiz.query.filter_by(user_id=user_id).all()
+            quizzes = Quiz.query.filter_by(
+                user_id=user_id).order_by(Quiz.quiz_id.desc()).all()
             return quizzes
 
     def get_questions_answers(self, quiz_id):
