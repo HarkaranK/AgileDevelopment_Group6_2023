@@ -2,6 +2,7 @@
     <div class="card mb-3 question" data-question-id="{{ qa.question.question_id }}">
         <div class="card-body">
             <h5 class="card-title">{{ qa.question.question }}</h5>
+            <p class="course-info">Course: {{ qa.question.course }}</p>
             <form>
                 {% for answer in qa.answers %}
                     <div class="form-check">
