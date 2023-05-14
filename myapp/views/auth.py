@@ -326,4 +326,4 @@ def init_auth_routes(app):
         # Retrieve user's participation and responses
         participation = QuizParticipant.query.get(participation_id)
         responses = quiz_manager.get_responses(participation.participation_id)
-        return render_template('quiz_results.html', responses=responses)
+        return render_template('quiz_results.html', responses=responses, participation=participation)

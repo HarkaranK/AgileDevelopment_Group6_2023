@@ -34,12 +34,14 @@ class Search(Handler):
 
 class Predict(Handler):
     def __init__(self, pinecone_env, index_name):
+        from run import app
         super().__init__(pinecone_env, index_name)
         self.embeddings = OpenAIEmbeddings()
+        self.app = app
 
     def get_message(self, participation_id):
-        manager = QuizManager()
-        response_data = manager.get_responses(participation_id)
+        quiz_manager = QuizManager(self.app)
+        response_data = quiz_manager.get_responses(participation_id)
         course = response_data[0]['question'].course
         text = f"i just took a quiz on {course} and below is the question, correct answer and my answer. would you please provide feedback on the quiz? please start with 'Here's some feedback on your quiz:'. describe the overall performance and then comment only on the questions with wrong answers. make your feedback concise and no more than 100 words.\n\n"
         for res in response_data:

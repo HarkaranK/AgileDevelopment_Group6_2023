@@ -51,7 +51,9 @@
                 <p id="correct-text"></p>
             </div>
             <h2>Feedback</h2>
-            <p>Coming soon...</p>
+            <div id="feedback">
+                <p id="message"></p>
+            </div>
         </div>
     </div>
 </div>
@@ -94,6 +96,56 @@
                     }
                 }
             }
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // connect to the socket server.
+        var socket = io.connect("http://127.0.0.1:9000");
+        // Emit the 'participation' event right after connection
+        socket.emit('participation', { 'participation_id': {{ participation.participation_id }} });
+
+        var msgQueue = [];
+        var isTyping = false;
+        var paragraph = document.getElementById("message");
+        var message = "";
+
+        function typeMessage() {
+            if (message.length > 0) {
+                var char = message.charAt(0);
+                message = message.substr(1);
+                if (char === "\n") {
+                    paragraph.innerHTML += "<br>";
+                } else {
+                    paragraph.innerHTML += char;
+                }
+                setTimeout(typeMessage, 20);
+            } else {
+                isTyping = false;
+                typeNextMessage();
+            }
+        }
+
+        function typeNextMessage() {
+            if (!isTyping && msgQueue.length > 0) {
+                isTyping = true;
+                message = msgQueue.shift();
+                typeMessage();
+            }
+        }
+
+        // receive details from server
+        socket.on("message", function (msg) {
+            console.log(msg);
+            msgQueue.push(msg.data);
+            typeNextMessage();
+        });
+
+        // Disconnect when 'end_of_stream' event is received
+        socket.on('end_of_stream', function() {
+            socket.disconnect();
         });
     });
 </script>
