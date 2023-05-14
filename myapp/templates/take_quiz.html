@@ -72,11 +72,18 @@
     }
 
     function submitQuiz() {
+        clearInterval(timerInterval);
         let responses = [];
 
         $('.question').each(function() {
             let questionId = $(this).data('question-id');
             let answerId = $('input[name="answer' + questionId + '"]:checked').val();
+            if (!answerId) {
+                // Select the first answer if the user didn't choose an answer
+                answerId = $('input[name="answer' + questionId + '"]:first').val();
+                // Check the radio button for the first answer
+                $('input[name="answer' + questionId + '"]:first').prop('checked', true);
+            }
             responses.push({ question_id: questionId, answer_id: answerId });
         });
 
@@ -97,7 +104,7 @@
     }
 
     updateTimer();
-    setInterval(updateTimer, 1000);
+    let timerInterval = setInterval(updateTimer, 1000);
 
 </script>
 </body>
