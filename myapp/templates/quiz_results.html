@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quiz Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <style>
+        .col-md-6 {
+            margin: 1.5rem 0; /* add some space below each column */
+        }
+        .container {
+            padding: 2rem; /* add some padding around the container */
+        }
+        #chart-container {
+            width: 75%;
+            height: 75%; /* set a fixed pixel height */
+        }
+        #summary-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 500px; /* adjust this value as needed */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+{% include 'navbar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Quiz Results</h2>
+            {% for response in responses %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ response.question.question }}</h5>
+                        <p class="course-info">Course: {{ response.question.course }}</p>
+                        <p class="card-text {{ 'text-danger' if not response.response.is_correct else 'text-success' }}">Your answer: {{ response.response.answer }}</p>
+                        <p class="card-text">Correct answer: {{ (response.answers|selectattr("is_correct", "equalto", true)|first).answer }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <h2>Quiz Results Summary</h2>
+            <div id="summary-container">
+                <div id="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <p id="correct-text"></p>
+            </div>
+            <h2>Feedback</h2>
+            <p>Coming soon...</p>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Calculate the number of correct answers
+        let correctCount = 0;
+        let totalCount = {{ responses|length }};
+        {% for response in responses %}
+            if ({{ response.response.is_correct|tojson }}) {
+                correctCount++;
+            }
+        {% endfor %}
+
+        // Display the text description
+        $("#correct-text").text(`You answered ${correctCount} out of ${totalCount} questions correctly.`);
+
+        // Create the pie chart
+        const ctx = $('#pieChart')[0].getContext('2d');
+        const pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Correct', 'Incorrect'],
+                datasets: [{
+                    data: [correctCount, totalCount - correctCount],
+                    backgroundColor: ['#28a745', '#dc3545']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Quiz Results'
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

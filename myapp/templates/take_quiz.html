@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Take Quiz</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <style>
+        /* Added this custom style to align the container in the middle and provide some margin at the top and bottom */
+        .container-custom {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        /* Styling the timer */
+        #timer {
+            background-color: #f8f9fa;
+            color: #ff4b5c;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;  /* Prevent it from spanning the entire width */
+        }
+    </style>
+</head>
+<body>
+{% include 'navbar.html' %}
+<!-- Added the custom container class here -->
+<div class="container container-custom">
+    <div class="row justify-content-center"> <!-- Added justify-content-center to center the row -->
+        <div class="col-12">
+            <h2>{{ quiz.quiz_name }}</h2>
+            <p id="timer" class="text-danger d-inline-block"></p> <!-- Added d-inline-block class -->
+            <form id="quiz-form">
+                {% with questions_answers=questions_answers, disable_inputs=disable_inputs %}
+                    {% include 'question_answers.html' %}
+                {% endwith %}
+                <!-- Wrapped the button in a separate div to center it -->
+                <div class="text-center">
+                    <button type="button" class="btn btn-custom btn-md" onclick="submitQuiz()">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    let dur = {{ quiz.duration }};
+    let timer = document.getElementById('timer');
+    let startTime = sessionStorage.getItem('quizStartTime');
+
+    if (!startTime) {
+        startTime = new Date().getTime();
+        sessionStorage.setItem('quizStartTime', startTime);
+    } else {
+        startTime = parseInt(startTime);
+    }
+
+    function updateTimer() {
+        let currentTime = new Date().getTime();
+        let elapsedTime = Math.floor((currentTime - startTime) / 1000);
+        let remainingTime = dur * 60 - elapsedTime;
+
+        if (remainingTime <= 0) {
+            submitQuiz();
+            return;
+        }
+
+        let minutes = Math.floor(remainingTime / 60);
+        let seconds = remainingTime % 60;
+        timer.textContent = `Time left: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    }
+
+    function submitQuiz() {
+        let responses = [];
+
+        $('.question').each(function() {
+            let questionId = $(this).data('question-id');
+            let answerId = $('input[name="answer' + questionId + '"]:checked').val();
+            responses.push({ question_id: questionId, answer_id: answerId });
+        });
+
+        $.ajax({
+            url: '/submit-quiz/{{ quiz.quiz_id }}',
+            type: 'POST',
+            data: JSON.stringify({ responses: responses, start_time: startTime }),
+            contentType: 'application/json',
+            success: function(response) {
+                if (response.success) {
+                    sessionStorage.removeItem('quizStartTime');
+                    location.href = '/quiz-results/' + response.participation_id;
+                } else {
+                    console.log(response.error);
+                }
+            }
+        });
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+</script>
+</body>
+</html>

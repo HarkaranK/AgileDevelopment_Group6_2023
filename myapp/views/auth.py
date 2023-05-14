@@ -1,10 +1,11 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from myapp.auth.models import User
-from myapp.database.models import Quiz, Question, Answer, QuizQuestion, QuizParticipant
+from myapp.database.models import Quiz, Question, Answer, QuizQuestion, QuizParticipant, UserResponse
 from myapp.database.db import db
 from myapp.utils.handler import Search, QuizManager
 import os
+from datetime import datetime
 from flask import jsonify
 
 
@@ -123,24 +124,24 @@ def init_auth_routes(app):
         questions = quiz_manager.get_questions_answers(quiz_id)
         return render_template('quiz.html', quiz=quiz, questions=questions)
 
-    @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
-    @login_required
-    def submit_quiz(quiz_id):
-        # Retrieve submitted answers
-        answers = {}
-        for key, value in request.form.items():
-            if key.startswith('question-'):
-                question_id = int(key.split('-')[-1])
-                answers[question_id] = int(value)
+    # @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
+    # @login_required
+    # def submit_quiz(quiz_id):
+    #     # Retrieve submitted answers
+    #     answers = {}
+    #     for key, value in request.form.items():
+    #         if key.startswith('question-'):
+    #             question_id = int(key.split('-')[-1])
+    #             answers[question_id] = int(value)
 
-        # Check answers and calculate the score
-        score = 0
-        total_questions = len(answers)
-        for question_id, answer_id in answers.items():
-            answer = Answer.query.get(answer_id)
-            if answer.is_correct:
-                score += 1
-        return render_template('results.html', score=score, total_questions=total_questions, quiz_id=quiz_id)
+    #     # Check answers and calculate the score
+    #     score = 0
+    #     total_questions = len(answers)
+    #     for question_id, answer_id in answers.items():
+    #         answer = Answer.query.get(answer_id)
+    #         if answer.is_correct:
+    #             score += 1
+    #     return render_template('results.html', score=score, total_questions=total_questions, quiz_id=quiz_id)
 
     @app.route('/test_statistic')
     @login_required
@@ -295,14 +296,14 @@ def init_auth_routes(app):
         first_quiz_id = quizzes[0].quiz_id if quizzes else None
         first_quiz_data = quiz_manager.get_questions_answers(
             first_quiz_id) if first_quiz_id else None
-        return render_template('quizzes.html', quizzes=quizzes, first_quiz_data=first_quiz_data)
+        return render_template('quizzes.html', quizzes=quizzes, first_quiz_data=first_quiz_data, disable_inputs=True)
 
     @app.route('/quiz-detail/<int:quiz_id>')
     @login_required
     def quiz_detail(quiz_id):
         questions_answers = quiz_manager.get_questions_answers(quiz_id)
         quiz = Quiz.query.get(quiz_id)
-        return render_template('quiz_detail.html', questions_answers=questions_answers, quiz=quiz)
+        return render_template('quiz_detail.html', questions_answers=questions_answers, quiz=quiz, disable_inputs=True)
 
     @app.route('/delete-quiz/<int:quiz_id>', methods=['DELETE'])
     @login_required
@@ -316,3 +317,54 @@ def init_auth_routes(app):
             return jsonify({'success': True})
         except Exception as e:
             return jsonify({'success': False, 'error': str(e)})
+
+    @app.route('/take-quiz/<int:quiz_id>', methods=['GET'])
+    @login_required
+    def take_quiz(quiz_id):
+        quiz = Quiz.query.get(quiz_id)
+        questions_answers = quiz_manager.get_questions_answers(quiz_id)
+        return render_template('take_quiz.html', quiz=quiz, questions_answers=questions_answers, disable_inputs=False)
+
+    @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
+    @login_required
+    def submit_quiz(quiz_id):
+        try:
+            # Get start_time from request payload
+            start_time = request.json['start_time']
+            # Convert from milliseconds to seconds
+            start_time = datetime.fromtimestamp(start_time / 1000)
+
+            # Calculate end_time
+            end_time = datetime.now()
+
+            # Create a new QuizParticipant entry with start_time and end_time
+            quiz_participant = QuizParticipant(
+                quiz_id=quiz_id,
+                participant_id=current_user.user_id,
+                start_time=start_time,
+                end_time=end_time
+            )
+            db.session.add(quiz_participant)
+            db.session.commit()
+
+            # Create UserResponse entries
+            for response in request.json['responses']:
+                user_response = UserResponse(participation_id=quiz_participant.participation_id,
+                                             question_id=response['question_id'],
+                                             answer_id=response['answer_id'])
+                db.session.add(user_response)
+            db.session.commit()
+
+            # Return participation_id instead of a simple success message
+            return jsonify({'success': True, 'participation_id': quiz_participant.participation_id})
+
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})
+
+    @app.route('/quiz-results/<int:participation_id>', methods=['GET'])
+    @login_required
+    def quiz_results(participation_id):
+        # Retrieve user's participation and responses
+        participation = QuizParticipant.query.get(participation_id)
+        responses = quiz_manager.get_responses(participation.participation_id)
+        return render_template('quiz_results.html', responses=responses)
