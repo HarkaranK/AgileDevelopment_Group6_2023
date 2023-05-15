@@ -111,7 +111,7 @@ def init_auth_routes(app):
                     print(f"Adding QuizQuestion: {quiz_question}")
 
                 db.session.commit()
-                return redirect(url_for('quiz_page', quiz_id=quiz.quiz_id))
+                return redirect(url_for('quizzes', quiz_id=quiz.quiz_id))
             return render_template('create_quiz.html')
         except Exception as e:
             print(f"Error: {e}")
@@ -123,25 +123,6 @@ def init_auth_routes(app):
         quiz = Quiz.query.get(quiz_id)
         questions = quiz_manager.get_questions_answers(quiz_id)
         return render_template('quiz.html', quiz=quiz, questions=questions)
-
-    # @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
-    # @login_required
-    # def submit_quiz(quiz_id):
-    #     # Retrieve submitted answers
-    #     answers = {}
-    #     for key, value in request.form.items():
-    #         if key.startswith('question-'):
-    #             question_id = int(key.split('-')[-1])
-    #             answers[question_id] = int(value)
-
-    #     # Check answers and calculate the score
-    #     score = 0
-    #     total_questions = len(answers)
-    #     for question_id, answer_id in answers.items():
-    #         answer = Answer.query.get(answer_id)
-    #         if answer.is_correct:
-    #             score += 1
-    #     return render_template('results.html', score=score, total_questions=total_questions, quiz_id=quiz_id)
 
     @app.route('/test_statistic')
     @login_required
