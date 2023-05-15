@@ -26,12 +26,22 @@
         <a href="landing.html"><img src="static/img/logo.png" alt="logo" /></a>
         <div class="nav-links" id="navLinks">
           <i class="fa fa-times" onclick="hideMenu()"></i>
-          <ul>
-            <li><a href="{{ url_for('landing_page') }}">HOME</a></li>
-            <li><a href="{{ url_for('register') }}">SIGN UP</a></li>
-            <li><a href="{{ url_for('login') }}">LOG IN</a></li>
-            <li><a href="">ABOUT</a></li>
-        </ul>        
+          {% if current_user.is_authenticated %}
+            <ul>
+              <li><a href="{{ url_for('landing_page') }}">HOME</a></li>
+              <li><a href="{{ url_for('quizzes') }}">MY QUIZ</a></li>
+              <li><a href="{{ url_for('create_quiz_page') }}">CREATE QUIZ</a></li>
+              <li><a href="{{ url_for('add_question') }}">CREATE QUESTION</a></li>
+              <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+            </ul>       
+          {% else %} 
+            <ul>
+              <li><a href="{{ url_for('landing_page') }}">HOME</a></li>
+              <li><a href="{{ url_for('register') }}">SIGN UP</a></li>
+              <li><a href="{{ url_for('login') }}">LOG IN</a></li>
+              <li><a href="">ABOUT</a></li>
+            </ul>       
+          {% endif %}
         </div>
         <i class="fa fa-bars" onclick="showMenu()"></i>
       </nav>

@@ -5,7 +5,7 @@
   <div class="btn-group" role="group" aria-label="Quiz Controls">
       <button id="edit-button" type="button" class="btn btn-custom btn-md mr-2 shadow" onclick="editQuiz({{ quiz.quiz_id }})">Edit</button>
       <button id="save-button" type="button" class="btn btn-custom btn-md mr-2 shadow" onclick="saveQuiz()" disabled>Save</button>
-      <button type="button" class="btn btn-custom btn-md mr-2 shadow" onclick="viewPastAttempts()">View Past Attempts</button>
+      <button type="button" class="btn btn-custom btn-md mr-2 shadow" onclick="viewPastAttempts({{ quiz.quiz_id }})">View Past Attempts</button>
       <button type="button" class="btn btn-custom btn-md mr-2 shadow" onclick="takeQuiz({{ quiz.quiz_id }})">Take Quiz</button>
       <button type="button" class="btn btn-custom btn-custom-red btn-md shadow" onclick="deleteQuiz({{ quiz.quiz_id }})">Delete</button>
   </div>
