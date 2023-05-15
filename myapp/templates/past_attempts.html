@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Past Attempts</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+</head>
+<body>
+{% include 'navbar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-4" id="attempt-list">
+            <h2><span>Past Attempts</span></h2>
+            <ul class="list-group">
+                {% for participation in participations %}
+                    <li class="list-group-item" onclick="loadAttemptData({{ participation.participation_id }})">{{ participation.start_time }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-8" id="attempt-detail">
+            {% if first_attempt_data %}
+                {% with responses=first_attempt_data %}
+                    {% include 'attempt_detail.html' %}
+                {% endwith %}
+            {% else %}
+                <p>Select an attempt to view its details.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    function loadAttemptData(participation_id) {
+        $.get('/attempt-detail/' + participation_id, function(data) {
+            $('#attempt-detail').html(data);
+        });
+    }
+</script>
+</body>
+</html>

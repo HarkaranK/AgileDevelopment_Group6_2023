@@ -1,0 +1,10 @@
+{% for response in responses %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ response.question.question }}</h5>
+            <p class="course-info">Course: {{ response.question.course }}</p>
+            <p class="card-text {{ 'text-danger' if not response.response.is_correct else 'text-success' }}">Your answer: {{ response.response.answer }}</p>
+            <p class="card-text">Correct answer: {{ (response.answers|selectattr("is_correct", "equalto", true)|first).answer }}</p>
+        </div>
+    </div>
+{% endfor %}

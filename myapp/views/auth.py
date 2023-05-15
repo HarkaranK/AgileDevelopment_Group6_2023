@@ -327,3 +327,19 @@ def init_auth_routes(app):
         participation = QuizParticipant.query.get(participation_id)
         responses = quiz_manager.get_responses(participation.participation_id)
         return render_template('quiz_results.html', responses=responses, participation=participation)
+
+    @app.route('/past-attempts/<int:quiz_id>')
+    @login_required
+    def past_attempts(quiz_id):
+        participations = quiz_manager.get_participation(quiz_id)
+        first_attempt_data = None
+        if participations:
+            first_attempt_data = quiz_manager.get_responses(
+                participations[0].participation_id)
+        return render_template('past_attempts.html', participations=participations, quiz_id=quiz_id, first_attempt_data=first_attempt_data)
+
+    @app.route('/attempt-detail/<int:participation_id>')
+    @login_required
+    def attempt_detail(participation_id):
+        responses = quiz_manager.get_responses(participation_id)
+        return render_template('attempt_detail.html', responses=responses)
