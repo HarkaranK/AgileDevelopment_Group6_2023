@@ -4,24 +4,6 @@
     <title>Take Quiz</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
-    <style>
-        /* Added this custom style to align the container in the middle and provide some margin at the top and bottom */
-        .container-custom {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
-        /* Styling the timer */
-        #timer {
-            background-color: #f8f9fa;
-            color: #ff4b5c;
-            padding: 10px;
-            border-radius: 10px;
-            display: inline-block;  /* Prevent it from spanning the entire width */
-        }
-    </style>
 </head>
 <body>
 {% include 'navbar.html' %}

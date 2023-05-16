@@ -25,8 +25,7 @@ def init_auth_routes(app):
 
     @app.route('/')
     def landing_page():
-        quizzes = Quiz.query.all()
-        return render_template('landing.html', quizzes=quizzes)
+        return render_template('landing.html')
 
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -359,50 +358,50 @@ def init_auth_routes(app):
         responses = quiz_manager.get_responses(participation_id)
         return render_template('attempt_detail.html', responses=responses)
 
-    @app.route('/create_question')
+    # @app.route('/create_question')
+    # @login_required
+    # def create_question():
+    #     return render_template('create_question.html')
+
+    @app.route('/create_question', methods=['GET', 'POST'])
     @login_required
     def create_question():
-        return render_template('create_question.html')
+        if request.method == 'POST':
+            # Get the submitted data
+            form_data = request.form
 
-    @app.route('/submit_question', methods=['POST'])
-    @login_required
-    def submit_question():
-        # Replace this with the actual user_id from the session
-        user_id = 'some_user_id'
+            # Iterate through the submitted questions
+            question_count = 1
+            while f'question-{question_count}' in form_data:
+                question_text = form_data[f'question-{question_count}']
+                course = form_data[f'course-{question_count}']
 
-        # Get the submitted data
-        form_data = request.form
+                # Create a new Question object and add it to the database
+                question = Question(user_id=current_user.user_id,
+                                    question=question_text, course=course)
+                db.session.add(question)
+                db.session.flush()  # Flush the session to get the question_id
 
-        # Iterate through the submitted questions
-        question_count = 1
-        while f'question-{question_count}' in form_data:
-            question_text = form_data[f'question-{question_count}']
-            course = form_data[f'course-{question_count}']
+                # Iterate through the submitted answers for the current question
+                answer_count = 1
+                while f'answer-{question_count}-{answer_count}' in form_data:
+                    answer_text = form_data[f'answer-{question_count}-{answer_count}']
+                    is_correct = form_data[f'correct-answer-{question_count}'] == str(
+                        answer_count)
 
-            # Create a new Question object and add it to the database
-            question = Question(user_id=current_user.user_id,
-                                question=question_text, course=course)
-            db.session.add(question)
-            db.session.flush()  # Flush the session to get the question_id
+                    # Create a new Answer object and add it to the database
+                    answer = Answer(question_id=question.question_id,
+                                    answer=answer_text, is_correct=is_correct)
+                    db.session.add(answer)
 
-            # Iterate through the submitted answers for the current question
-            answer_count = 1
-            while f'answer-{question_count}-{answer_count}' in form_data:
-                answer_text = form_data[f'answer-{question_count}-{answer_count}']
-                is_correct = form_data[f'correct-answer-{question_count}'] == str(
-                    answer_count)
+                    answer_count += 1
 
-                # Create a new Answer object and add it to the database
-                answer = Answer(question_id=question.question_id,
-                                answer=answer_text, is_correct=is_correct)
-                db.session.add(answer)
+                question_count += 1
 
-                answer_count += 1
+            # Commit the changes to the database
+            db.session.commit()
 
-            question_count += 1
-
-        # Commit the changes to the database
-        db.session.commit()
-
-        # Redirect to a success page or any other page you'd like
-        return redirect(url_for('create_quiz'))
+            # Redirect to a success page or any other page you'd like
+            return redirect(url_for('create_quiz'))
+        else:
+            return render_template('create_question.html')

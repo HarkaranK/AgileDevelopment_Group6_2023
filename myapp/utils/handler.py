@@ -43,7 +43,7 @@ class Predict(Handler):
         quiz_manager = QuizManager(self.app)
         response_data = quiz_manager.get_responses(participation_id)
         course = response_data[0]['question'].course
-        text = f"i just took a quiz on {course} and below is the question, correct answer and my answer. would you please provide feedback on the quiz? please start with 'Here's some feedback on your quiz:'. describe the overall performance and then comment only on the questions with wrong answers. make your feedback concise and no more than 100 words.\n\n"
+        text = f"i just took a quiz on {course} and below is the question, correct answer and my answer. would you please provide feedback on the quiz? please start with 'Here's some feedback on your quiz:'. describe the overall performance and then comment only on the questions with wrong answers. base your rating on the comparison of my answers and the correct answers provided. make your feedback concise and no more than 100 words.\n\n"
         for res in response_data:
             text += f"question: {res['question'].question}\ncorrect answer: {next(filter(lambda answer: answer.is_correct, res['answers']), None).answer}\nmy answer: {res['response'].answer}\n\n"
         # llm = OpenAI(model_name="gpt-4", temperature=0.5)

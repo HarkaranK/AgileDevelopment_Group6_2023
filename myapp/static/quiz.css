@@ -177,3 +177,60 @@ body {
   color: #888;
   margin-bottom: 1em;
 }
+
+.container-custom {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.question-card {
+  margin-bottom: 20px;
+}
+.answers-container {
+  margin-bottom: 10px;
+}
+.quiz-card {
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.submit-button-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.intro-text {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #555;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+.col-md-6 {
+  margin: 1.5rem 0; /* add some space below each column */
+}
+.rslt-container {
+  padding: 2rem; /* add some padding around the container */
+}
+#chart-container {
+  width: 75%;
+  height: 75%; /* set a fixed pixel height */
+}
+#summary-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 500px; /* adjust this value as needed */
+}
+/* Styling the timer */
+#timer {
+  background-color: #f8f9fa;
+  color: #ff4b5c;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block; /* Prevent it from spanning the entire width */
+}

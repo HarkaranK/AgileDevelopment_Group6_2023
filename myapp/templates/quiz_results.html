@@ -4,30 +4,11 @@
     <title>Quiz Results</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
-    <style>
-        .col-md-6 {
-            margin: 1.5rem 0; /* add some space below each column */
-        }
-        .container {
-            padding: 2rem; /* add some padding around the container */
-        }
-        #chart-container {
-            width: 75%;
-            height: 75%; /* set a fixed pixel height */
-        }
-        #summary-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            height: 500px; /* adjust this value as needed */
-        }
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 {% include 'navbar.html' %}
-<div class="container">
+<div class="container rslt-container">
     <div class="row">
         <div class="col-md-6">
             <h2>Quiz Results</h2>

@@ -11,24 +11,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .container-custom {
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
-        .question-card {
-            margin-bottom: 20px;
-        }
-        .answers-container {
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 <body>
     {% include 'navbar.html' %}
     <div class="container container-custom">
         <h2>Create Question</h2>
-        <form id="question-form" method="POST" action="/submit_question">
+        <form id="question-form" method="POST" action="/create_question">
             <div id="questions-container">
                 <!-- Questions will be added here -->
             </div>
