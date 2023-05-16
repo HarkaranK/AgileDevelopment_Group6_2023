@@ -72,50 +72,84 @@ def init_auth_routes(app):
 
         return render_template('index.html', user_quizzes=user_quizzes, user_quizzes_questions=user_quizzes_questions)
 
-    @app.route('/create', methods=['POST'])
+    # @app.route('/create', methods=['POST'])
+    # @login_required
+    # def create_quiz():
+    #     title = request.form['title']
+    #     new_quiz = Quiz(title=title)
+    #     db.session.add(new_quiz)
+    #     db.session.commit()
+    #     return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
+
+    # @app.route('/create-quiz', methods=['GET', 'POST'])
+    # # @login_required
+    # def create_quiz_page():
+    #     try:
+    #         if request.method == 'POST':
+    #             quiz_name = request.form['title']
+    #             duration = 30
+    #             course = request.form['course']
+    #             topic = request.form['quiz-topic']
+    #             num = int(request.form['total_questions'])
+
+    #             # Create the Quiz instance
+    #             quiz = Quiz(user_id=current_user.user_id,
+    #                         quiz_name=quiz_name, duration=duration)
+    #             db.session.add(quiz)
+    #             # Flush the session to get the quiz_id before adding QuizQuestion instances
+    #             db.session.flush()
+
+    #             # Add QuizQuestions for each question_id in question_ids
+    #             search = Search("us-central1-gcp", "quizzes")
+    #             question_ids = search.get_question_ids(course, topic, num, 0.3)
+    #             print(f"Question IDs: {question_ids}")
+
+    #             for question_id in question_ids:
+    #                 quiz_question = QuizQuestion(
+    #                     quiz_id=quiz.quiz_id, question_id=question_id)
+    #                 db.session.add(quiz_question)
+    #                 print(f"Adding QuizQuestion: {quiz_question}")
+
+    #             db.session.commit()
+    #             return redirect(url_for('quiz_page', quiz_id=quiz.quiz_id))
+    #         return render_template('create_quiz.html')
+    #     except Exception as e:
+    #         print(f"Error: {e}")
+    #         return render_template('create_quiz.html', error=str(e))
+
+    @app.route('/create_quiz', methods=['GET', 'POST'])
     @login_required
     def create_quiz():
-        title = request.form['title']
-        new_quiz = Quiz(title=title)
-        db.session.add(new_quiz)
-        db.session.commit()
-        return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
+        if request.method == 'POST':
+            # Get form data
+            quiz_name = request.form.get('quiz_name')
+            course = request.form.get('course')
+            quiz_topic = request.form.get('quiz_topic')
+            num_questions = int(request.form.get('num_questions'))
+            duration = int(request.form.get('duration'))
 
-    @app.route('/create-quiz', methods=['GET', 'POST'])
-    # @login_required
-    def create_quiz_page():
-        try:
-            if request.method == 'POST':
-                quiz_name = request.form['title']
-                duration = 30
-                course = request.form['course']
-                topic = request.form['quiz-topic']
-                num = int(request.form['total_questions'])
+            # Get question ids
+            search = Search("us-central1-gcp", "quizzes")
+            question_ids = search.get_question_ids(
+                course, quiz_topic, num_questions)
 
-                # Create the Quiz instance
-                quiz = Quiz(user_id=current_user.user_id,
+            # Create Quiz
+            new_quiz = Quiz(user_id=current_user.user_id,
                             quiz_name=quiz_name, duration=duration)
-                db.session.add(quiz)
-                # Flush the session to get the quiz_id before adding QuizQuestion instances
-                db.session.flush()
+            db.session.add(new_quiz)
+            db.session.flush()  # So we can get the ID of the new_quiz
 
-                # Add QuizQuestions for each question_id in question_ids
-                search = Search("us-central1-gcp", "quizzes")
-                question_ids = search.get_question_ids(course, topic, num, 0.3)
-                print(f"Question IDs: {question_ids}")
+            # Create QuizQuestion entries
+            for question_id in question_ids:
+                quiz_question = QuizQuestion(
+                    quiz_id=new_quiz.quiz_id, question_id=question_id)
+                db.session.add(quiz_question)
 
-                for question_id in question_ids:
-                    quiz_question = QuizQuestion(
-                        quiz_id=quiz.quiz_id, question_id=question_id)
-                    db.session.add(quiz_question)
-                    print(f"Adding QuizQuestion: {quiz_question}")
+            db.session.commit()
 
-                db.session.commit()
-                return redirect(url_for('quiz_page', quiz_id=quiz.quiz_id))
+            return redirect(url_for('quizzes'))
+        else:
             return render_template('create_quiz.html')
-        except Exception as e:
-            print(f"Error: {e}")
-            return render_template('create_quiz.html', error=str(e))
 
     @app.route('/quiz/<int:quiz_id>')
     @login_required
@@ -176,7 +210,7 @@ def init_auth_routes(app):
             question = Question(
                 user_id=user_id, question=question_text, course=course)
             db.session.add(question)
-            db.session.commit()
+            db.session.flush()
 
             # Add the answers
             for i in range(1, 5):
@@ -304,7 +338,7 @@ def init_auth_routes(app):
                 end_time=end_time
             )
             db.session.add(quiz_participant)
-            db.session.commit()
+            db.session.flush()
 
             # Create UserResponse entries
             for response in request.json['responses']:
@@ -343,3 +377,51 @@ def init_auth_routes(app):
     def attempt_detail(participation_id):
         responses = quiz_manager.get_responses(participation_id)
         return render_template('attempt_detail.html', responses=responses)
+
+    @app.route('/create_question')
+    @login_required
+    def create_question():
+        return render_template('create_question.html')
+
+    @app.route('/submit_question', methods=['POST'])
+    @login_required
+    def submit_question():
+        # Replace this with the actual user_id from the session
+        user_id = 'some_user_id'
+
+        # Get the submitted data
+        form_data = request.form
+
+        # Iterate through the submitted questions
+        question_count = 1
+        while f'question-{question_count}' in form_data:
+            question_text = form_data[f'question-{question_count}']
+            course = form_data[f'course-{question_count}']
+
+            # Create a new Question object and add it to the database
+            question = Question(user_id=current_user.user_id,
+                                question=question_text, course=course)
+            db.session.add(question)
+            db.session.flush()  # Flush the session to get the question_id
+
+            # Iterate through the submitted answers for the current question
+            answer_count = 1
+            while f'answer-{question_count}-{answer_count}' in form_data:
+                answer_text = form_data[f'answer-{question_count}-{answer_count}']
+                is_correct = form_data[f'correct-answer-{question_count}'] == str(
+                    answer_count)
+
+                # Create a new Answer object and add it to the database
+                answer = Answer(question_id=question.question_id,
+                                answer=answer_text, is_correct=is_correct)
+                db.session.add(answer)
+
+                answer_count += 1
+
+            question_count += 1
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        # Redirect to a success page or any other page you'd like
+        return redirect(url_for('create_quiz'))

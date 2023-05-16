@@ -1,47 +1,83 @@
-{% extends 'base.html' %} {% block title %}Create Quiz{% endblock %} {% block
-content %}
-<div class="container create-quiz-container">
-  <h1 id="create_quiz_heading">Create Quiz</h1>
-  <p class="create">
-    Follow the steps below to create a new quiz. Select a course, set the number
-    of questions, and start building your quiz!
-  </p>
-  <form
-    action="{{ url_for('create_quiz_page') }}"
-    method="post"
-    class="create-quiz-form"
-  >
-  <!-- Add this button inside your create_quiz.html file -->
-    <a href="{{ url_for('add_question') }}" class="btn btn-secondary mt-3">Add Question Instead</a>
-    <label class="quiz_label" for="quiz-title">Quiz Title:</label>
-    <input type="text" name="title" id="quiz-title" required />
-    <label class="quiz_label" for="course">Course:</label>
-    <select name="course" id="course" required>
-      <option class="quiz_label" value="" disabled selected>Select a course</option>
-      <option value="Node.js">Node.js</option>
-      <option value="Python">Python</option>
-      <option value="Network">Network</option>
-      <option value="Biology">Biology</option>
-    </select>
-    <label class="quiz_label" for="quiz-topic">Quiz Topic</label>
-    <input type="string" name="quiz-topic" id="quiz type" min="1" required />
-
-    <label class="quiz_label" for="total_questions">Total number of questions:</label>
-    <input
-      type="number"
-      name="total_questions"
-      id="total_questions"
-      min="1"
-      required
-    />
-    <input type="submit" value="Create Quiz" class="create-quiz-btn" />
-  </form>
-  <a href="{{ url_for('index') }}" class="back-to-quizzes">Back to Quizzes</a>
-  <!-- Add this line for the "View Your Progress" button -->
-  <a
-    href="{{ url_for('test_statistic') }}"
-    class="btn btn-primary view-progress-btn"
-    >View Your Progress</a
-  >
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .container-custom {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .quiz-card {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .submit-button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .intro-text {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #555;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container container-custom">
+        <h2>Create Quiz</h2>
+        <p class="intro-text">Follow the steps below to create a new quiz. Select a course, fill in the quiz topic, set the number of questions, and start building your quiz!</p>
+        
+        <form method="POST" action="/create_quiz">
+            <div class="card mt-4 quiz-card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="quiz_name">Quiz Name:</label>
+                        <input type="text" class="form-control" id="quiz_name" name="quiz_name" required>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <select class="form-control" id="course" name="course" required>
+                            <option value="Node.js">Node.js</option>
+                            <option value="Network">Network</option>
+                            <option value="Biology">Biology</option>
+                        </select>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="quiz_topic">Quiz Topic:</label>
+                        <input type="text" class="form-control" id="quiz_topic" name="quiz_topic" required>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="num_questions">Number of questions:</label>
+                        <input type="number" class="form-control" id="num_questions" name="num_questions" required>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="duration">Duration (in minutes):</label>
+                        <input type="number" class="form-control" id="duration" name="duration" required>
+                    </div>
+                </div>
+            </div>
+            <div class="submit-button-container">
+                <input type="submit" class="btn btn-custom btn-primary" value="Create Quiz">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

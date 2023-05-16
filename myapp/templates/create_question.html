@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Question</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .container-custom {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .question-card {
+            margin-bottom: 20px;
+        }
+        .answers-container {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container container-custom">
+        <h2>Create Question</h2>
+        <form id="question-form" method="POST" action="/submit_question">
+            <div id="questions-container">
+                <!-- Questions will be added here -->
+            </div>
+            <button type="button" class="btn btn-custom btn-primary" id="add-question-btn">Add Question</button>
+            <button type="submit" class="btn btn-custom btn-success" id="submit-btn">Submit</button>
+        </form>
+    </div>
+    <script>
+        let questionCounter = 0;
+
+        function addQuestion() {
+            questionCounter++;
+            const questionTemplate = `
+            <div class="card mt-4 question-card" data-question-id="${questionCounter}">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="question-${questionCounter}">Question ${questionCounter}:</label>
+                        <input type="text" class="form-control" name="question-${questionCounter}" id="question-${questionCounter}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course-${questionCounter}">Course:</label>
+                        <select class="form-control" name="course-${questionCounter}" id="course-${questionCounter}" required>
+                            <option value="Node.js">Node.js</option>
+                            <option value="Network">Network</option>
+                            <option value="Biology">Biology</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Answers:</label>
+                        <div class="answers-container">
+                            <!-- Answers will be added here -->
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary add-answer-btn">Add Answer</button>
+                    </div>
+                </div>
+            </div>`;
+            $('#questions-container').append(questionTemplate);
+        }
+
+        function addAnswer(e) {
+            const questionCard = $(e.target).closest('.question-card');
+            const questionId = questionCard.data('question-id');
+            const answerContainer = questionCard.find('.answers-container');
+            const answerCount = answerContainer.children().length + 1;
+
+            const answerTemplate = `
+            <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="radio" name="correct-answer-${questionId}" value="${answerCount}" required>
+                    </div>
+                </div>
+                <input type="text" class="form-control" name="answer-${questionId}-${answerCount}" required>
+            </div>`;
+            answerContainer.append(answerTemplate);
+        }
+
+        function handleSubmit(e) {
+            let isValid = true;
+            let validationMessage = "";
+
+            $('.question-card').each(function() {
+                const questionId = $(this).data('question-id');
+                const answerCount = $(this).find('.answers-container .input-group').length;
+                const correctAnswerSelected = $(this).find(`input[name="correct-answer-${questionId}"]:checked`).length > 0;
+
+                if (answerCount < 2) {
+                    isValid = false;
+                    validationMessage += `Question ${questionId} must have at least two answers.\n`;
+                }
+
+                if (!correctAnswerSelected) {
+                    isValid = false;
+                    validationMessage += `Please select a correct answer for Question ${questionId}.\n`;
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert(validationMessage);
+            }
+        }
+
+        // Add question button click event
+        $('#add-question-btn').click(addQuestion);
+
+        // Add answer button click event
+        $(document).on('click', '.add-answer-btn', addAnswer);
+
+        // Form submit event
+        $('#question-form').submit(handleSubmit);
+    </script>
+</body>
+</html>
