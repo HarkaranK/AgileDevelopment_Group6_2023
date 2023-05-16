@@ -178,17 +178,16 @@ body {
   }
   
   .login-container {
-    background-color: #ffffff;
+    background-color: none;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 600px; /* Add this line to set the width */
     margin-top: 120px;
-    background-image: url('img/create.jpg');
+    background-image: none;
     background-repeat: no-repeat;
     background-size: cover;
-
   }  
   
   .logo {
