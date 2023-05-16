@@ -1,134 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Quizzes</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
 </head>
+
 <body>
-{% include 'navbar.html' %}
-<div class="container">
-    <div class="row">
-        <div class="col-4" id="quiz-list">
-            <h2><span>Quizzes</span></h2>
-            <ul class="list-group">
-                {% for quiz in quizzes %}
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-4" id="quiz-list">
+                <h2><span>Quizzes</span></h2>
+                <ul class="list-group">
+                    {% for quiz in quizzes %}
                     <li class="list-group-item" onclick="loadQuizData({{ quiz.quiz_id }})">{{ quiz.quiz_name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-8" id="quiz-detail">
-          {% if first_quiz_data %}
-              {% with questions_answers=first_quiz_data, quiz=quizzes[0], disable_inputs=disable_inputs %}
-                  {% include 'quiz_detail.html' %}
-              {% endwith %}
-          {% else %}
-              <p>Select a quiz to view its details.</p>
-          {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-8" id="quiz-detail">
+                {% if first_quiz_data %}
+                {% with questions_answers=first_quiz_data, quiz=quizzes[0], disable_inputs=disable_inputs %}
+                {% include 'quiz_detail.html' %}
+                {% endwith %}
+                {% else %}
+                <p>Select a quiz to view its details.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-    sessionStorage.removeItem('quizStartTime');
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        sessionStorage.removeItem('quizStartTime');
 
-    let editingQuizId = null;
+        let editingQuizId = null;
 
-    function loadQuizData(quizId) {
-        editingQuizId = null;
-        $.get('/quiz-detail/' + quizId, function(data) {
-            $('#quiz-detail').html(data);
-        });
-    }
-
-    function editQuiz(quizId) {
-        editingQuizId = quizId;
-
-        // Add delete buttons to each question
-        $('.question').each(function() {
-            $(this).append('<button class="delete-button" onclick="deleteQuestion(this)">Delete</button>');
-        });
-
-        // Change 'Edit' button to 'Cancel'
-        $('#edit-button').attr('onclick', 'cancelEditQuiz()').text('Cancel');
-
-        // Enable 'Save' button
-        $("#save-button").prop("disabled", false);
-    }
-
-    function deleteQuestion(button) {
-        // Remove question from page
-        $(button).closest('.question').remove();
-    }
-
-    function cancelEditQuiz() {
-        editingQuizId = null;
-
-        // Remove delete buttons
-        $('.delete-button').remove();
-
-        // Change 'Cancel' button back to 'Edit'
-        $('#edit-button').attr('onclick', 'editQuiz()').text('Edit');
-
-        // Disable 'Save' button
-        $("#save-button").prop("disabled", true);
-    }
-
-    function saveQuiz() {
-        let updatedQuizData = { questions: [] };
-
-        // Collect updated quiz data from page
-        $('.question').each(function() {
-            let questionId = $(this).data('question-id');
-            updatedQuizData.questions.push(questionId);
-        });
-
-        if (updatedQuizData.questions.length === 0) {
-            alert("A quiz must have at least one question.");
-            return;
+        function loadQuizData(quizId) {
+            editingQuizId = null;
+            $.get('/quiz-detail/' + quizId, function (data) {
+                $('#quiz-detail').html(data);
+            });
         }
 
-        $.ajax({
-            url: '/update-quiz/' + editingQuizId,
-            type: 'POST',
-            data: JSON.stringify(updatedQuizData),
-            contentType: 'application/json',
-            success: function(response) {
-                if (response.success) {
-                    cancelEditQuiz();
-                } else {
-                    console.log(response.error);
-                }
-            }
-        });
-    }
+        function editQuiz(quizId) {
+            editingQuizId = quizId;
 
-    function deleteQuiz(quizId) {
-        if (!confirm('Are you sure you want to delete this quiz?')) {
-            return;
+            // Add delete buttons to each question
+            $('.question').each(function () {
+                $(this).append('<button class="delete-button" onclick="deleteQuestion(this)">Delete</button>');
+            });
+
+            // Change 'Edit' button to 'Cancel'
+            $('#edit-button').attr('onclick', 'cancelEditQuiz()').text('Cancel');
+
+            // Enable 'Save' button
+            $("#save-button").prop("disabled", false);
         }
 
-        $.ajax({
-            url: '/delete-quiz/' + quizId,
-            type: 'DELETE',
-            success: function(response) {
-                if (response.success) {
-                    location.reload();
-                } else {
-                    console.log(response.error);
-                }
+        function deleteQuestion(button) {
+            // Remove question from page
+            $(button).closest('.question').remove();
+        }
+
+        function cancelEditQuiz() {
+            editingQuizId = null;
+
+            // Remove delete buttons
+            $('.delete-button').remove();
+
+            // Change 'Cancel' button back to 'Edit'
+            $('#edit-button').attr('onclick', 'editQuiz()').text('Edit');
+
+            // Disable 'Save' button
+            $("#save-button").prop("disabled", true);
+        }
+
+        function saveQuiz() {
+            let updatedQuizData = { questions: [] };
+
+            // Collect updated quiz data from page
+            $('.question').each(function () {
+                let questionId = $(this).data('question-id');
+                updatedQuizData.questions.push(questionId);
+            });
+
+            if (updatedQuizData.questions.length === 0) {
+                alert("A quiz must have at least one question.");
+                return;
             }
-        });
-    }
 
-    function takeQuiz(quiz_id) {
-        location.href = '/take-quiz/' + quiz_id;
-    }
+            $.ajax({
+                url: '/update-quiz/' + editingQuizId,
+                type: 'POST',
+                data: JSON.stringify(updatedQuizData),
+                contentType: 'application/json',
+                success: function (response) {
+                    if (response.success) {
+                        cancelEditQuiz();
+                    } else {
+                        console.log(response.error);
+                    }
+                }
+            });
+        }
 
-    function viewPastAttempts(quiz_id) {
-        location.href = '/past-attempts/' + quiz_id;
-    }
+        function deleteQuiz(quizId) {
+            if (!confirm('Are you sure you want to delete this quiz?')) {
+                return;
+            }
 
-</script>
+            $.ajax({
+                url: '/delete-quiz/' + quizId,
+                type: 'DELETE',
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        console.log(response.error);
+                    }
+                }
+            });
+        }
+
+        function takeQuiz(quiz_id) {
+            location.href = '/take-quiz/' + quiz_id;
+        }
+
+        function viewPastAttempts(quiz_id) {
+            location.href = '/past-attempts/' + quiz_id;
+        }
+
+    </script>
 </body>
+
 </html>
