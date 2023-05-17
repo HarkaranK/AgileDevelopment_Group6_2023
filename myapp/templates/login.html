@@ -4,7 +4,8 @@
 
 {% block content %}
     <div class="login-container">
-      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo" />
+      <h1 class="login-h1">SIGN IN TO SMARTQUEST</h1>
+      <!-- <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo" /> -->
       {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class="flashes">
@@ -16,10 +17,20 @@
       {% endwith %}
       <!-- <h1 class="login-heading">Login</h1> -->
       <form method="POST" action="{{ url_for('login') }}">
-        <p class="loginp">Username <input type="text" name="username" required /></p>
-        <p class="loginp">Password <input type="password" name="password" required /></p>
-        <input class="register-btn login-btn" type="submit" value="Login" />
+        <div class="int-area">
+          <input type="text" name="username" id="id" autocomplete="off" required />
+          <label for="id">USER NAME</label>
+        </div>
+        <div class="int-area">
+          <input type="password" name="password" id="pw" autocomplete="off" required />
+          <label for="pw">PASSWORD</label>
+        </div>
+        <div class="btn-area">
+          <button type="submit" value="Login">LOGIN</button>
+        </div>
       </form>
-    <a href="{{ url_for('register') }}" class="register-btn">Register</a>
+      <div class="caption">
+        <a href="{{ url_for('register') }}">Create New Account?</a>
+      </div>
     </div>
 {% endblock %}
