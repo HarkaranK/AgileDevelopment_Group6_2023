@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from myapp.auth.models import User
 from myapp.database.models import Quiz, Question, Answer, QuizQuestion, QuizParticipant, UserResponse
 from myapp.database.db import db
-from myapp.utils.handler import Search, QuizManager
+from myapp.utils.handler import Search, QuizManager, Ingest
 import os
 from datetime import datetime
 from flask import jsonify
@@ -372,6 +372,7 @@ def init_auth_routes(app):
 
             # Iterate through the submitted questions
             question_count = 1
+            question_ids = []
             while f'question-{question_count}' in form_data:
                 question_text = form_data[f'question-{question_count}']
                 course = form_data[f'course-{question_count}']
@@ -397,9 +398,14 @@ def init_auth_routes(app):
                     answer_count += 1
 
                 question_count += 1
+                question_ids.append(question.question_id)
 
             # Commit the changes to the database
             db.session.commit()
+
+            # Ingest data
+            ingestor = Ingest("us-central1-gcp", "quizzes")
+            ingestor.ingest_questions(question_ids)
 
             # Redirect to a success page or any other page you'd like
             return redirect(url_for('create_quiz'))
