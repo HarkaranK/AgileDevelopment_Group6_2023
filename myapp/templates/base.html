@@ -12,13 +12,13 @@
 </head>
 <body class="main-body">
     <header id="indexHeader">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="App Logo" id="appLogo", width="300" height="300">
+        <a href="{{ url_for('landing_page') }}"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="App Logo" id="appLogo", width="300" height="300"></a>
         <nav>
-            <ul class="navUl">
+            <!-- <ul class="navUl">
                 <li class="navElmt"><a href="{{ url_for('login') }}">Login</a></li>
                 <li class="navElmt"><a href="{{ url_for('register') }}">Register</a></li>
                 <li class="navElmt"><a href="{{ url_for('index') }}">Home</a></li>
-            </ul>
+            </ul> -->
         </nav>
     </header>
     <div class="icons">
