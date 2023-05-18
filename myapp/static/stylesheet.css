@@ -119,6 +119,7 @@ li {
 
 li:last-child {
   border-bottom: none;
+  color: white;
 }
 
 a {
