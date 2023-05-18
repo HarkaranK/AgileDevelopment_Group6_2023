@@ -4,15 +4,35 @@
 
 {% block content %}
     <div class="login-container">
-      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo" />
-      <h1>Register</h1>
+      <h1 class="login-h1">REGISTER</h1>
       <form method="POST" action="{{ url_for('register') }}">
-        <p>Name <input type="text" name="name" required /></p>
+        <!-- <p>Name <input type="text" name="name" required /></p>
         <p>School <input type="text" name="school" required /></p>
         <p>Username <input type="text" name="username" required /></p>
         <p>Password <input type="password" name="password" required /></p>
-        <input class="register-btn" type="submit" value="Submit" />
+        <input class="register-btn" type="submit" value="Submit" /> -->
+        <div class="int-area">
+          <input type="text" name="name" id="name" autocomplete="off" required />
+          <label for="name">NAME</label>
+        </div>
+        <div class="int-area">
+          <input type="text" name="school" id="school" autocomplete="off" required />
+          <label for="school">SCHOOL</label>
+        </div>
+        <div class="int-area">
+          <input type="text" name="username" id="id" autocomplete="off" required />
+          <label for="id">USER NAME</label>
+        </div>
+        <div class="int-area">
+          <input type="password" name="password" id="pw" autocomplete="off" required />
+          <label for="pw">PASSWORD</label>
+        </div>
+        <div class="btn-area">
+          <button type="submit" value="Submit">SUBMIT</button>
+        </div>
       </form>
-      <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+      <div class="caption">
+        <a href="{{ url_for('login') }}" class="login-btn">Sign In?</a>
+      </div>
     </div>
 {% endblock %}
