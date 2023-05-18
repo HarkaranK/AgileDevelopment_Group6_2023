@@ -9,14 +9,19 @@ jobs:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
-      - image: cimg/base:stable
+     - image: circleci/python:3.11.0
+     #- image: cimg/base:stable
+    
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      #- run:
+       - run: pip install -r requirements.txt
+       - run: python -m pytest
+          
+          #name: "Say hello"
+          #command: "echo Hello, World!"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
