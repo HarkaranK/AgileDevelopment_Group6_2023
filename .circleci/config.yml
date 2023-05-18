@@ -18,6 +18,8 @@ jobs:
        - checkout
       #- run:
        - run: pip install -r requirements.txt
+       - run: python create_tables.py
+       - run: python create_data.py
        - run: python -m pytest
           
           #name: "Say hello"
