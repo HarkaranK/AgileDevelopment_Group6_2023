@@ -9,6 +9,15 @@ from myapp import create_app
 
 @pytest.fixture
 def client():
+    """
+    Fixture that provides a Flask test client for use in tests.
+    
+    The fixture creates an application context, commits necessary test data to the database, and provides the client.
+    The client allows sending requests to the application without running the server.
+    
+    Yields:
+        FlaskClient: A test client instance for the Flask application.
+    """
     app, _ = create_app()
     with app.test_client() as client:
         with app.app_context():
@@ -24,12 +33,31 @@ def client():
         yield client
 
 def test_logout(client):
+    """
+    Test for the logout endpoint.
+
+    Checks whether a successful logout redirects properly and 
+    whether the 'Logged in as:' text is not in the response data, 
+    indicating the user is not logged in.
+
+    Args:
+        client (FlaskClient): The test client used to make requests to the app.
+    """
     response = client.get('/logout', follow_redirects=True)
 
     assert response.status_code == 200
     assert b'Logged in as:' not in response.data
 
 def test_create_quiz(client):
+    """
+    Test for the create quiz endpoint.
+
+    Sets a 'user_id' in the session to mimic a logged in user and sends a POST request to create a quiz.
+    Checks whether the request is successful and whether the new quiz title appears in the response data.
+
+    Args:
+        client (FlaskClient): The test client used to make requests to the app.
+    """
     with client.session_transaction() as session:
         session['user_id'] = 'testuser'
 
