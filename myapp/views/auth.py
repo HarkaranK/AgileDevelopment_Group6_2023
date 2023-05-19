@@ -71,51 +71,6 @@ def init_auth_routes(app):
 
         return render_template('index.html', user_quizzes=user_quizzes, user_quizzes_questions=user_quizzes_questions)
 
-    # @app.route('/create', methods=['POST'])
-    # @login_required
-    # def create_quiz():
-    #     title = request.form['title']
-    #     new_quiz = Quiz(title=title)
-    #     db.session.add(new_quiz)
-    #     db.session.commit()
-    #     return redirect(url_for('quiz_page', quiz_id=new_quiz.quiz_id))
-
-    # @app.route('/create-quiz', methods=['GET', 'POST'])
-    # # @login_required
-    # def create_quiz_page():
-    #     try:
-    #         if request.method == 'POST':
-    #             quiz_name = request.form['title']
-    #             duration = 30
-    #             course = request.form['course']
-    #             topic = request.form['quiz-topic']
-    #             num = int(request.form['total_questions'])
-
-    #             # Create the Quiz instance
-    #             quiz = Quiz(user_id=current_user.user_id,
-    #                         quiz_name=quiz_name, duration=duration)
-    #             db.session.add(quiz)
-    #             # Flush the session to get the quiz_id before adding QuizQuestion instances
-    #             db.session.flush()
-
-    #             # Add QuizQuestions for each question_id in question_ids
-    #             search = Search("us-central1-gcp", "quizzes")
-    #             question_ids = search.get_question_ids(course, topic, num, 0.3)
-    #             print(f"Question IDs: {question_ids}")
-
-    #             for question_id in question_ids:
-    #                 quiz_question = QuizQuestion(
-    #                     quiz_id=quiz.quiz_id, question_id=question_id)
-    #                 db.session.add(quiz_question)
-    #                 print(f"Adding QuizQuestion: {quiz_question}")
-
-    #             db.session.commit()
-    #             return redirect(url_for('quiz_page', quiz_id=quiz.quiz_id))
-    #         return render_template('create_quiz.html')
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-    #         return render_template('create_quiz.html', error=str(e))
-
     @app.route('/create_quiz', methods=['GET', 'POST'])
     @login_required
     def create_quiz():
@@ -323,8 +278,8 @@ def init_auth_routes(app):
             # Create UserResponse entries
             for response in request.json['responses']:
                 user_response = UserResponse(participation_id=quiz_participant.participation_id,
-                                             question_id=response['question_id'],
-                                             answer_id=response['answer_id'])
+                                            question_id=response['question_id'],
+                                            answer_id=response['answer_id'])
                 db.session.add(user_response)
             db.session.commit()
 
