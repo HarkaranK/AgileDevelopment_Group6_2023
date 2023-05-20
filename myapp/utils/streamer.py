@@ -5,12 +5,27 @@ import openai
 
 
 def init_stream_socket(socketio):
+    """
+    Initializes the socketio server and registers the event handlers.
+
+    Args:
+        socketio (SocketIO): The flask_socketio instance.
+    """
     @socketio.on('connect')
     def handle_connection():
+        """
+        Handles new client connections and adds the client to a new socket.io room.
+        """
         join_room(request.sid)
 
     @socketio.on('participation')
     def handle_participation(data):
+        """
+        Handles the 'participation' event and emits chat completion results back to the client.
+
+        Args:
+            data (dict): The event data. It's expected to have a 'participation_id' key with the ID of the quiz participation as the value.
+        """
         participation_id = data['participation_id']
         predict = Predict("us-central1-gcp", "quizzes")
         message = predict.get_message(participation_id)

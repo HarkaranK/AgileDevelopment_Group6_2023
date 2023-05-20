@@ -10,10 +10,21 @@ from flask import jsonify
 
 
 def init_auth_routes(app):
+    """Initializes all routes for user authentication and quiz management.
+
+        Args:
+            app (Flask): The Flask application to add routes to.
+
+        """
     quiz_manager = QuizManager(app)
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
+        """Handles user login requests, and renders the login page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         if request.method == 'POST':
             user_id = request.form['username']
             password = request.form['password']
@@ -25,10 +36,20 @@ def init_auth_routes(app):
 
     @app.route('/')
     def landing_page():
+        """Renders the landing page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         return render_template('landing.html')
 
     @app.route('/register', methods=['GET', 'POST'])
     def register():
+        """Handles user registration requests, and renders the registration page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         if request.method == 'POST':
             name = request.form['name']
             school = request.form['school']
@@ -51,17 +72,32 @@ def init_auth_routes(app):
     @app.route('/logout')
     @login_required
     def logout():
+        """Logs out the current user and redirects them to the login page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         logout_user()
         return redirect(url_for('login'))
 
     @app.route('/protected')
     @login_required
     def protected():
+        """Protected route that displays the current user's ID.
+
+        Returns:
+            str: A string containing the user ID of the current user.
+        """
         return f'Logged in as: {current_user.user_id}'
 
     @app.route('/index')
     @login_required
     def index():
+        """Renders the index page with all the quizzes associated with the current user.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         user_quizzes = Quiz.query.filter_by(user_id=current_user.user_id).all()
         user_quizzes_questions = []
 
@@ -74,6 +110,11 @@ def init_auth_routes(app):
     @app.route('/create_quiz', methods=['GET', 'POST'])
     @login_required
     def create_quiz():
+        """Handles quiz creation requests, and renders the quiz creation page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         if request.method == 'POST':
             # Get form data
             quiz_name = request.form.get('quiz_name')
@@ -108,18 +149,29 @@ def init_auth_routes(app):
     @app.route('/quiz/<int:quiz_id>')
     @login_required
     def quiz_page(quiz_id):
+        """Renders the page for a specific quiz.
+
+        Args:
+            quiz_id (int): The ID of the quiz.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         quiz = Quiz.query.get(quiz_id)
         questions = quiz_manager.get_questions_answers(quiz_id)
         return render_template('quiz.html', quiz=quiz, questions=questions)
 
-    @app.route('/test_statistic')
-    @login_required
-    def test_statistic():
-        return render_template('test_statistic.html')
-
     @app.route('/edit/<int:quiz_id>', methods=['GET', 'POST'])
     @login_required
     def edit_quiz(quiz_id):
+        """Handles quiz editing requests, and renders the quiz editing page.
+
+        Args:
+            quiz_id (int): The ID of the quiz to edit.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         quiz = Quiz.query.get(quiz_id)
         if request.method == 'POST':
             quiz.title = request.form['title']
@@ -130,6 +182,14 @@ def init_auth_routes(app):
     @app.route('/category/<category>')
     @login_required
     def category_page(category):
+        """Renders the page for a specific category of quizzes.
+
+        Args:
+            category (str): The category of quizzes.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         # Replace this with your own logic to filter quizzes based on the category
         quizzes = Quiz.query.filter_by(category=category).all()
         return render_template('category.html', quizzes=quizzes, category=category)
@@ -137,6 +197,11 @@ def init_auth_routes(app):
     @app.route('/add_question', methods=['GET', 'POST'])
     @login_required
     def add_question():
+        """Handles question creation requests, and renders the question creation page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         if request.method == 'POST':
             user_id = current_user.user_id
             question_text = request.form.get('question')
@@ -165,6 +230,14 @@ def init_auth_routes(app):
     @app.route('/get-quiz-details/<int:quiz_id>', methods=['GET'])
     @login_required
     def get_quiz_details(quiz_id):
+        """Gets the details for a specific quiz.
+
+        Args:
+            quiz_id (int): The ID of the quiz.
+
+        Returns:
+            JSON: The quiz details in JSON format.
+        """
         quiz_questions = QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
         questions = []
 
@@ -180,6 +253,14 @@ def init_auth_routes(app):
     @app.route('/update-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def update_quiz(quiz_id):
+        """Updates a specific quiz with new details.
+
+        Args:
+            quiz_id (int): The ID of the quiz to update.
+
+        Returns:
+            JSON: The result of the update operation in JSON format.
+        """
         # Get data from request
         updated_quiz_data = request.json
 
@@ -204,6 +285,14 @@ def init_auth_routes(app):
     @app.route('/delete-question/<int:question_id>', methods=['POST'])
     @login_required
     def delete_question(question_id):
+        """Deletes a specific question.
+
+        Args:
+            question_id (int): The ID of the question to delete.
+
+        Returns:
+            JSON: The result of the deletion operation in JSON format.
+        """
         question = Question.query.get(question_id)
         if question.user_id == current_user.user_id:
             db.session.delete(question)
@@ -214,11 +303,23 @@ def init_auth_routes(app):
 
     @app.route("/streamer")
     def streamer():
+        """Renders the streamer page.
+
+        Returns:
+            Werkzeug Response: The HTTP response.
+        """
         return render_template("streamer.html")
 
     @app.route('/quizzes')
     @login_required
     def quizzes():
+        """Retrieve and display quizzes for the current user.
+
+        Returns:
+            render_template: Renders the 'quizzes.html' template with the quizzes 
+                            related to the current user and the first quiz data.
+        """
+
         user_id = current_user.user_id
         quizzes = quiz_manager.get_quizzes(user_id)
         first_quiz_id = quizzes[0].quiz_id if quizzes else None
@@ -229,6 +330,16 @@ def init_auth_routes(app):
     @app.route('/quiz-detail/<int:quiz_id>')
     @login_required
     def quiz_detail(quiz_id):
+        """Displays detailed information about a specific quiz.
+
+        Args:
+            quiz_id (int): The ID of the quiz to retrieve details for.
+
+        Returns:
+            render_template: Renders the 'quiz_detail.html' template with the quiz 
+                            details and the related questions and answers.
+        """
+
         questions_answers = quiz_manager.get_questions_answers(quiz_id)
         quiz = Quiz.query.get(quiz_id)
         return render_template('quiz_detail.html', questions_answers=questions_answers, quiz=quiz, disable_inputs=True)
@@ -236,6 +347,14 @@ def init_auth_routes(app):
     @app.route('/delete-quiz/<int:quiz_id>', methods=['DELETE'])
     @login_required
     def delete_quiz(quiz_id):
+        """Deletes a specific quiz and its related entries.
+
+        Args:
+            quiz_id (int): The ID of the quiz to delete.
+
+        Returns:
+            jsonify: JSON response indicating the success or failure of the operation.
+        """
         try:
             quiz = Quiz.query.get(quiz_id)
             QuizQuestion.query.filter_by(quiz_id=quiz_id).delete()
@@ -249,6 +368,15 @@ def init_auth_routes(app):
     @app.route('/take-quiz/<int:quiz_id>', methods=['GET'])
     @login_required
     def take_quiz(quiz_id):
+        """Prepares a specific quiz for the user to take.
+
+        Args:
+            quiz_id (int): The ID of the quiz to take.
+
+        Returns:
+            render_template: Renders the 'take_quiz.html' template with the quiz 
+                            details and the related questions and answers.
+        """
         quiz = Quiz.query.get(quiz_id)
         questions_answers = quiz_manager.get_questions_answers(quiz_id)
         return render_template('take_quiz.html', quiz=quiz, questions_answers=questions_answers, disable_inputs=False)
@@ -256,6 +384,15 @@ def init_auth_routes(app):
     @app.route('/submit-quiz/<int:quiz_id>', methods=['POST'])
     @login_required
     def submit_quiz(quiz_id):
+        """Handles the submission of a taken quiz.
+
+        Args:
+            quiz_id (int): The ID of the submitted quiz.
+
+        Returns:
+            jsonify: JSON response indicating the success or failure of the operation 
+                    and the ID of the participation.
+        """
         try:
             # Get start_time from request payload
             start_time = request.json['start_time']
@@ -292,6 +429,15 @@ def init_auth_routes(app):
     @app.route('/quiz-results/<int:participation_id>', methods=['GET'])
     @login_required
     def quiz_results(participation_id):
+        """Displays the results of a completed quiz.
+
+        Args:
+            participation_id (int): The ID of the participation whose results to retrieve.
+
+        Returns:
+            render_template: Renders the 'quiz_results.html' template with the responses 
+                            and the participation details.
+        """
         # Retrieve user's participation and responses
         participation = QuizParticipant.query.get(participation_id)
         responses = quiz_manager.get_responses(participation.participation_id)
@@ -300,6 +446,15 @@ def init_auth_routes(app):
     @app.route('/past-attempts/<int:quiz_id>')
     @login_required
     def past_attempts(quiz_id):
+        """Displays past attempts of a specific quiz.
+
+        Args:
+            quiz_id (int): The ID of the quiz to retrieve past attempts for.
+
+        Returns:
+            render_template: Renders the 'past_attempts.html' template with the past 
+                            attempts and the first attempt data.
+        """
         participations = quiz_manager.get_participation(quiz_id)
         first_attempt_data = None
         if participations:
@@ -310,17 +465,32 @@ def init_auth_routes(app):
     @app.route('/attempt-detail/<int:participation_id>')
     @login_required
     def attempt_detail(participation_id):
+        """Displays detailed information about a specific attempt.
+
+        Args:
+            participation_id (int): The ID of the attempt to retrieve details for.
+
+        Returns:
+            render_template: Renders the 'attempt_detail.html' template with the responses 
+                            related to the attempt.
+        """
         responses = quiz_manager.get_responses(participation_id)
         return render_template('attempt_detail.html', responses=responses)
-
-    # @app.route('/create_question')
-    # @login_required
-    # def create_question():
-    #     return render_template('create_question.html')
 
     @app.route('/create_question', methods=['GET', 'POST'])
     @login_required
     def create_question():
+        """
+        Handles the GET request to render the form for creating new questions and 
+        the POST request to save the newly created questions in the database. It then 
+        ingests the question data into a specified location and redirects to the 
+        'create_quiz' page.
+
+        Returns:
+            render_template or redirect: On a GET request, it renders the 'create_question.html' 
+            template. On a POST request, it saves the created questions and answers into the database 
+            and redirects to 'create_quiz' page.
+        """
         if request.method == 'POST':
             # Get the submitted data
             form_data = request.form
@@ -355,14 +525,11 @@ def init_auth_routes(app):
                 question_count += 1
                 question_ids.append(question.question_id)
 
-            # Commit the changes to the database
             db.session.commit()
 
-            # Ingest data
             ingestor = Ingest("us-central1-gcp", "quizzes")
             ingestor.ingest_questions(question_ids)
-
-            # Redirect to a success page or any other page you'd like
+            
             return redirect(url_for('create_quiz'))
         else:
             return render_template('create_question.html')
