@@ -5,6 +5,7 @@
     <title>Quizzes</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -131,6 +132,15 @@
             location.href = '/past-attempts/' + quiz_id;
         }
 
+    </script>
+    <script>
+        const navLinks = document.getElementById("navLinks");
+        const showMenu = () => {
+            navLinks.style.right = "0";
+        };
+        const hideMenu = () => {
+            navLinks.style.right = "-200px";
+        };
     </script>
 </body>
 

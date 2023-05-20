@@ -1,25 +1,25 @@
 <!-- navbar.html -->
 
-{% if current_user.is_authenticated %}
-    <!-- Navbar when user is logged in -->
-    <nav class="navbar">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
-        <ul class="nav-links">
-            <li><a href="{{ url_for('landing_page') }}">Home</a></li>
-            <li><a href="{{ url_for('quizzes') }}">My Quiz</a></li>
-            <li><a href="{{ url_for('create_quiz') }}">Create Quiz</a></li>
-            <li><a href="{{ url_for('create_question') }}">Create Question</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-        </ul>
-    </nav>
-{% else %}
-    <!-- Navbar when user is not logged in -->
-    <nav class="navbar">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
-        <ul class="nav-links">
-            <li><a href="{{ url_for('landing_page') }}">Home</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('register') }}">Signup</a></li>
-        </ul>
-    </nav>
-{% endif %}
+<nav>
+    <a href="{{ url_for('landing_page') }}"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo" /></a>
+    <div class="nav-links" id="navLinks">
+      <i class="fa fa-times" onclick="hideMenu()"></i>
+      {% if current_user.is_authenticated %}
+        <ul>
+          <li><a href="{{ url_for('landing_page') }}">HOME</a></li>
+          <li><a href="{{ url_for('quizzes') }}">MY QUIZ</a></li>
+          <li><a href="{{ url_for('create_quiz') }}">CREATE QUIZ</a></li>
+          <li><a href="{{ url_for('create_question') }}">CREATE QUESTION</a></li>
+          <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+        </ul>       
+      {% else %} 
+        <ul>
+          <li><a href="{{ url_for('landing_page') }}">HOME</a></li>
+          <li><a href="{{ url_for('register') }}">SIGN UP</a></li>
+          <li><a href="{{ url_for('login') }}">LOG IN</a></li>
+          <li><a href="">ABOUT</a></li>
+        </ul>       
+      {% endif %}
+    </div>
+    <i class="fa fa-bars" onclick="showMenu()"></i>
+</nav>

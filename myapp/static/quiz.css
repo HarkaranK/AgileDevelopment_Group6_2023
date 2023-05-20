@@ -105,43 +105,61 @@ h2 span {
 } */
 
 /* Navigation Bar CSS */
-
-.navbar {
+nav {
   background-color: #333;
   height: 70px; /* Set the height of the navbar */
   display: flex;
+  padding: 2% 6%;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
   position: fixed; /* Fix position at the top of the page */
   top: 0;
   width: 100%; /* Full width */
   z-index: 1; /* Stay on top */
 }
 
-.navbar .logo {
-  height: 50px;
+nav img {
+  width: 150px;
 }
 
-.navbar .nav-links {
+.nav-links {
+  flex: 1;
+  text-align: right;
+}
+
+.nav-links ul {
+  margin-bottom: auto;
+}
+
+.nav-links ul li {
   list-style: none;
-  display: flex;
+  display: inline-block;
+  padding: 8px 12px;
+  position: relative;
 }
 
-.navbar .nav-links li {
-  margin-left: 15px;
-}
-
-.navbar .nav-links li a {
-  color: #f2f2f2; /* Light color to contrast with the dark navbar */
+.nav-links ul li a {
+  color: #fff;
   text-decoration: none;
-  font-size: 16px;
-  padding: 14px 16px;
-  transition: color 0.3s ease;
+  font-size: 13px;
 }
 
-.navbar .nav-links li a:hover {
-  color: #bababa; /* Lighten the link color on hover */
+.nav-links ul li::after {
+  content: "";
+  width: 0%;
+  height: 2px;
+  background: #f44336;
+  display: block;
+  margin: auto;
+  transition: 0.5s;
+}
+
+.nav-links ul li:hover::after {
+  width: 100%;
+}
+
+nav .fa {
+  display: none;
 }
 
 /* Body CSS to add padding at the top */
@@ -233,4 +251,31 @@ body {
   padding: 10px;
   border-radius: 10px;
   display: inline-block; /* Prevent it from spanning the entire width */
+}
+
+@media (max-width: 700px) {
+  .nav-links ul li {
+    display: block;
+  }
+  .nav-links {
+    position: absolute;
+    background: #f44336;
+    height: 100vh;
+    width: 200px;
+    top: 0;
+    right: -200px;
+    text-align: left;
+    z-index: 2;
+    transition: 1s;
+  }
+  nav .fa {
+    display: block;
+    color: #fff;
+    margin: 10px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .nav-links ul {
+    padding: 30px;
+  }
 }
