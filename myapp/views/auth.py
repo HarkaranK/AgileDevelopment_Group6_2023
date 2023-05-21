@@ -415,8 +415,8 @@ def init_auth_routes(app):
             # Create UserResponse entries
             for response in request.json['responses']:
                 user_response = UserResponse(participation_id=quiz_participant.participation_id,
-                                            question_id=response['question_id'],
-                                            answer_id=response['answer_id'])
+                                             question_id=response['question_id'],
+                                             answer_id=response['answer_id'])
                 db.session.add(user_response)
             db.session.commit()
 
@@ -460,7 +460,7 @@ def init_auth_routes(app):
         if participations:
             first_attempt_data = quiz_manager.get_responses(
                 participations[0].participation_id)
-        return render_template('past_attempts.html', participations=participations, quiz_id=quiz_id, first_attempt_data=first_attempt_data)
+        return render_template('past_attempts.html', participations=participations, first_attempt_data=first_attempt_data)
 
     @app.route('/attempt-detail/<int:participation_id>')
     @login_required
@@ -475,7 +475,8 @@ def init_auth_routes(app):
                             related to the attempt.
         """
         responses = quiz_manager.get_responses(participation_id)
-        return render_template('attempt_detail.html', responses=responses)
+        participation = QuizParticipant.query.get(participation_id)
+        return render_template('attempt_detail.html', responses=responses, participation=participation)
 
     @app.route('/create_question', methods=['GET', 'POST'])
     @login_required
@@ -529,7 +530,24 @@ def init_auth_routes(app):
 
             ingestor = Ingest("us-central1-gcp", "quizzes")
             ingestor.ingest_questions(question_ids)
-            
+
             return redirect(url_for('create_quiz'))
         else:
             return render_template('create_question.html')
+
+    @app.route('/delete-attempt/<int:participation_id>', methods=['DELETE'])
+    def delete_attempt(participation_id):
+        try:
+            participation = QuizParticipant.query.get(participation_id)
+
+            # cascade delete all the responses of this participation
+            UserResponse.query.filter_by(
+                participation_id=participation_id).delete()
+
+            # delete the participation
+            db.session.delete(participation)
+            db.session.commit()
+            return jsonify({"success": True})
+
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)})
