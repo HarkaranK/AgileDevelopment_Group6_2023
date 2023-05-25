@@ -404,3 +404,9 @@ article {
 .rslt-container{
   background-color: none;
 }
+
+@media (max-height: 576px) {
+  #indexHeader {
+    display: none;
+  }
+}
