@@ -278,4 +278,9 @@ body {
   .nav-links ul {
     padding: 30px;
   }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
