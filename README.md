@@ -9,7 +9,9 @@ Created By:
 - Aaron Wong
 
 Create your own virtual environment and install packages using the provided requirements.txt file:
-```python -m venv my_local_venv```
+```
+python -m venv my_local_venv
+```
 
 Activate the virtual environment:
 On Windows:
