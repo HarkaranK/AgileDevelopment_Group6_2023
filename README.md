@@ -1,13 +1,5 @@
 # AgileDevelopment_Group6_2023
 
-Created By:
-
-- Harkaran Kang
-- Gyumin Kim
-- Ziyin Zhuang
-- Arshdeep Kaur
-- Aaron Wong
-
 Create your own virtual environment and install packages using the provided requirements.txt file:
 ```
 python -m venv my_local_venv
